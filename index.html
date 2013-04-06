@@ -1,218 +1,77 @@
-
-<!DOCTYPE html>
-<!--[if IE 8]> 				 <html class="no-js lt-ie9" lang="en"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en"> <!--<![endif]-->
-
+<!DOCTYPE HTML>
+<html ng-app="Angello">
 <head>
-	<meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width" />
-  <title>Angello</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Angello</title>
 
-  <link rel="stylesheet" href="stylesheets/normalize.css" />
-  
-  <link rel="stylesheet" href="stylesheets/app.css" />
-  
+    <link rel="stylesheet" href="stylesheets/normalize.css" />
+    <link rel="stylesheet" href="stylesheets/app.css" />
 
-  <script src="javascripts/vendor/custom.modernizr.js"></script>
-
+    <script src="javascripts/vendor/custom.modernizr.js"></script>
+    <script src="javascripts/vendor/jquery.js"></script>
+    <script src="javascripts/vendor/angular.js"></script>
+    
+    <script type="text/javascript" src="javascripts/app.js"></script>
 </head>
 <body>
-<div id="masterWrapper" class="row">
-<div id="column01" class="small-12 large-2 columns">
-    <h3>Backlog</h3>
-    <article class="large-12 columns cardWrapper">User can quick search based on specialty</article>
-</div>
-<div id="column02" class="small-12 large-2 columns"><h3>User Stories</h3></div>
-<div id="column03" class="small-12 large-2 columns"><h3>Doing</h3></div>
-<div id="column04" class="small-12 large-2 columns"><header><h3>Done</h3></header>
-
-    <p>Bacon ipsum dolor sit amet leberkas fatback tail capicola jowl. Beef ribs leberkas filet mignon, cow brisket shoulder salami jowl pig rump pork chop short ribs. Leberkas swine short ribs beef ribs kielbasa sausage, boudin capicola. Kielbasa flank fatback sausage capicola. Turkey pastrami drumstick, rump sausage chuck pork chop shankle tongue tri-tip. Corned beef pig ham hock ham boudin salami hamburger, shoulder pork loin fatback strip steak tongue. Meatball shank tenderloin fatback venison.
-
-        Tri-tip turkey beef prosciutto strip steak ribeye. Meatloaf venison rump ham hock chicken, short ribs strip steak short loin frankfurter turkey shankle. Tongue ham hock frankfurter jowl leberkas. Pig swine capicola prosciutto, frankfurter turkey bacon ribeye sausage ham hock cow. Boudin meatloaf ham hock tri-tip drumstick.
-
-        Filet mignon frankfurter tri-tip t-bone, chicken ham jowl hamburger. Chuck meatloaf chicken turducken ribeye pastrami. Fatback spare ribs rump andouille pastrami. Boudin turkey sirloin, doner hamburger tenderloin salami ribeye pancetta. Ground round pork belly corned beef meatball, sirloin hamburger shank.
-
-        Shoulder salami frankfurter swine chicken chuck turducken. Ham leberkas prosciutto, frankfurter t-bone spare ribs corned beef shankle. Drumstick beef cow bresaola. Tenderloin chicken brisket pastrami pork belly. Rump doner chicken, t-bone bacon beef tail ribeye shoulder. Meatball drumstick turducken beef filet mignon chicken frankfurter cow pig rump. Corned beef beef ball tip chuck drumstick tail meatball doner prosciutto bresaola tri-tip.
-
-        Spare ribs tenderloin beef shoulder frankfurter bacon ball tip ground round shank turducken venison fatback ribeye jowl. Prosciutto salami chicken jowl ribeye, drumstick brisket pork chop andouille chuck pig. Cow t-bone venison beef salami sausage shankle doner frankfurter short loin spare ribs. Biltong boudin chicken cow pork loin bacon short ribs turkey. Pastrami turducken shank rump. Corned beef turkey leberkas shoulder tri-tip chuck pork flank capicola filet mignon.
-
-        Corned beef tenderloin ham, pork loin chuck shoulder boudin brisket tail. Swine pork sausage filet mignon pork loin rump. Ham hock drumstick tri-tip shankle, beef bresaola meatball boudin ball tip pork loin. Ham ground round cow sausage, tri-tip boudin strip steak rump.
-
-        Bacon swine turkey strip steak frankfurter pancetta short ribs jowl rump tenderloin pork chop kielbasa sausage. Ground round pork chuck fatback, pig biltong beef strip steak ham flank pancetta beef ribs. Tongue fatback pork short ribs swine. Spare ribs salami meatloaf, shankle tri-tip tenderloin fatback turducken. Salami beef ribs cow brisket. Beef boudin tri-tip prosciutto strip steak. Ribeye hamburger drumstick ham ball tip.
-
-        Pork chop pig corned beef shank pancetta flank fatback. Tenderloin pork loin boudin pork shoulder brisket flank ground round prosciutto hamburger. Pork belly strip steak pork short ribs sausage cow brisket pancetta shank. Pork chop short ribs turkey, pig venison brisket jowl swine pork belly chicken salami pork loin ball tip. Pork chop swine sirloin doner. Ground round biltong leberkas pancetta pork loin chicken. Kielbasa venison bacon, andouille ball tip turkey turducken hamburger.
-
-        Strip steak meatball shoulder prosciutto biltong pork belly venison salami. Sirloin pork loin flank, pig doner bresaola boudin pork chop bacon beef ribs chuck venison andouille kielbasa beef. Biltong drumstick rump short loin, short ribs frankfurter shoulder pork belly strip steak bresaola doner swine turducken leberkas. Doner biltong shankle beef sirloin short loin. Pork belly kielbasa pastrami meatball, chuck strip steak bacon jerky hamburger meatloaf. Filet mignon tenderloin ball tip fatback frankfurter ham. Sausage meatball capicola sirloin tri-tip pancetta, beef ribs shank ground round fatback ham.
-
-        Boudin flank spare ribs doner ham hock. Sausage tri-tip flank, shoulder leberkas salami tenderloin short loin spare ribs filet mignon meatball brisket t-bone jerky tail. Pig tri-tip biltong tongue sirloin. Shankle leberkas prosciutto turducken ham hock sausage pork tail chicken jowl rump beef ribs cow. Andouille pork chop shoulder, biltong jerky meatloaf chuck frankfurter tenderloin sausage bacon filet mignon tri-tip. Frankfurter salami hamburger drumstick meatball, tenderloin swine short loin biltong spare ribs chuck capicola flank. Corned beef turducken meatloaf, beef ribs tenderloin pork chop tongue shank frankfurter sausage.
-
-        Brisket chicken pastrami strip steak short ribs. Rump ribeye kielbasa tongue andouille leberkas pork capicola corned beef bacon. Corned beef ground round chuck bresaola. Sausage pig filet mignon prosciutto. Bresaola fatback kielbasa shoulder tongue drumstick pancetta spare ribs tri-tip filet mignon beef chuck sausage hamburger. Corned beef bacon flank venison, tail short loin bresaola.
-
-        Strip steak rump venison t-bone, pork frankfurter jerky. Swine short loin meatball doner beef ribs ham bacon. Ball tip t-bone tri-tip ham sirloin salami short loin prosciutto corned beef shoulder. Fatback ball tip tongue strip steak jerky. Bacon bresaola tongue t-bone jerky jowl. Ham hock tenderloin biltong shoulder filet mignon.
-
-        Beef ribs shankle andouille spare ribs pork loin shoulder ham hock beef salami frankfurter prosciutto tongue meatball. Brisket ham jerky, bresaola tenderloin meatball boudin pork belly meatloaf tongue pancetta flank. Kielbasa pork loin sirloin t-bone chuck, pork belly venison frankfurter drumstick jowl ground round. Ham meatball venison flank beef ribs, corned beef kielbasa beef turducken shankle tail biltong bresaola brisket. Drumstick venison tongue short loin jowl tri-tip bresaola short ribs strip steak ribeye swine fatback turkey ham ham hock. Pork loin prosciutto shankle drumstick swine.
-
-        Biltong pancetta chicken, frankfurter ball tip beef ribs brisket turkey ham hock drumstick ground round pork meatball doner ribeye. Turkey brisket cow flank, ground round pork shank hamburger ham hock rump filet mignon. Ball tip pork belly ham hock andouille chuck shank corned beef tenderloin ground round prosciutto turkey shoulder. Corned beef capicola pancetta, turkey ham shankle swine pastrami chuck ball tip meatloaf salami cow rump.
-
-        Sirloin meatloaf meatball, salami ham turkey ball tip tongue sausage bacon bresaola. Pancetta fatback bacon shoulder, hamburger tenderloin bresaola. Capicola beef pig tongue bacon brisket pork chop jowl chicken pork. Flank jerky andouille pancetta prosciutto salami frankfurter doner shankle swine rump shoulder leberkas brisket.
-
-        Ribeye bacon pastrami, salami biltong ball tip tri-tip ground round short loin ham hock swine beef ribs spare ribs short ribs pork chop. Pork loin drumstick shoulder filet mignon turducken ground round pancetta boudin brisket. Brisket kielbasa sirloin tri-tip. Meatball sirloin ribeye pig tongue turducken beef swine short ribs pancetta bacon pork short loin t-bone shankle. Ball tip andouille bacon short loin tail hamburger shoulder chuck prosciutto kielbasa turducken frankfurter.
-
-        Sirloin pork chop ground round flank ribeye. Tongue spare ribs corned beef flank meatball ham prosciutto meatloaf brisket pig pancetta bacon. Ham salami brisket t-bone. Tri-tip short ribs flank, kielbasa leberkas filet mignon jerky jowl hamburger shank.
-
-        Shoulder turkey capicola short loin brisket ham, cow bresaola pork loin tenderloin short ribs ribeye. Swine brisket kielbasa rump capicola, meatloaf sausage tongue beef meatball chuck shank t-bone fatback venison. Rump chicken hamburger turducken tongue kielbasa sausage capicola bacon ham hock corned beef pork meatloaf. Hamburger jowl spare ribs pork belly meatball turkey, swine tri-tip tenderloin short loin ball tip turducken. Shank tongue swine tenderloin leberkas cow tail tri-tip pastrami ham hock. Boudin flank sirloin strip steak, frankfurter pork belly bacon fatback ground round sausage brisket jowl rump tongue kielbasa. Shankle prosciutto pork chop short loin, fatback filet mignon biltong venison pork doner tongue ham hock hamburger meatball brisket.
-
-        Cow pastrami pork ground round brisket. Shoulder leberkas kielbasa jerky pork loin corned beef chicken shankle ball tip andouille turducken ham. Strip steak ham hock rump pastrami pancetta jerky shoulder chicken. Ham pork chop hamburger pig leberkas venison beef ribs tenderloin pork belly ground round fatback swine jerky pastrami. Strip steak tail ball tip short ribs pork chop rump beef ribs cow venison andouille pork belly chicken. Biltong turducken beef ribs pig cow.
-
-        Shankle andouille spare ribs chicken swine bresaola pig. Sausage bacon hamburger meatloaf capicola short ribs strip steak short loin fatback tail venison cow swine shank meatball. Biltong jowl spare ribs pork loin chicken tail shank swine ham hock kielbasa turducken tenderloin. Shank leberkas boudin filet mignon, pig t-bone pork belly tri-tip jowl.
-
-        Shank sausage bacon, short loin shankle tongue tenderloin beef. Meatloaf filet mignon sirloin shoulder sausage leberkas tongue bresaola venison beef ribs. Bacon pork belly leberkas, ground round ribeye pork tail. Tenderloin salami bacon strip steak ham hock tongue.
-
-        Pork chop pancetta t-bone ham tongue short ribs meatloaf pork loin venison shank turducken pastrami capicola shankle chicken. Tongue hamburger flank, ham short loin shankle t-bone ground round biltong. Tenderloin pork chop andouille ground round pastrami cow fatback jerky chicken shank swine sausage sirloin brisket. Kielbasa rump tri-tip bacon meatloaf filet mignon doner salami drumstick pork belly pork chop strip steak beef meatball. Venison shoulder hamburger strip steak filet mignon short loin leberkas ham hock meatball tongue kielbasa cow bacon doner turkey. Turducken hamburger chuck sausage. Frankfurter sirloin boudin kielbasa shankle venison.
-
-        Doner sausage prosciutto, pork belly strip steak shankle chuck beef ribs jowl salami pork. Pork sausage prosciutto fatback tongue t-bone frankfurter beef ribs ball tip brisket. Pancetta ham hock corned beef short loin, jowl jerky t-bone pork belly boudin beef pig tri-tip pork loin. Kielbasa flank t-bone shoulder sausage, ribeye frankfurter beef brisket filet mignon salami pork loin.
-
-        Ribeye venison pancetta bacon capicola tri-tip. Shankle ribeye bacon ham hock. Tongue short ribs boudin shankle t-bone beef short loin. Doner turducken sirloin short loin salami. Doner t-bone meatball, shoulder prosciutto ground round biltong chicken rump bresaola pastrami pancetta tri-tip cow.
-
-        Cow pancetta corned beef, capicola salami tenderloin biltong tail doner. Jowl frankfurter t-bone sausage short ribs jerky ribeye. Tail beef beef ribs frankfurter shank prosciutto jerky pork loin capicola cow turducken. Shoulder corned beef jowl turkey tongue kielbasa pork chop, swine pig. Ball tip filet mignon sirloin t-bone, shoulder pig tenderloin sausage.
-
-        Doner chuck pancetta filet mignon, prosciutto tail short ribs swine biltong chicken ham hock pork belly ribeye capicola. Pork belly pork swine pig brisket, short ribs shoulder. Tail spare ribs ball tip tri-tip, chuck capicola ham ribeye frankfurter. Sirloin ham shoulder venison pancetta tri-tip sausage tenderloin ball tip ham hock t-bone fatback ribeye meatball cow. Pork chop tongue strip steak sirloin meatloaf chicken sausage, pastrami pancetta.
-
-        T-bone sirloin turkey ham tail shoulder rump pork turducken biltong. Brisket pork belly cow leberkas, ground round tenderloin prosciutto fatback spare ribs tongue sirloin chuck pork frankfurter meatloaf. Ground round tenderloin shoulder beef ribs kielbasa drumstick, meatball biltong ham hock short ribs tongue tri-tip fatback cow. Chicken flank salami ham hock bresaola. Sirloin pork drumstick chuck, bacon tongue meatball boudin. Jerky beef ribs shankle, chuck prosciutto shoulder pastrami turkey ribeye pork belly. Chuck ribeye meatball short ribs hamburger.
-
-        Pork belly short loin jerky, pig pork brisket kielbasa flank salami tongue strip steak. T-bone tenderloin andouille salami, chicken short loin ribeye. Leberkas drumstick ham, rump tail strip steak shoulder turkey shank beef. Tail doner frankfurter ground round leberkas prosciutto brisket. Salami tri-tip bacon turkey filet mignon ground round ribeye, leberkas shank corned beef ball tip pig. Andouille venison doner bresaola, fatback hamburger ball tip filet mignon capicola frankfurter shankle tri-tip jerky short ribs pork belly.
-
-        Flank venison turducken cow chicken meatball. Fatback ham hock brisket shankle, andouille shoulder ground round ham beef pancetta ribeye. Fatback flank drumstick tail rump turkey bacon spare ribs short loin biltong. Short ribs shankle tail biltong jowl meatball pastrami drumstick capicola t-bone prosciutto frankfurter kielbasa strip steak flank. Turkey chicken shank biltong, doner ribeye pancetta meatball ball tip ham hock meatloaf turducken sirloin.
-
-        Tongue pork chop filet mignon frankfurter drumstick shankle ham hock leberkas brisket boudin pork belly kielbasa shank. Turducken shoulder pork drumstick shankle spare ribs hamburger pig pancetta. Beef tenderloin turkey ball tip. Strip steak boudin swine, doner short ribs jerky ball tip brisket chicken turducken. Swine shankle sausage tongue strip steak ground round ribeye rump. Pork belly beef chuck bacon venison.
-
-        Drumstick salami sirloin tongue, shoulder andouille pork belly chicken short ribs hamburger tri-tip. Short ribs meatloaf andouille shank turducken bresaola tail turkey shankle pig doner brisket short loin ribeye. Leberkas chicken beef ribs frankfurter. Pastrami shank filet mignon bacon kielbasa meatloaf ham venison tongue.
-
-        Pancetta sausage meatloaf short loin filet mignon ham hock brisket pork boudin shoulder venison hamburger prosciutto turducken. Boudin brisket pastrami, cow sausage spare ribs shank corned beef. Boudin shoulder andouille, bresaola turducken filet mignon biltong ground round strip steak corned beef meatball pancetta pork chop. Leberkas tail shoulder pork frankfurter chuck prosciutto pig salami. Tail drumstick pancetta short loin filet mignon shoulder pork.
-
-        Shoulder sausage sirloin ribeye fatback short loin ground round pig prosciutto ball tip. Chicken pork chop short loin meatball pastrami capicola ham t-bone beef ribs. Ham t-bone sausage, flank sirloin bresaola pork chop brisket filet mignon jerky swine fatback chicken. Bresaola spare ribs doner flank, cow pastrami pancetta kielbasa jowl leberkas ribeye swine.
-
-        Doner spare ribs tongue, drumstick chicken beef ribs ball tip beef capicola leberkas sirloin ribeye pig. Biltong brisket andouille jowl tongue frankfurter leberkas capicola jerky short loin. Shankle hamburger capicola chicken ribeye pork loin. Boudin spare ribs pork loin pig tri-tip pork chop rump flank, bresaola corned beef tongue beef ribs sausage beef. Jowl bresaola ham hock pig strip steak andouille short loin jerky tenderloin pork belly spare ribs corned beef chuck. Ball tip hamburger bresaola chicken, turducken cow pork loin spare ribs fatback brisket meatloaf. Tri-tip fatback bacon, salami spare ribs drumstick tail.
-
-        Salami short loin ball tip, corned beef chicken pig pork loin capicola flank sausage shankle pork belly swine spare ribs ham hock. Ham hock andouille shank ham chicken pork chop filet mignon tri-tip jowl hamburger spare ribs venison. Short loin brisket pork loin beef sausage. Beef ribs ham chuck chicken t-bone fatback sausage tongue pig tenderloin.
-
-        Brisket meatball cow turkey t-bone flank. Andouille jowl cow pork biltong swine. Shoulder frankfurter bresaola, biltong boudin ground round chicken. Pork belly ham hock boudin pork, ham andouille cow pork loin turducken bresaola hamburger spare ribs. Rump ribeye beef ribs short loin, turducken capicola tri-tip shoulder. Meatloaf kielbasa beef capicola sausage turducken cow bresaola brisket.
-
-        Prosciutto pork belly tri-tip bacon meatball kielbasa tail fatback shoulder short ribs pork chop tongue ham hock. Meatloaf jerky turkey beef ribs. Beef hamburger chuck, jowl sirloin short ribs spare ribs andouille short loin turducken. Biltong ball tip bresaola turkey.
-
-        Venison chuck ball tip, sausage beef ribs pancetta tri-tip pork turkey. Cow t-bone doner tri-tip andouille kielbasa short ribs turkey tongue pork. Rump shankle kielbasa hamburger. Salami short loin turkey ground round turducken brisket ham hock pork chop andouille bacon jowl. Ham tongue pancetta short ribs, kielbasa brisket ribeye tenderloin prosciutto ball tip. Fatback chicken tail cow strip steak. Brisket bacon chicken cow, short ribs pork fatback pastrami pig meatball filet mignon.
-
-        Beef ribs pig chuck ham hock, tongue ham doner sirloin pancetta andouille venison swine tail jowl. Turkey venison strip steak ribeye frankfurter pancetta. Hamburger jowl drumstick shankle tail. Flank leberkas hamburger cow. Cow shank short ribs frankfurter tenderloin shoulder, hamburger tri-tip turducken bacon. Bacon capicola turkey, rump corned beef turducken doner boudin brisket cow filet mignon kielbasa. Shankle ham biltong pastrami tongue.
-
-        Short ribs venison andouille brisket. Shank biltong salami pancetta jerky hamburger. Leberkas sausage flank fatback biltong short ribs. Sirloin jerky chicken, beef t-bone pancetta shankle short loin ribeye turducken shank. Bacon meatball pancetta ribeye leberkas turducken rump short loin beef ribs prosciutto boudin tenderloin. Jerky ball tip tongue doner boudin andouille, pig pork loin.
-
-        Bacon capicola meatball tenderloin ball tip andouille shank ribeye fatback meatloaf. Shankle frankfurter hamburger andouille, chicken chuck jerky capicola tenderloin meatloaf prosciutto. Beef sirloin flank doner swine meatloaf. Short loin flank short ribs biltong brisket pancetta ground round pork chop tenderloin fatback ribeye ham chicken tri-tip cow. Meatloaf pork chop short loin flank salami turkey, ribeye strip steak shank cow t-bone pancetta swine pig.
-
-        Spare ribs short ribs tongue brisket beef ribs. Bresaola rump boudin, venison doner frankfurter tongue flank meatloaf ham hock swine andouille sausage fatback pancetta. Pancetta pork shankle, turkey shoulder capicola pork loin tenderloin spare ribs meatloaf brisket hamburger frankfurter pork belly strip steak. Bacon salami corned beef rump. Prosciutto shank meatloaf salami pork turkey tongue shankle leberkas. Prosciutto short loin beef short ribs spare ribs pork chop, turducken tail jowl rump.
-
-        Tenderloin jowl pork loin, beef ribs ham ribeye hamburger chuck ground round flank filet mignon pork leberkas. Turducken beef ribs tail, fatback meatball chicken flank salami ham leberkas. Salami ground round shank tri-tip, beef ribs tail rump corned beef pork chop boudin bresaola capicola jowl cow. Doner brisket pork belly, strip steak rump venison pig turkey kielbasa shoulder ham ribeye. Venison sirloin fatback, jowl shankle corned beef pastrami chicken pancetta biltong pig shoulder rump.
-
-        Jowl boudin drumstick rump, strip steak meatloaf tenderloin capicola filet mignon cow. Shoulder tri-tip leberkas kielbasa doner bresaola. Capicola pork chop tri-tip hamburger, pork rump kielbasa turducken prosciutto pancetta cow brisket t-bone. Pastrami swine turkey, strip steak pancetta tenderloin ham hock cow. Biltong chuck boudin strip steak, short loin andouille flank venison tail bresaola beef ribs pastrami brisket hamburger.
-
-        Cow andouille pancetta meatball shankle flank pastrami ribeye corned beef ground round beef tongue fatback. Salami ham hock doner beef swine meatloaf bacon kielbasa meatball leberkas chuck short loin andouille fatback chicken. Shankle pork corned beef tail, frankfurter spare ribs turkey jowl. Andouille pork loin pork chop turducken.
-
-        Kielbasa pig pork chop ribeye. Jowl andouille boudin venison pork chop swine beef ribs capicola beef pork belly sausage tri-tip. Salami cow bresaola tenderloin. Biltong ribeye tongue, beef t-bone spare ribs andouille rump tri-tip ball tip hamburger beef ribs ham. Meatball ham chicken, sirloin venison jerky pork belly prosciutto tail tongue rump ribeye.
-
-        Kielbasa pork chop ground round pastrami, ball tip jerky meatball tongue bacon doner tri-tip chicken. Ham jerky short ribs, sirloin biltong leberkas tongue beef meatball jowl cow pork loin boudin. Turkey ball tip flank leberkas frankfurter. Sausage sirloin tail shoulder chicken, beef flank pig. Strip steak shank capicola pork belly, chuck tongue leberkas tri-tip drumstick biltong beef pastrami ribeye rump doner.
-
-        Tail pig jerky boudin beef ribs leberkas. Pig biltong capicola meatball boudin. Filet mignon sirloin chicken meatloaf salami drumstick shank. Tail pork loin doner venison andouille t-bone meatball, turducken pancetta brisket short ribs salami tri-tip. Doner salami shankle bacon frankfurter.
-
-        Pork belly shoulder tail short ribs bacon jowl. Turkey turducken tongue, chicken flank biltong pork loin ground round sirloin boudin shank shoulder jerky filet mignon. Bresaola chuck meatball, capicola boudin doner ball tip cow biltong andouille kielbasa sausage corned beef. Chicken doner biltong filet mignon, short ribs flank pork belly.
-
-        Tongue drumstick doner pork belly, beef ribs shankle sausage prosciutto rump t-bone beef turducken. Sausage hamburger tongue filet mignon, pastrami ground round ribeye leberkas. Short loin brisket shoulder ham hock ham jowl turkey turducken hamburger pancetta chicken sausage andouille chuck sirloin. Fatback beef ribs filet mignon rump.
-
-        Does your lorem ipsum text long for something a little meatier? Give our generator a try… it’s tasty!</p></div>
-<div id="cardDetails" class="small-12 large-4 columns">
-    <h2>Card Details</h2>
-    <p>Title, Description, Acceptance Criteria, Assignee</p>
-    <form class="form-horizontal">
-        <div class="control-group">
-            <label class="control-label" for="inputTitle">Title</label>
-            <div class="controls">
-                <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
-            </div>
+    <div id="masterWrapper" class="row" ng-controller="MainCtrl">
+        <div id="column01" class="small-12 large-2 columns" ng-repeat="status in statuses">
+            <h3>{{status.name}}</h3>
+            <article class="large-12 columns cardWrapper" ng-repeat="story in stories | filter:status.name" ng-click="setCurrentStory(story)">
+                <h4>{{story.title}}</h4>
+                <p>{{story.description}}</p>
+            </article>     
         </div>
-        <div class="control-group">
-            <label class="control-label" for="inputStatus">Status</label>
-            <div class="controls">
-                <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
-            </div>
+        <div id="cardDetails" class="small-12 large-4 columns">
+            <h2>Card Details</h2>
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="inputTitle">Title</label>
+                    <div class="controls">
+                        <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputStatus">Status</label>
+                    <div class="controls">
+                        <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputType">Type</label>
+                    <div class="controls">
+                        <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputDescription">Description</label>
+                    <div class="controls">
+                        <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
+                    <div class="controls">
+                        <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputReporter">Reporter</label>
+                    <div class="controls">
+                        <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="inputAssignee">Assignee</label>
+                    <div class="controls">
+                        <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee"
+                    </div>
+                </div>
+            </form>
+            <br>
+            <button ng-click="createStory()">New Story</button>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="inputType">Type</label>
-            <div class="controls">
-                <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputDescription">Description</label>
-            <div class="controls">
-                <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
-            <div class="controls">
-                <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputReporter">Reporter</label>
-            <div class="controls">
-                <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputAssignee">Assignee</label>
-            <div class="controls">
-                <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee"
-            </div>
-        </div>
-    </form>
-</div>
-</div>
-  <script>
-  document.write('<script src=' +
-  ('__proto__' in {} ? 'javascripts/vendor/zepto' : 'javascripts/vendor/jquery') +
-  '.js><\/script>')
-  </script>
-  
-  <script src="javascripts/foundation/foundation.js"></script>
-	
-	<script src="javascripts/foundation/foundation.alerts.js"></script>
-	
-	<script src="javascripts/foundation/foundation.clearing.js"></script>
-	
-	<script src="javascripts/foundation/foundation.cookie.js"></script>
-	
-	<script src="javascripts/foundation/foundation.dropdown.js"></script>
-	
-	<script src="javascripts/foundation/foundation.forms.js"></script>
-	
-	<script src="javascripts/foundation/foundation.joyride.js"></script>
-	
-	<script src="javascripts/foundation/foundation.magellan.js"></script>
-	
-	<script src="javascripts/foundation/foundation.orbit.js"></script>
-	
-	<script src="javascripts/foundation/foundation.placeholder.js"></script>
-	
-	<script src="javascripts/foundation/foundation.reveal.js"></script>
-	
-	<script src="javascripts/foundation/foundation.div.js"></script>
-	
-	<script src="javascripts/foundation/foundation.tooltips.js"></script>
-	
-	<script src="javascripts/foundation/foundation.topbar.js"></script>
-	
-  
-  <script>
-    $(document).foundation();
-  </script>
+    </div>
 </body>
 </html>
