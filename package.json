@@ -1,0 +1,25 @@
+{
+  "name": "angello",
+  "version": "0.0.0",
+  "description": "Task management app written with AngularJS",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/karma start --single-run --browsers PhantomJS karma.unit.conf"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/angularjs-in-action/angello.git"
+  },
+  "devDependencies": {
+    "karma": "~0.8"
+  },
+  "contributors": [
+    "Brian Ford <btford@umich.edu> (http://briantford.com/)",
+    "Lukas Ruebbelke <simpul@gmail.com> (http://onehungrymind.com/)"
+  ],
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
