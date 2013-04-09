@@ -1,18 +1,14 @@
 <!DOCTYPE HTML>
 <html ng-app="Angello">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
     <title>Angello</title>
 
-    <link rel="stylesheet" href="stylesheets/normalize.css" />
-    <link rel="stylesheet" href="stylesheets/app.css" />
+    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="stylesheets/app.css">
 
     <script src="javascripts/vendor/custom.modernizr.js"></script>
-    <script src="javascripts/vendor/jquery.js"></script>
-    <script src="javascripts/vendor/angular.js"></script>
-    
-    <script type="text/javascript" src="javascripts/app.js"></script>
 </head>
 <body>
     <div id="masterWrapper" class="row" ng-controller="MainCtrl">
@@ -65,7 +61,7 @@
                 <div class="control-group">
                     <label class="control-label" for="inputAssignee">Assignee</label>
                     <div class="controls">
-                        <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee"
+                        <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee">
                     </div>
                 </div>
             </form>
@@ -73,5 +69,8 @@
             <button ng-click="createStory()">New Story</button>
         </div>
     </div>
+    <script src="javascripts/vendor/jquery.js"></script>
+    <script src="javascripts/vendor/angular.js"></script>
+    <script src="javascripts/app.js"></script>
 </body>
 </html>
