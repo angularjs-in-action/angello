@@ -14,7 +14,7 @@
     <div id="masterWrapper" ng-controller="MainCtrl">
         <div id="column01" class="small-12 large-2 columns" ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
-            <article class="large-12 columns cardWrapper" ng-repeat="story in stories | filter:status.name" ng-click="setCurrentStory(story)">
+            <article class="large-12 columns cardWrapper" ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
                 <h4>{{story.title}}</h4>
                 <p>{{story.description}}</p>
             </article>     
