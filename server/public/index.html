@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="utf-8">
+  <title>My AngularJS App</title>
+  <link rel="stylesheet" href="css/app.css"/>
+</head>
+<body>
+
+  <h1>Welcome to our App</h1>
+  <div ng-controller="MainCtrl">
+    <p>{{status}}</p>
+    
+    <form ng-submit="login()">
+      <input ng-model="user.name">
+      <input type="password" ng-model="user.password">
+      <input type="submit" val="Login">
+    </form>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.min.js"></script>
+  <script>
+    angular.module('myApp', []).
+    controller('MainCtrl', function ($scope, $http) {
+
+      $http.get('/login').success(function (res) {
+        $scope.status = 'You are ' + (res.loggedIn?'':'not ') + 'logged in';
+      });
+
+      $scope.user = {
+        name: 'btford',
+        password: 'unicorns4eva'
+      };
+
+      $scope.login = function () {
+        $http.post('/login', $scope.user).success(function (res) {
+          console.log(res);
+          $scope.status = 'You are ' + (res.loggedIn?'':'not ') + 'logged in';
+        });
+      };
+    });
+  </script>
+</body>
+</html>
+  
