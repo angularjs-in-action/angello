@@ -5,72 +5,97 @@
     <meta name="viewport" content="width=device-width">
     <title>Angello</title>
 
-    <link rel="stylesheet" href="stylesheets/normalize.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <!-- Bootstrap -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
 
-    <script src="javascripts/vendor/custom.modernizr.js"></script>
+    <link rel="stylesheet" href="css/angello.css"/>
+
+    <script src="lib/custom.modernizr.js"></script>
 </head>
-<body>
-    <div id="masterWrapper" ng-controller="MainCtrl">
-        <div id="column01" class="small-12 large-2 columns" ng-repeat="status in statuses">
+<body ng-controller="MainCtrl">
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <a class="brand logo" href="index.html"> <img src="img/angello.png"></a>
+    </div>
+</div>
+
+<!-- Begin page content -->
+<div class="list-area">
+    <div class="list-wrapper">
+        <div class="list" ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
-            <userstory class="large-12 columns cardWrapper" ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
+            <hr>
+            <userstory ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
                 <h4>{{story.title}}</h4>
+
                 <p>{{story.description}}</p>
             </userstory>
         </div>
-
-        <div id="cardDetails" class="columns">
-            <h2>Card Details</h2>
-            <form class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label" for="inputTitle">Title</label>
-                    <div class="controls">
-                        <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputStatus">Status</label>
-                    <div class="controls">
-                        <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputType">Type</label>
-                    <div class="controls">
-                        <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputDescription">Description</label>
-                    <div class="controls">
-                        <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
-                    <div class="controls">
-                        <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputReporter">Reporter</label>
-                    <div class="controls">
-                        <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="inputAssignee">Assignee</label>
-                    <div class="controls">
-                        <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee">
-                    </div>
-                </div>
-            </form>
-            <br>
-            <button ng-click="createStory()">New Story</button>
-        </div>
     </div>
-    <script src="javascripts/vendor/jquery.js"></script>
-    <script src="javascripts/vendor/angular.js"></script>
-    <script src="javascripts/app.js"></script>
+</div>
+
+<!-- CARD DETAILS -->
+<div class="details">
+    <h2>Card Details</h2>
+
+    <form>
+        <div class="control-group">
+            <div class="controls">
+                <label class="control-label" for="inputTitle">Title</label>
+                <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputStatus">Status</label>
+
+            <div class="controls">
+                <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputType">Type</label>
+
+            <div class="controls">
+                <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputDescription">Description</label>
+
+            <div class="controls">
+                <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
+
+            <div class="controls">
+                <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputReporter">Reporter</label>
+
+            <div class="controls">
+                <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="inputAssignee">Assignee</label>
+
+            <div class="controls">
+                <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee">
+            </div>
+        </div>
+    </form>
+    <br>
+    <button class="btn" ng-click="createStory()">New Story</button>
+</div>
+
+<script src="lib/jquery.js"></script>
+<script src="lib/angular.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
