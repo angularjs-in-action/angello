@@ -27,10 +27,11 @@
         <div class="list" ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
             <hr>
-            <userstory ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
-                <h4>{{story.title}}</h4>
-
-                <p>{{story.description}}</p>
+            <userstory class="story" ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
+                <article class="{{story.type}}">
+                    <h4>{{story.title}}</h4>
+                    <p>{{story.description}}</p>
+                </article>
             </userstory>
         </div>
     </div>
