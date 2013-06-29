@@ -7,19 +7,16 @@ myModule.config(function ($routeProvider) {
         otherwise({redirectTo: '/'});
 })
 
-myModule.directive('userstory', function () {
-    var linker = function (scope, element, attrs) {
-
-    };
-
+myModule.directive('userstory', function (AngelloModel) {
     var controller = function ($scope) {
-
+        $scope.deleteStory = function (id) {
+            AngelloModel.deleteStory(id);
+        };
     };
 
     return {
         restrict: 'E',
-        controller: controller,
-        link: linker
+        controller: controller
     };
 })
 
@@ -32,14 +29,13 @@ myModule.directive('chart', function () {
             });
             data.push([r[referenceProp], count]);
         });
-
         return data;
     };
 
     var linker = function (scope, element, attrs) {
         scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
 
-        if(element.is(":visible")){
+        if (element.is(":visible")) {
             $.plot(element, [ scope.data ], {
                 series: {
                     bars: {
@@ -56,16 +52,12 @@ myModule.directive('chart', function () {
         }
     };
 
-    var controller = function ($scope) {
-    };
-
     return {
         restrict: 'A',
-        controller: controller,
         link: linker,
         scope: {
-            sourceArray:'=',
-            referenceArray:'='
+            sourceArray: '=',
+            referenceArray: '='
         }
     };
 })
@@ -87,52 +79,67 @@ myModule.factory('AngelloHelper', function () {
 });
 
 myModule.factory('AngelloModel', function ($rootScope) {
+    var statuses = [
+        {name: 'To Do'},
+        {name: 'In Progress'},
+        {name: 'Code Review'},
+        {name: 'QA Review'},
+        {name: 'Verified'},
+    ];
+
+    var types = [
+        {name: 'Feature'},
+        {name: 'Enhancement'},
+        {name: 'Bug'},
+        {name: 'Spike'}
+    ];
+
+    var stories = [
+        {id: 1, title: 'Story 00', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
+        {id: 2, title: 'Story 01', description: 'Description pending.', criteria: 'Criteria pending.', status: 'In Progress', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
+        {id: 3, title: 'Story 02', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Code Review', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
+        {id: 4, title: 'Story 03', description: 'Description pending.', criteria: 'Criteria pending.', status: 'QA Review', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
+        {id: 5, title: 'Story 04', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Verified', type: 'Bug', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
+        {id: 6, title: 'Story 05', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Spike', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'}
+    ];
+
     var getStatuses = function () {
-        var tempArray = [
-            {name: 'Back Log'},
-            {name: 'To Do'},
-            {name: 'In Progress'},
-            {name: 'Code Review'},
-            {name: 'QA Review'},
-            {name: 'Verified'},
-            {name: 'Done'}
-        ];
-        return tempArray;
+        return statuses;
     };
 
     var getTypes = function () {
-        var tempArray = [
-            {name: 'Feature'},
-            {name: 'Enhancement'},
-            {name: 'Bug'},
-            {name: 'Spike'}
-        ];
-        return tempArray;
+        return types;
     };
 
     var getStories = function () {
-        var tempArray = [
-            {title: 'Story 00', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-            {title: 'Story 01', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Back Log', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-            {title: 'Story 02', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Code Review', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-            {title: 'Story 03', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Done', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-            {title: 'Story 04', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Verified', type: 'Bug', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-            {title: 'Story 05', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Spike', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'}
-        ];
+        return stories;
+    };
 
-        return tempArray;
+    var deleteStory = function (id) {
+        stories.remove(function (s) {
+            return s.id == id;
+        });
+
+        $rootScope.$broadcast('storiesChanged')
+    };
+
+    var createStory = function (id) {
+        stories.push({id: new Date().getTime(), title: 'New Story', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Feature', reporter: 'Pending', assignee: 'Pending'});
+
+        $rootScope.$broadcast('storiesChanged')
     };
 
     return {
         getStatuses: getStatuses,
         getTypes: getTypes,
-        getStories: getStories
+        getStories: getStories,
+        createStory: createStory,
+        deleteStory: deleteStory
     };
 });
 
 myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
-    $scope.currentStory;
-
+    $scope.currentStory = null;
     $scope.types = AngelloModel.getTypes();
     $scope.statuses = AngelloModel.getStatuses();
     $scope.stories = AngelloModel.getStories();
@@ -141,13 +148,12 @@ myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
 
     $scope.setCurrentStory = function (story) {
         $scope.currentStory = story;
-
         $scope.currentStatus = $scope.statusesIndex[story.status];
         $scope.currentType = $scope.typesIndex[story.type];
     };
 
     $scope.createStory = function () {
-        $scope.stories.push({title: 'New Story', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Back Log', type: 'Feature', reporter: 'Pending', assignee: 'Pending'});
+        AngelloModel.createStory();
     };
 
     $scope.setCurrentStatus = function (status) {
@@ -161,6 +167,10 @@ myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
             $scope.currentStory.type = type.name;
         }
     };
+
+    $scope.$on('storiesChanged', function () {
+        $scope.stories = AngelloModel.getStories(); // refresh the stories
+    })
 });
 
 myModule.controller('DashboardCtrl', function ($scope, AngelloModel) {

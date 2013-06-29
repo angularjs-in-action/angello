@@ -4,10 +4,15 @@
         <div class="list" ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
             <hr>
-            <userstory class="story" ng-repeat="story in stories | filter:{status:status.name}" ng-click="setCurrentStory(story)">
+            <userstory ng-repeat="story in stories | filter:{status:status.name}" class="story" ng-click="setCurrentStory(story)">
                 <article class="{{story.type}}">
-                    <h4>{{story.title}}</h4>
-                    <p>{{story.description}}</p>
+                    <div class="modal-header">
+                        <button type="button" class="close" ng-click="deleteStory(story.id);">&times;</button>
+                        <h3>{{story.title}}</h3>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{story.description}}</p>
+                    </div>
                 </article>
             </userstory>
         </div>
