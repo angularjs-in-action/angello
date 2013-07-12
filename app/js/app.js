@@ -5,7 +5,7 @@ myModule.config(function ($routeProvider) {
         when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
         otherwise({redirectTo: '/'});
-})
+});
 
 myModule.directive('userstory', function (AngelloModel) {
     var controller = function ($scope) {
@@ -15,10 +15,36 @@ myModule.directive('userstory', function (AngelloModel) {
     };
 
     return {
-        restrict: 'E',
+        restrict: 'A',
         controller: controller
     };
-})
+});
+
+myModule.directive('sortable', function (AngelloModel) {
+    var linker = function (scope, element, attrs) {
+        var status = scope.status.name;
+
+        element.sortable({
+            items: 'li',
+            connectWith: ".list",
+            receive: function (event, ui) {
+                var prevScope = angular.element(ui.item.prev()).scope();
+                var curScope = angular.element(ui.item).scope();
+
+                scope.$apply(function () {
+                    AngelloModel.insertStoryAfter(curScope.story, prevScope.story);
+                    curScope.story.status = status; // Update the status
+                });
+
+            }
+        });
+    };
+
+    return {
+        restrict: 'A',
+        link: linker
+    };
+});
 
 myModule.directive('chart', function () {
     var parseDataForCharts = function (sourceArray, sourceProp, referenceArray, referenceProp) {
@@ -60,7 +86,7 @@ myModule.directive('chart', function () {
             referenceArray: '='
         }
     };
-})
+});
 
 myModule.factory('AngelloHelper', function () {
     var buildIndex = function (source, property) {
@@ -129,12 +155,21 @@ myModule.factory('AngelloModel', function ($rootScope) {
         $rootScope.$broadcast('storiesChanged')
     };
 
+    var insertStoryAfter = function(story, prevStory) {
+        stories = stories.remove(function(t) {
+          return t['title'] == story.title;
+        });
+
+        stories = stories.add(story, stories.findIndex(prevStory) + 1);
+    };
+
     return {
         getStatuses: getStatuses,
         getTypes: getTypes,
         getStories: getStories,
         createStory: createStory,
-        deleteStory: deleteStory
+        deleteStory: deleteStory,
+        insertStoryAfter: insertStoryAfter
     };
 });
 

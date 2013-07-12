@@ -1,10 +1,10 @@
 <!-- STORIES -->
 <div class="list-area">
     <div class="list-wrapper">
-        <div class="list" ng-repeat="status in statuses">
+        <ul class="list" sortable ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
             <hr>
-            <userstory ng-repeat="story in stories | filter:{status:status.name}" class="story" ng-click="setCurrentStory(story)">
+            <li userstory ng-repeat="story in stories | filter:{status:status.name}" class="story" ng-click="setCurrentStory(story)">
                 <article class="{{story.type}}">
                     <div class="modal-header">
                         <button type="button" class="close" ng-click="deleteStory(story.id);">&times;</button>
@@ -14,8 +14,8 @@
                         <p>{{story.description}}</p>
                     </div>
                 </article>
-            </userstory>
-        </div>
+            </li>
+        </ul>
     </div>
 </div>
 
