@@ -69,7 +69,7 @@ myModule.directive('chart', function () {
     var linker = function (scope, element, attrs) {
         scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
 
-        if (element.is(":visible")) {
+        if (element.is(':visible')) {
             $.plot(element, [ scope.data ], {
                 series: {
                     bars: {
