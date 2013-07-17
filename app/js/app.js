@@ -8,6 +8,14 @@ myModule.config(function ($routeProvider) {
 });
 
 myModule.directive('userstory', function (AngelloModel) {
+    var linker = function (scope, element, attrs) {
+        element.mouseover(function () {
+            element.css({ 'opacity': 0.9 });
+        }).mouseout(function () {
+            element.css({ 'opacity': 1.0 })
+        });
+    };
+
     var controller = function ($scope) {
         $scope.deleteStory = function (id) {
             AngelloModel.deleteStory(id);
@@ -16,7 +24,8 @@ myModule.directive('userstory', function (AngelloModel) {
 
     return {
         restrict: 'A',
-        controller: controller
+        controller: controller,
+        link: linker
     };
 });
 
@@ -35,7 +44,6 @@ myModule.directive('sortable', function (AngelloModel) {
                     AngelloModel.insertStoryAfter(curScope.story, prevScope.story);
                     curScope.story.status = status; // Update the status
                 });
-
             }
         });
     };
@@ -145,8 +153,6 @@ myModule.factory('AngelloModel', function ($rootScope) {
         stories.remove(function (s) {
             return s.id == id;
         });
-
-        $rootScope.$broadcast('storiesChanged')
     };
 
     var createStory = function (id) {
@@ -157,7 +163,7 @@ myModule.factory('AngelloModel', function ($rootScope) {
 
     var insertStoryAfter = function(story, prevStory) {
         stories = stories.remove(function(t) {
-          return t['title'] == story.title;
+            return t['id'] == story.id;
         });
 
         stories = stories.add(story, stories.findIndex(prevStory) + 1);
@@ -202,10 +208,6 @@ myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
             $scope.currentStory.type = type.name;
         }
     };
-
-    $scope.$on('storiesChanged', function () {
-        $scope.stories = AngelloModel.getStories(); // refresh the stories
-    })
 });
 
 myModule.controller('DashboardCtrl', function ($scope, AngelloModel) {
