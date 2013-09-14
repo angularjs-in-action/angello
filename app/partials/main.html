@@ -1,10 +1,10 @@
 <!-- STORIES -->
 <div class="list-area">
     <div class="list-wrapper">
-        <ul class="list" sortable ng-repeat="status in statuses">
+        <ul class="list my-repeat-animation" sortable ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
             <hr>
-            <li userstory ng-repeat="story in stories | filter:{status:status.name}" class="story" ng-click="setCurrentStory(story)">
+            <li userstory ng-repeat="story in stories | filter:{status:status.name}" class="story my-repeat-animation" ng-click="setCurrentStory(story)">
                 <article class="{{story.type}}">
                     <div class="modal-header">
                         <button type="button" class="close" ng-click="deleteStory(story.id);">&times;</button>
@@ -20,59 +20,69 @@
 </div>
 
 <!-- STORY DETAILS -->
-<div class="details">
-    <h2>Card Details</h2>
-
-    <form>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label" for="inputTitle">Title</label>
-                <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
-            </div>
+<div class="details details-animation" ng-class="{'details-visible':detailsVisible}">
+    <div class="details-nav">
+        <div ng-if="!detailsVisible">
+            <button class="btn pull-left" style="margin-top: 12px" ng-click="setDetailsVisible(true)"><i class="icon-chevron-left"></i></button>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="inputStatus">Status</label>
-
-            <div class="controls">
-                <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
-            </div>
+        <div ng-if="detailsVisible">
+            <button class="btn pull-right" style="margin-top: 12px" ng-click="setDetailsVisible(false)"><i class="icon-chevron-right"></i></button>
         </div>
-        <div class="control-group">
-            <label class="control-label" for="inputType">Type</label>
+    </div>
 
-            <div class="controls">
-                <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
+    <div ng-if="detailsVisible" class="my-fade-animation">
+        <h3>Card Details</h3>
+        <form>
+            <div class="control-group">
+                <div class="controls">
+                    <label class="control-label" for="inputTitle">Title</label>
+                    <input type="text" id="inputTitle" placeholder="Title" ng-model="currentStory.title">
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputDescription">Description</label>
+            <div class="control-group">
+                <label class="control-label" for="inputStatus">Status</label>
 
-            <div class="controls">
-                <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
+                <div class="controls">
+                    <select id="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)"></select>
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
+            <div class="control-group">
+                <label class="control-label" for="inputType">Type</label>
 
-            <div class="controls">
-                <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
+                <div class="controls">
+                    <select id="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)"></select>
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputReporter">Reporter</label>
+            <div class="control-group">
+                <label class="control-label" for="inputDescription">Description</label>
 
-            <div class="controls">
-                <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
+                <div class="controls">
+                    <textarea id="inputDescription" placeholder="Description" rows="3" ng-model="currentStory.description"></textarea>
+                </div>
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="inputAssignee">Assignee</label>
+            <div class="control-group">
+                <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
 
-            <div class="controls">
-                <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee">
+                <div class="controls">
+                    <textarea id="inputAcceptance" placeholder="Acceptance Criteria" rows="3" ng-model="currentStory.criteria"></textarea>
+                </div>
             </div>
-        </div>
-    </form>
-    <br>
-    <button class="btn" ng-click="createStory()">New Story</button>
+            <div class="control-group">
+                <label class="control-label" for="inputReporter">Reporter</label>
+
+                <div class="controls">
+                    <input type="text" id="inputReporter" placeholder="Reporter" ng-model="currentStory.reporter">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="inputAssignee">Assignee</label>
+
+                <div class="controls">
+                    <input type="text" id="inputAssignee" placeholder="Assignee" ng-model="currentStory.assignee">
+                </div>
+            </div>
+        </form>
+        <br>
+        <button class="btn" ng-click="createStory()">New Story</button>
+    </div>
 </div>

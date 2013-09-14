@@ -1,4 +1,4 @@
-var myModule = angular.module('Angello', []);
+var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate']);
 
 myModule.config(function ($routeProvider) {
     $routeProvider.
@@ -12,8 +12,8 @@ myModule.directive('userstory', function (AngelloModel) {
         element.mouseover(function () {
             element.css({ 'opacity': 0.9 });
         }).mouseout(function () {
-            element.css({ 'opacity': 1.0 })
-        });
+                element.css({ 'opacity': 1.0 })
+            });
     };
 
     var controller = function ($scope) {
@@ -118,7 +118,7 @@ myModule.factory('AngelloModel', function ($rootScope) {
         {name: 'In Progress'},
         {name: 'Code Review'},
         {name: 'QA Review'},
-        {name: 'Verified'},
+        {name: 'Verified'}
     ];
 
     var types = [
@@ -161,8 +161,8 @@ myModule.factory('AngelloModel', function ($rootScope) {
         $rootScope.$broadcast('storiesChanged')
     };
 
-    var insertStoryAfter = function(story, prevStory) {
-        stories = stories.remove(function(t) {
+    var insertStoryAfter = function (story, prevStory) {
+        stories = stories.remove(function (t) {
             return t['id'] == story.id;
         });
 
@@ -208,10 +208,36 @@ myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
             $scope.currentStory.type = type.name;
         }
     };
+
+    $scope.detailsVisible = true;
+    $scope.setDetailsVisible = function (visible) {
+        $scope.detailsVisible = visible;
+    };
 });
 
 myModule.controller('DashboardCtrl', function ($scope, AngelloModel) {
     $scope.types = AngelloModel.getTypes();
     $scope.statuses = AngelloModel.getStatuses();
     $scope.stories = AngelloModel.getStories();
+});
+
+myModule.animation('.details-animation', function ($window) {
+    return {
+        addClass: function (element, className, done) {
+            if (className == 'details-visible') {
+                TweenMax.to(element, 0.5, {right: 0, onComplete: done });
+            }
+            else {
+                done();
+            }
+        },
+        removeClass: function (element, className, done) {
+            if (className == 'details-visible') {
+                TweenMax.to(element, 0.5, {right: -element.width() + 50, onComplete: done });
+            }
+            else {
+                done();
+            }
+        }
+    };
 });
