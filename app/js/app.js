@@ -9,9 +9,11 @@ myModule.config(function ($routeProvider) {
 
 myModule.directive('userstory', function (AngelloModel) {
     var linker = function (scope, element, attrs) {
-        element.mouseover(function () {
-            element.css({ 'opacity': 0.9 });
-        }).mouseout(function () {
+        element
+            .mouseover(function () {
+                element.css({ 'opacity': 0.9 });
+            })
+            .mouseout(function () {
                 element.css({ 'opacity': 1.0 })
             });
     };
@@ -155,8 +157,9 @@ myModule.factory('AngelloModel', function ($rootScope) {
         });
     };
 
-    var createStory = function (id) {
-        stories.push({id: new Date().getTime(), title: 'New Story', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Feature', reporter: 'Pending', assignee: 'Pending'});
+    var createStory = function (newStory) {
+        newStory.id = new Date().getTime();
+        stories.push(newStory);
 
         $rootScope.$broadcast('storiesChanged')
     };
@@ -181,6 +184,10 @@ myModule.factory('AngelloModel', function ($rootScope) {
 
 myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
     $scope.currentStory = null;
+    $scope.currentStatus = null;
+    $scope.currentType = null;
+    $scope.editedStory = {};
+
     $scope.types = AngelloModel.getTypes();
     $scope.statuses = AngelloModel.getStatuses();
     $scope.stories = AngelloModel.getStories();
@@ -189,24 +196,46 @@ myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
 
     $scope.setCurrentStory = function (story) {
         $scope.currentStory = story;
+        $scope.editedStory = angular.copy($scope.currentStory);
+
         $scope.currentStatus = $scope.statusesIndex[story.status];
         $scope.currentType = $scope.typesIndex[story.type];
     };
 
     $scope.createStory = function () {
-        AngelloModel.createStory();
+        AngelloModel.createStory($scope.editedStory);
+        $scope.resetForm();
+    };
+
+    $scope.updateStory = function () {
+        var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
+
+        fields.forEach(function (field) {
+            $scope.currentStory[field] = $scope.editedStory[field]
+        });
+
+        $scope.resetForm();
+    };
+
+    $scope.updateCancel = function () {
+        $scope.resetForm();
+    };
+
+    $scope.resetForm = function () {
+        $scope.currentStory = null;
+        $scope.currentStatus = null;
+        $scope.currentType = null;
+        $scope.editedStory = {};
+
+        $scope.detailsForm.$setPristine();
     };
 
     $scope.setCurrentStatus = function (status) {
-        if (typeof $scope.currentStory !== 'undefined') {
-            $scope.currentStory.status = status.name;
-        }
+        $scope.editedStory.status = status.name;
     };
 
     $scope.setCurrentType = function (type) {
-        if (typeof $scope.currentStory !== 'undefined') {
-            $scope.currentStory.type = type.name;
-        }
+        $scope.editedStory.type = type.name;
     };
 
     $scope.detailsVisible = true;

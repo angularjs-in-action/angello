@@ -1,3 +1,5 @@
+/* CSS Animations
+------------------------------------------------------------------------------------------------ */
 .my-fade-animation.ng-enter, .my-fade-animation.ng-leave {
     -webkit-transition: 0.5s linear all;
     -moz-transition: 0.5s linear all;
@@ -21,6 +23,8 @@
     opacity: 0;
 }
 
+/* CSS Animations
+------------------------------------------------------------------------------------------------ */
 .my-repeat-animation.ng-enter {
   -webkit-animation: 0.5s repeat-animation-enter;
   -moz-animation: 0.5s repeat-animation-enter;

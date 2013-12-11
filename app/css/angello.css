@@ -9,8 +9,8 @@ body {
     margin-left: 10px;
 }
 
-.details-nav {
-    height: 32px;
+.navbar-inner .pull-right {
+    margin: 15px;
 }
 
 .list {
@@ -34,6 +34,14 @@ body {
     padding: 3px;
     margin: 3px;
     cursor: pointer;
+}
+
+input.ng-invalid {
+    border: 1px solid #B02B2C;
+}
+
+input.ng-valid {
+    border: 1px solid #6BBA70;
 }
 
 .Feature {
@@ -77,6 +85,19 @@ body {
     top: 41px;
     bottom: 0px;
     width: 250px;
+    overflow-y: scroll;
+}
+
+.details .alert {
+    margin-right: 30px;
+}
+
+.details-nav {
+    height: 32px;
+}
+
+.details-nav .btn {
+    margin-top: 12px;
 }
 
 .chart {
