@@ -84,9 +84,8 @@
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputReporter">*Reporter</label>
-
                 <div class="controls">
-                    <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z]+$/" >
+                    <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" >
                     <div class="alert alert-error" ng-show="detailsForm.inputReporter.$dirty && detailsForm.inputReporter.$invalid">
                         <small ng-if="detailsForm.inputReporter.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputReporter.$error.minlength">Too short!</small>
@@ -98,7 +97,7 @@
                 <label class="control-label" for="inputAssignee">*Assignee</label>
 
                 <div class="controls">
-                    <input type="text" id="inputAssignee" name="inputAssignee" placeholder="Assignee" ng-model="editedStory.assignee" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z]+$/">
+                    <input type="text" id="inputAssignee" name="inputAssignee" placeholder="Assignee" ng-model="editedStory.assignee" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/">
                     <div class="alert alert-error" ng-show="detailsForm.inputAssignee.$dirty && detailsForm.inputAssignee.$invalid">
                         <small ng-if="detailsForm.inputAssignee.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputAssignee.$error.minlength">Too short!</small>
