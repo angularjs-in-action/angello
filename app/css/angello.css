@@ -14,7 +14,7 @@ body {
 }
 
 .list {
-    background: #e3e3e3;
+    background: #E3E3E3;
     border-radius: 3px;
     list-style-type: none;
     -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.1);
@@ -106,13 +106,13 @@ input.ng-valid {
     height: 450px;
     padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;
-    border: 1px solid #ddd;
-    background: #fff;
-    background: linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+    border: 1px solid #DDD;
+    background: #FFF;
+    background: linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -o-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -ms-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -moz-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -webkit-linear-gradient(#F6F6F6 0, #FFF 50px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     -o-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -133,13 +133,13 @@ input.ng-valid {
     height: 450px;
     padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;
-    border: 1px solid #ddd;
-    background: #fff;
-    background: linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -o-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -ms-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -moz-linear-gradient(#f6f6f6 0, #fff 50px);
-    background: -webkit-linear-gradient(#f6f6f6 0, #fff 50px);
+    border: 1px solid #DDD;
+    background: #FFF;
+    background: linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -o-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -ms-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -moz-linear-gradient(#F6F6F6 0, #FFF 50px);
+    background: -webkit-linear-gradient(#F6F6F6 0, #FFF 50px);
     box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
     -o-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
     -ms-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);

@@ -32,11 +32,13 @@
 
     <div ng-if="detailsVisible" class="my-fade-animation">
         <h3>Card Details</h3>
+
         <form name="detailsForm" novalidate>
             <div class="control-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
                     <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="10">
+
                     <div class="alert alert-error" ng-show="detailsForm.inputTitle.$dirty && detailsForm.inputTitle.$invalid">
                         <small ng-if="detailsForm.inputTitle.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputTitle.$error.minlength">Too short!</small>
@@ -51,6 +53,7 @@
                     <select id="inputStatus" name="inputStatus" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)" ng-required="true">
                         <option value="">Select Status</option>
                     </select>
+
                     <div class="alert alert-error" ng-show="detailsForm.inputStatus.$dirty && detailsForm.inputStatus.$invalid">
                         <small ng-if="detailsForm.inputStatus.$error.required">Required!</small>
                     </div>
@@ -63,6 +66,7 @@
                     <select id="inputType" name="inputType" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)" ng-required="true">
                         <option value="">Select Type</option>
                     </select>
+
                     <div class="alert alert-error" ng-show="detailsForm.inputType.$dirty && detailsForm.inputType.$invalid">
                         <small ng-if="detailsForm.inputType.$error.required">Required!</small>
                     </div>
@@ -84,8 +88,10 @@
             </div>
             <div class="control-group">
                 <label class="control-label" for="inputReporter">*Reporter</label>
+
                 <div class="controls">
-                    <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" >
+                    <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/">
+
                     <div class="alert alert-error" ng-show="detailsForm.inputReporter.$dirty && detailsForm.inputReporter.$invalid">
                         <small ng-if="detailsForm.inputReporter.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputReporter.$error.minlength">Too short!</small>
@@ -98,6 +104,7 @@
 
                 <div class="controls">
                     <input type="text" id="inputAssignee" name="inputAssignee" placeholder="Assignee" ng-model="editedStory.assignee" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/">
+
                     <div class="alert alert-error" ng-show="detailsForm.inputAssignee.$dirty && detailsForm.inputAssignee.$invalid">
                         <small ng-if="detailsForm.inputAssignee.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputAssignee.$error.minlength">Too short!</small>
