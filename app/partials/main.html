@@ -40,7 +40,7 @@
                     <label class="control-label" for="inputTitle">*Title</label>
                     <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputTitle.$dirty &amp;&amp; detailsForm.inputTitle.$invalid">
+                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputTitle.$dirty && detailsForm.inputTitle.$invalid">
                         <small ng-if="detailsForm.inputTitle.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputTitle.$error.minlength">Too short!</small>
                         <small ng-if="detailsForm.inputTitle.$error.maxlength">Too long!</small>
@@ -55,7 +55,7 @@
                         <option value="">Select Status</option>
                     </select>
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputStatus.$dirty &amp;&amp; detailsForm.inputStatus.$invalid">
+                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputStatus.$dirty && detailsForm.inputStatus.$invalid">
                         <small ng-if="detailsForm.inputStatus.$error.required">Required!</small>
                     </div>
                 </div>
@@ -68,7 +68,7 @@
                         <option value="">Select Type</option>
                     </select>
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputType.$dirty &amp;&amp; detailsForm.inputType.$invalid">
+                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputType.$dirty && detailsForm.inputType.$invalid">
                         <small ng-if="detailsForm.inputType.$error.required">Required!</small>
                     </div>
                 </div>
@@ -93,7 +93,7 @@
                 <div class="controls">
                     <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" class="form-control">
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputReporter.$dirty &amp;&amp; detailsForm.inputReporter.$invalid">
+                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputReporter.$dirty && detailsForm.inputReporter.$invalid">
                         <small ng-if="detailsForm.inputReporter.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputReporter.$error.minlength">Too short!</small>
                         <small ng-if="detailsForm.inputReporter.$error.pattern">Letters only please!</small>
@@ -106,7 +106,7 @@
                 <div class="controls">
                     <input type="text" id="inputAssignee" name="inputAssignee" placeholder="Assignee" ng-model="editedStory.assignee" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" class="form-control">
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputAssignee.$dirty &amp;&amp; detailsForm.inputAssignee.$invalid">
+                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputAssignee.$dirty && detailsForm.inputAssignee.$invalid">
                         <small ng-if="detailsForm.inputAssignee.$error.required">Required!</small>
                         <small ng-if="detailsForm.inputAssignee.$error.minlength">Too short!</small>
                         <small ng-if="detailsForm.inputAssignee.$error.pattern">Letters only please!</small>
