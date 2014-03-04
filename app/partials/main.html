@@ -4,10 +4,11 @@
         <ul class="list my-repeat-animation" sortable ng-repeat="status in statuses">
             <h3>{{status.name}}</h3>
             <hr>
-            <li userstory ng-repeat="story in stories | filter:{status:status.name}" class="story my-repeat-animation" ng-click="setCurrentStory(story)">
+            <!-- TODO Filter by status -->
+            <li userstory ng-repeat="(id, story) in stories" class="story my-repeat-animation" ng-click="setCurrentStory(id, story)">
                 <article class="{{story.type}}">
                     <div class="modal-header">
-                        <button type="button" class="close" ng-click="deleteStory(story.id);">&times;</button>
+                        <button type="button" class="close" ng-click="deleteStory(id);">&times;</button>
                         <h3>{{story.title}}</h3>
                     </div>
                     <div class="modal-body">
@@ -37,7 +38,7 @@
             <div class="control-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
-                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="10">
+                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30">
 
                     <div class="alert alert-error" ng-show="detailsForm.inputTitle.$dirty && detailsForm.inputTitle.$invalid">
                         <small ng-if="detailsForm.inputTitle.$error.required">Required!</small>

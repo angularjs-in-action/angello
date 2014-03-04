@@ -7,7 +7,191 @@ myModule.config(function ($routeProvider) {
         otherwise({redirectTo: '/'});
 });
 
-myModule.directive('userstory', function (AngelloModel) {
+myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
+
+myModule.value('STORY_STATUSES', [
+    {name: 'To Do'},
+    {name: 'In Progress'},
+    {name: 'Code Review'},
+    {name: 'QA Review'},
+    {name: 'Verified'}
+]);
+
+myModule.value('STORY_TYPES', [
+    {name: 'Feature'},
+    {name: 'Enhancement'},
+    {name: 'Bug'},
+    {name: 'Spike'}
+]);
+
+myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
+    var find = function () {
+        var deferred = $q.defer();
+        var url = ENDPOINT_URI + 'stories.json';
+
+        $http.get(url).success(deferred.resolve).error(deferred.reject);
+
+        return deferred.promise;
+    };
+
+    var fetch = function (story_id) {
+        var deferred = $q.defer();
+        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+
+        $http.get(url).success(deferred.resolve).error(deferred.reject)
+
+        return deferred.promise;
+    };
+
+    var create = function (story) {
+        var deferred = $q.defer();
+        var url = ENDPOINT_URI + 'stories.json';
+
+        $http.post(url, story).success(deferred.resolve).error(deferred.reject);
+
+        return deferred.promise;
+    };
+
+    var update = function (story_id, story) {
+        var deferred = $q.defer();
+        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+
+        $http.put(url, story).success(deferred.resolve).error(deferred.reject);
+
+        return deferred.promise;
+    };
+
+    var destroy = function (story_id) {
+        var deferred = $q.defer();
+        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+
+        $http.delete(url).success(deferred.resolve).error(deferred.reject);
+
+        return deferred.promise;
+    };
+
+    return {
+        find: find,
+        fetch: fetch,
+        create: create,
+        update: update,
+        destroy: destroy
+    };
+});
+
+myModule.factory('HelperService', function () {
+    var buildIndex = function (source, property) {
+        var tempArray = [];
+
+        for (var i = 0, len = source.length; i < len; ++i) {
+            tempArray[source[i][property]] = source[i];
+        }
+
+        return tempArray;
+    };
+
+    return {
+        buildIndex: buildIndex
+    };
+});
+
+myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'STORY_STATUSES', 'STORY_TYPES',
+    function ($scope, StoriesService, HelperService, STORY_STATUSES, STORY_TYPES) {
+        $scope.detailsVisible = true;
+        $scope.currentStoryId = null;
+        $scope.currentStory = null;
+        $scope.currentStatus = null;
+        $scope.currentType = null;
+        $scope.editedStory = {};
+        $scope.stories = [];
+
+        $scope.types = STORY_TYPES;
+        $scope.statuses = STORY_STATUSES;
+        $scope.typesIndex = HelperService.buildIndex($scope.types, 'name');
+        $scope.statusesIndex = HelperService.buildIndex($scope.statuses, 'name');
+
+        $scope.setCurrentStory = function (id, story) {
+            $scope.currentStoryId = id;
+            $scope.currentStory = story;
+            $scope.editedStory = angular.copy($scope.currentStory);
+
+            $scope.currentStatus = $scope.statusesIndex[story.status];
+            $scope.currentType = $scope.typesIndex[story.type];
+        };
+
+        $scope.getStories = function () {
+            StoriesService.find().then(function (result) {
+                $scope.stories = (result !== 'null') ? result : {};
+            }, function (reason) {
+                console.log('ERROR', reason);
+            });
+        };
+
+        $scope.createStory = function () {
+            StoriesService.create($scope.editedStory).then(function (result) {
+                $scope.getStories();
+                $scope.resetForm();
+            }, function (reason) {
+                console.log('ERROR', reason);
+            });
+        };
+
+        $scope.updateStory = function () {
+            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
+
+            fields.forEach(function (field) {
+                $scope.currentStory[field] = $scope.editedStory[field]
+            });
+
+            StoriesService.update($scope.currentStoryId, $scope.editedStory).then(function (result) {
+                $scope.getStories();
+                $scope.resetForm();
+            }, function (reason) {
+                console.log('ERROR', reason);
+            });
+        };
+
+        $scope.updateCancel = function () {
+            $scope.resetForm();
+        };
+
+        $scope.resetForm = function () {
+            $scope.currentStory = null;
+            $scope.currentStatus = null;
+            $scope.currentType = null;
+            $scope.editedStory = {};
+
+            $scope.detailsForm.$setPristine();
+        };
+
+        $scope.setCurrentStatus = function (status) {
+            $scope.editedStory.status = status.name;
+        };
+
+        $scope.setCurrentType = function (type) {
+            $scope.editedStory.type = type.name;
+        };
+
+        $scope.setDetailsVisible = function (visible) {
+            $scope.detailsVisible = visible;
+        };
+
+        $scope.$on('storyDeleted', function () {
+            $scope.getStories();
+            $scope.resetForm();
+        });
+
+        $scope.getStories();
+    }]);
+
+myModule.controller('DashboardCtrl', ['$scope', 'StoriesService', 'STORY_STATUSES', 'STORY_TYPES',
+    function ($scope, StoriesService, STORY_STATUSES, STORY_TYPES) {
+        $scope.types = STORY_TYPES;
+        $scope.statuses = STORY_STATUSES;
+        $scope.stories = StoriesService.find();
+    }]);
+
+myModule.directive('userstory', function ($rootScope, StoriesService) {
     var linker = function (scope, element, attrs) {
         element
             .mouseover(function () {
@@ -20,7 +204,11 @@ myModule.directive('userstory', function (AngelloModel) {
 
     var controller = function ($scope) {
         $scope.deleteStory = function (id) {
-            AngelloModel.deleteStory(id);
+            StoriesService.destroy(id).then(function (result) {
+                $rootScope.$broadcast('storyDeleted');
+            }, function (reason) {
+                console.log('ERROR', reason);
+            });;
         };
     };
 
@@ -31,7 +219,7 @@ myModule.directive('userstory', function (AngelloModel) {
     };
 });
 
-myModule.directive('sortable', function (AngelloModel) {
+myModule.directive('sortable', function (StoriesService) {
     var linker = function (scope, element, attrs) {
         var status = scope.status.name;
 
@@ -43,7 +231,8 @@ myModule.directive('sortable', function (AngelloModel) {
                 var curScope = angular.element(ui.item).scope();
 
                 scope.$apply(function () {
-                    AngelloModel.insertStoryAfter(curScope.story, prevScope.story);
+                    // TODO Fix the entire drag and drop to order mechanism
+                    // StoriesService.insertStoryAfter(curScope.story, prevScope.story);
                     curScope.story.status = status; // Update the status
                 });
             }
@@ -98,157 +287,6 @@ myModule.directive('chart', function () {
     };
 });
 
-myModule.factory('AngelloHelper', function () {
-    var buildIndex = function (source, property) {
-        var tempArray = [];
-
-        for (var i = 0, len = source.length; i < len; ++i) {
-            tempArray[source[i][property]] = source[i];
-        }
-
-        return tempArray;
-    };
-
-    return {
-        buildIndex: buildIndex
-    };
-});
-
-myModule.factory('AngelloModel', function ($rootScope) {
-    var statuses = [
-        {name: 'To Do'},
-        {name: 'In Progress'},
-        {name: 'Code Review'},
-        {name: 'QA Review'},
-        {name: 'Verified'}
-    ];
-
-    var types = [
-        {name: 'Feature'},
-        {name: 'Enhancement'},
-        {name: 'Bug'},
-        {name: 'Spike'}
-    ];
-
-    var stories = [
-        {id: 1, title: 'Story 00', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-        {id: 2, title: 'Story 01', description: 'Description pending.', criteria: 'Criteria pending.', status: 'In Progress', type: 'Feature', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-        {id: 3, title: 'Story 02', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Code Review', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-        {id: 4, title: 'Story 03', description: 'Description pending.', criteria: 'Criteria pending.', status: 'QA Review', type: 'Enhancement', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-        {id: 5, title: 'Story 04', description: 'Description pending.', criteria: 'Criteria pending.', status: 'Verified', type: 'Bug', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'},
-        {id: 6, title: 'Story 05', description: 'Description pending.', criteria: 'Criteria pending.', status: 'To Do', type: 'Spike', reporter: 'Lukas Ruebbelke', assignee: 'Brian Ford'}
-    ];
-
-    var getStatuses = function () {
-        return statuses;
-    };
-
-    var getTypes = function () {
-        return types;
-    };
-
-    var getStories = function () {
-        return stories;
-    };
-
-    var deleteStory = function (id) {
-        stories.remove(function (s) {
-            return s.id == id;
-        });
-    };
-
-    var createStory = function (newStory) {
-        newStory.id = new Date().getTime();
-        stories.push(newStory);
-
-        $rootScope.$broadcast('storiesChanged')
-    };
-
-    var insertStoryAfter = function (story, prevStory) {
-        stories = stories.remove(function (t) {
-            return t['id'] == story.id;
-        });
-
-        stories = stories.add(story, stories.findIndex(prevStory) + 1);
-    };
-
-    return {
-        getStatuses: getStatuses,
-        getTypes: getTypes,
-        getStories: getStories,
-        createStory: createStory,
-        deleteStory: deleteStory,
-        insertStoryAfter: insertStoryAfter
-    };
-});
-
-myModule.controller('MainCtrl', function ($scope, AngelloModel, AngelloHelper) {
-    $scope.currentStory = null;
-    $scope.currentStatus = null;
-    $scope.currentType = null;
-    $scope.editedStory = {};
-
-    $scope.types = AngelloModel.getTypes();
-    $scope.statuses = AngelloModel.getStatuses();
-    $scope.stories = AngelloModel.getStories();
-    $scope.typesIndex = AngelloHelper.buildIndex($scope.types, 'name');
-    $scope.statusesIndex = AngelloHelper.buildIndex($scope.statuses, 'name');
-
-    $scope.setCurrentStory = function (story) {
-        $scope.currentStory = story;
-        $scope.editedStory = angular.copy($scope.currentStory);
-
-        $scope.currentStatus = $scope.statusesIndex[story.status];
-        $scope.currentType = $scope.typesIndex[story.type];
-    };
-
-    $scope.createStory = function () {
-        AngelloModel.createStory($scope.editedStory);
-        $scope.resetForm();
-    };
-
-    $scope.updateStory = function () {
-        var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
-
-        fields.forEach(function (field) {
-            $scope.currentStory[field] = $scope.editedStory[field]
-        });
-
-        $scope.resetForm();
-    };
-
-    $scope.updateCancel = function () {
-        $scope.resetForm();
-    };
-
-    $scope.resetForm = function () {
-        $scope.currentStory = null;
-        $scope.currentStatus = null;
-        $scope.currentType = null;
-        $scope.editedStory = {};
-
-        $scope.detailsForm.$setPristine();
-    };
-
-    $scope.setCurrentStatus = function (status) {
-        $scope.editedStory.status = status.name;
-    };
-
-    $scope.setCurrentType = function (type) {
-        $scope.editedStory.type = type.name;
-    };
-
-    $scope.detailsVisible = true;
-    $scope.setDetailsVisible = function (visible) {
-        $scope.detailsVisible = visible;
-    };
-});
-
-myModule.controller('DashboardCtrl', function ($scope, AngelloModel) {
-    $scope.types = AngelloModel.getTypes();
-    $scope.statuses = AngelloModel.getStatuses();
-    $scope.stories = AngelloModel.getStories();
-});
 
 myModule.animation('.details-animation', function ($window) {
     return {
