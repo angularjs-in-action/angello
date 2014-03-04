@@ -5,11 +5,11 @@ body {
     background-color: #36393D;
 }
 
-.navbar-inner .logo {
+.navbar .logo {
     margin-left: 10px;
 }
 
-.navbar-inner .pull-right {
+.navbar .pull-right {
     margin: 15px;
 }
 
@@ -74,6 +74,12 @@ form.ng-dirty input.ng-valid {
 .list-wrapper {
     padding: 10px;
     width: 1200px;
+}
+
+.user-wrapper {
+    padding: 10px;
+    margin-top: 60px;
+    background-color: #FFF;
 }
 
 .details {
@@ -152,4 +158,20 @@ form.ng-dirty input.ng-valid {
     height: 100%;
     font-size: 14px;
     line-height: 1.2em;
+}
+
+.edit input[type=text] {
+    border: 1px solid #ffffff;
+    width: 100%;
+    resize: none;
+    background-color: #ffffff;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+.edit input[type=text]:hover,
+.edit input[type=text]:focus {
+    border: 1px solid #d7cebf;
+    outline: none
 }
