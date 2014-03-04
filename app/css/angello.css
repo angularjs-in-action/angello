@@ -36,11 +36,11 @@ body {
     cursor: pointer;
 }
 
-input.ng-invalid {
+form.ng-dirty input.ng-invalid {
     border: 1px solid #B02B2C;
 }
 
-input.ng-valid {
+form.ng-dirty input.ng-valid {
     border: 1px solid #6BBA70;
 }
 
