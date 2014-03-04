@@ -1,4 +1,4 @@
-<!DOCTYPE HTML>
+<!doctype html>
 <html ng-app="Angello">
     <head>
         <meta charset="utf-8">
@@ -8,17 +8,22 @@
         <link rel="stylesheet" href="css/normalize.css">
 
         <!-- Bootstrap -->
-        <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-        <link rel="stylesheet" href="css/angello.css"/>
-        <link rel="stylesheet" href="css/animations.css"/>
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="css/angello.css">
+        <link rel="stylesheet" href="css/animations.css">
     </head>
     <body>
-
-        <div class="navbar navbar-fixed-top">
-            <div class="navbar-inner">
-                <a class="brand logo" href="#/"> <img src="img/angello.png"></a>
-                <a class="btn btn-danger pull-right" href="#/dashboard"><i class="icon-signal icon-white"></i></a>
+        <div class="navbar navbar-fixed-top navbar-default">
+            <div class="navbar-header"><a class="logo navbar-brand" href="#/"> <img src="img/angello.png"></a></div>
+            <div class="btn-group pull-right">
+                <a class="btn btn-danger" href="#/"><span class="glyphicon glyphicon-home"></span></a>
+                <a class="btn btn-danger" href="#/users"><span class="glyphicon glyphicon-user"></span></a>
+                <a class="btn btn-danger" href="#/dashboard"><span class="glyphicon glyphicon-signal"></span></a>
             </div>
         </div>
 
@@ -29,7 +34,8 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-animate.min.js"></script>
 
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.10.3/TweenMax.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
         <script src="lib/custom.modernizr.js"></script>
         <script src="lib/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="lib/flot/jquery.flot.js"></script>
@@ -37,5 +43,6 @@
         <script src="lib/sugar-1.3.9.min.js"></script>
 
         <script src="js/app.js"></script>
+
     </body>
 </html>

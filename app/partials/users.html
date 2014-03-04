@@ -1,0 +1,34 @@
+<div class="user-wrapper">
+    <table class="table edit">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="(id, user) in users">
+            <td><input type="text" class="form-control" ng-model="user.name" ng-blur="updateUser(id, user)"/></td>
+            <td><input type="text" class="form-control" ng-model="user.email" ng-blur="updateUser(id, user)"/></td>
+            <td>
+                <button type="button" class="btn btn-link" ng-click="removeUser(id)">Remove</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="well">
+        <h4>Add User</h4>
+
+        <form class="form-inline" role="form" novalidate ng-submit="addUser()">
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="newUser.name" placeholder="Name">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="newUser.email" placeholder="Email">
+            </div>
+            <button type="submit" class="btn btn-default">Add</button>
+        </form>
+    </div>
+</div>
