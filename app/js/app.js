@@ -295,7 +295,15 @@ myModule.controller('DashboardCtrl', ['$scope', 'StoriesService', 'STORY_STATUSE
     function ($scope, StoriesService, STORY_STATUSES, STORY_TYPES) {
         $scope.types = STORY_TYPES;
         $scope.statuses = STORY_STATUSES;
-        $scope.stories = StoriesService.find();
+        $scope.stories = [];
+
+        StoriesService.find().then(function(stories) {
+          var arr = [];
+          for (var key in stories) {
+            arr.push(stories[key]);
+          }
+          $scope.stories = arr;
+        });
     }]);
 
 myModule.directive('userstory', function ($rootScope, StoriesService) {
@@ -365,23 +373,25 @@ myModule.directive('chart', function () {
     };
 
     var linker = function (scope, element, attrs) {
-        scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
+        scope.$watch('sourceArray', function() {
+            scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
 
-        if (element.is(':visible')) {
-            $.plot(element, [ scope.data ], {
-                series: {
-                    bars: {
-                        show: true,
-                        barWidth: 0.6,
-                        align: "center"
+            if (element.is(':visible')) {
+                $.plot(element, [ scope.data ], {
+                    series: {
+                        bars: {
+                            show: true,
+                            barWidth: 0.6,
+                            align: "center"
+                        }
+                    },
+                    xaxis: {
+                        mode: "categories",
+                        tickLength: 0
                     }
-                },
-                xaxis: {
-                    mode: "categories",
-                    tickLength: 0
-                }
-            });
-        }
+                });
+            }
+        });
     };
 
     return {
