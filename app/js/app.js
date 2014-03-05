@@ -323,7 +323,7 @@ myModule.directive('userstory', function ($rootScope, StoriesService) {
                 $rootScope.$broadcast('storyDeleted');
             }, function (reason) {
                 console.log('ERROR', reason);
-            });;
+            });
         };
     };
 
