@@ -285,12 +285,14 @@ myModule.controller('DashboardCtrl', ['$scope', 'StoriesService', 'STORY_STATUSE
     function ($scope, StoriesService, STORY_STATUSES, STORY_TYPES) {
         $scope.types = STORY_TYPES;
         $scope.statuses = STORY_STATUSES;
-        $scope.stories = StoriesService.find().then(function(stories) {
+        $scope.stories = [];
+
+        StoriesService.find().then(function(stories) {
           var arr = [];
           for (var key in stories) {
             arr.push(stories[key]);
           }
-          return arr;
+          $scope.stories = arr;
         });
     }]);
 
@@ -348,7 +350,7 @@ myModule.directive('sortable', function (StoriesService) {
     };
 });
 
-myModule.directive('chart', ['$q', function ($q) {
+myModule.directive('chart', function () {
     var parseDataForCharts = function (sourceArray, sourceProp, referenceArray, referenceProp) {
         var data = [];
         referenceArray.each(function (r) {
@@ -361,8 +363,8 @@ myModule.directive('chart', ['$q', function ($q) {
     };
 
     var linker = function (scope, element, attrs) {
-        $q.when(scope.sourceArray).then(function(sourceArray) {
-            scope.data = parseDataForCharts(sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
+        scope.$watch('sourceArray', function() {
+            scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
 
             if (element.is(':visible')) {
                 $.plot(element, [ scope.data ], {
@@ -390,7 +392,7 @@ myModule.directive('chart', ['$q', function ($q) {
             referenceArray: '='
         }
     };
-}]);
+});
 
 
 myModule.animation('.details-animation', function ($window) {
