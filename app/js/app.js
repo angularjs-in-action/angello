@@ -274,11 +274,11 @@ myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'S
         };
 
         $scope.storiesWithStatus = function(status) {
-          var stories = [];
+          var stories = {};
           var keys = Object.keys($scope.stories);
           for (var i = 0; i < keys.length; i++) {
             var key = keys[i];
-            if ($scope.stories[key].status == status.name) stories.push($scope.stories[key]);
+            if ($scope.stories[key].status == status.name) stories[key] = $scope.stories[key];
           }
           return stories;
         };
