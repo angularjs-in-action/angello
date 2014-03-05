@@ -91,12 +91,12 @@
                 <label class="control-label" for="inputReporter">*Reporter</label>
 
                 <div class="controls">
-                    <input type="text" id="inputReporter" name="inputReporter" placeholder="Reporter" ng-model="editedStory.reporter" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" class="form-control">
-
+                    <select ng-model="editedStory.reporter" class="form-control"
+                        name="inputReporter" ng-required="true" ng-options="id as user.name for (id, user) in users">
+                        <option value="">Please select...</option>
+                    </select>
                     <div class="alert alert-error alert-warning" ng-show="detailsForm.inputReporter.$dirty && detailsForm.inputReporter.$invalid">
                         <small ng-if="detailsForm.inputReporter.$error.required">Required!</small>
-                        <small ng-if="detailsForm.inputReporter.$error.minlength">Too short!</small>
-                        <small ng-if="detailsForm.inputReporter.$error.pattern">Letters only please!</small>
                     </div>
                 </div>
             </div>
@@ -104,12 +104,13 @@
                 <label class="control-label" for="inputAssignee">*Assignee</label>
 
                 <div class="controls">
-                    <input type="text" id="inputAssignee" name="inputAssignee" placeholder="Assignee" ng-model="editedStory.assignee" ng-required="true" ng-minlength="3" ng-pattern="/^[A-z ]+$/" class="form-control">
+                    <select ng-model="editedStory.assignee" class="form-control"
+                        name="inputAssignee" ng-required="true" ng-options="id as user.name for (id, user) in users">
+                        <option value="">Please select...</option>
+                    </select>
 
                     <div class="alert alert-error alert-warning" ng-show="detailsForm.inputAssignee.$dirty && detailsForm.inputAssignee.$invalid">
                         <small ng-if="detailsForm.inputAssignee.$error.required">Required!</small>
-                        <small ng-if="detailsForm.inputAssignee.$error.minlength">Too short!</small>
-                        <small ng-if="detailsForm.inputAssignee.$error.pattern">Letters only please!</small>
                     </div>
                 </div>
             </div>
