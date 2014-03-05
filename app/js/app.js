@@ -192,8 +192,8 @@ myModule.factory('HelperService', function () {
     };
 });
 
-myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'STORY_STATUSES', 'STORY_TYPES',
-    function ($scope, StoriesService, HelperService, STORY_STATUSES, STORY_TYPES) {
+myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
+    function ($scope, StoriesService, HelperService, UsersService, STORY_STATUSES, STORY_TYPES) {
         $scope.detailsVisible = true;
         $scope.currentStoryId = null;
         $scope.currentStory = null;
@@ -206,6 +206,15 @@ myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'S
         $scope.statuses = STORY_STATUSES;
         $scope.typesIndex = HelperService.buildIndex($scope.types, 'name');
         $scope.statusesIndex = HelperService.buildIndex($scope.statuses, 'name');
+
+        $scope.users = {};
+
+        UsersService.find().then(function (result) {
+            $scope.users = (result !== 'null') ? result : {};
+        }, function (reason) {
+            console.log('ERROR', reason);
+        });
+
 
         $scope.setCurrentStory = function (id, story) {
             $scope.currentStoryId = id;
