@@ -3,8 +3,21 @@ var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate']);
 myModule.config(function ($routeProvider) {
     $routeProvider.
         when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
-        when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
+        when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
+        when('/users/:userId', {
+            templateUrl: 'partials/user.html',
+            controller: 'UserCtrl',
+            resolve: {
+                user: function($route, UsersService){
+                    var userId = $route.current.params.userId;
+                    return UsersService.fetch(userId);
+                },
+                stories: function(StoriesService) {
+                    return StoriesService.find();
+                }
+            }
+        }).
         otherwise({redirectTo: '/'});
 });
 
@@ -79,6 +92,25 @@ myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
         destroy: destroy
     };
 });
+
+myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
+    function ($scope, $routeParams, user, stories) {
+        $scope.userId = $routeParams['userId'];
+        $scope.user = user;
+
+        $scope.getAssignedStories = function(userId, stories) {
+            var assignedStories = {};
+            var keys = Object.keys(stories);
+            for (var i = 0, len = keys.length; i < len; i++) {
+                var key = keys[i];
+                if (stories[key].assignee == userId) assignedStories[key] = stories[key];
+            }
+            return assignedStories;
+        };
+
+        $scope.stories = $scope.getAssignedStories($scope.userId, stories);
+    }]);
+
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
     $scope.newUser = { name: '', email: '' };
@@ -285,7 +317,7 @@ myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'U
         $scope.storiesWithStatus = function(status) {
           var stories = {};
           var keys = Object.keys($scope.stories);
-          for (var i = 0; i < keys.length; i++) {
+          for (var i = 0, len = keys.length; i < len; i++) {
             var key = keys[i];
             if ($scope.stories[key].status == status.name) stories[key] = $scope.stories[key];
           }
@@ -357,7 +389,7 @@ myModule.directive('sortable', function (StoriesService) {
                 scope.$apply(function () {
                     // TODO Fix the entire drag and drop to order mechanism
                     // StoriesService.insertStoryAfter(curScope.story, prevScope.story);
-                    curScope.story.status = status; // Update the status
+                    // curScope.story.status = status; // Update the status
                 });
             }
         });

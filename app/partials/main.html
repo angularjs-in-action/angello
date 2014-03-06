@@ -5,7 +5,7 @@
             <h3>{{status.name}}</h3>
             <hr>
             <!-- TODO Filter by status -->
-            <li userstory="" ng-repeat="(id, story) in storiesWithStatus(status)" class="story my-repeat-animation" ng-click="setCurrentStory(id, story)">
+            <li userstory ng-repeat="(id, story) in storiesWithStatus(status)" class="story my-repeat-animation" ng-click="setCurrentStory(id, story)">
                 <article class="{{story.type}}">
                     <div class="modal-header">
                         <button type="button" class="close" ng-click="deleteStory(id);">×</button>
@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label" for="inputReporter">*Reporter</label>
+                <label class="control-label">*Reporter</label>
 
                 <div class="controls">
                     <select ng-model="editedStory.reporter" class="form-control"
@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="control-label" for="inputAssignee">*Assignee</label>
+                <label class="control-label">*Assignee</label>
 
                 <div class="controls">
                     <select ng-model="editedStory.assignee" class="form-control"
