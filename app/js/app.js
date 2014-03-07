@@ -38,25 +38,6 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, AuthService) {
-    $scope.currentUser = null;
-
-    $scope.logout = function () {
-        AuthService.logout();
-    };
-
-    $scope.$on('onLogin', function () {
-        $scope.currentUser = AuthService.user();
-    });
-
-    $scope.$on('onLogout', function () {
-        $scope.currentUser = null;
-    });
-
-    // Get the current user
-    AuthService.getCurrentUser();
-}]);
-
 myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT_URI', function ($rootScope, $firebaseSimpleLogin, FIREBASE_URI) {
     var $scope = $rootScope.$new(false);
     $scope.user = {};
@@ -97,6 +78,18 @@ myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT
         return $scope.user;
     };
 
+    var existy = function (x) {
+        return x != null;
+    };
+
+    var userExists = function () {
+        return existy($scope.user) && existy($scope.user.id);
+    };
+
+    var getCurrentUserId = function () {
+        return userExists() ? $scope.user.id : null;
+    };
+
     $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
         $scope.user = user;
         $rootScope.$broadcast('onLogin');
@@ -114,6 +107,7 @@ myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT
 
     return {
         getCurrentUser: getCurrentUser,
+        getCurrentUserId: getCurrentUserId,
         user: user,
         login: login,
         logout: logout,
@@ -122,34 +116,10 @@ myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT
     }
 }]);
 
-myModule.controller('LoginCtrl', function ($scope, AuthService) {
-    $scope.user = {
-        email: '',
-        password: '',
-        register: false
-    };
-
-    $scope.submit = function (email, password, register) {
-        if ($scope.loginForm.$valid) {
-            ((register) ? AuthService.register : AuthService.login)(email, password);
-            $scope.reset();
-        }
-    };
-
-    $scope.reset = function () {
-        $scope.user = {
-            email: '',
-            password: '',
-            register: false
-        };
-    };
-});
-
-
-myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
+myModule.factory('StoriesService', function ($http, $q, AuthService, ENDPOINT_URI) {
     var find = function () {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'stories.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
 
         $http.get(url).success(deferred.resolve).error(deferred.reject);
 
@@ -158,7 +128,7 @@ myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
 
     var fetch = function (story_id) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
         $http.get(url).success(deferred.resolve).error(deferred.reject)
 
@@ -167,7 +137,7 @@ myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
 
     var create = function (story) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'stories.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
 
         $http.post(url, story).success(deferred.resolve).error(deferred.reject);
 
@@ -176,7 +146,7 @@ myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
 
     var update = function (story_id, story) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
         $http.put(url, story).success(deferred.resolve).error(deferred.reject);
 
@@ -185,7 +155,7 @@ myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
 
     var destroy = function (story_id) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/stories/' + story_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
         $http.delete(url).success(deferred.resolve).error(deferred.reject);
 
@@ -219,6 +189,47 @@ myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
         $scope.stories = $scope.getAssignedStories($scope.userId, stories);
     }]);
 
+myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, AuthService) {
+    $scope.currentUser = null;
+
+    $scope.logout = function () {
+        AuthService.logout();
+    };
+
+    $scope.$on('onLogin', function () {
+        $scope.currentUser = AuthService.user();
+    });
+
+    $scope.$on('onLogout', function () {
+        $scope.currentUser = null;
+    });
+
+    // Get the current user
+    AuthService.getCurrentUser();
+}]);
+
+myModule.controller('LoginCtrl', function ($scope, AuthService) {
+    $scope.user = {
+        email: '',
+        password: '',
+        register: false
+    };
+
+    $scope.submit = function (email, password, register) {
+        if ($scope.loginForm.$valid) {
+            ((register) ? AuthService.register : AuthService.login)(email, password);
+            $scope.reset();
+        }
+    };
+
+    $scope.reset = function () {
+        $scope.user = {
+            email: '',
+            password: '',
+            register: false
+        };
+    };
+});
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
     $scope.newUser = { name: '', email: '' };
@@ -260,10 +271,10 @@ myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, Us
     $scope.getUsers();
 }]);
 
-myModule.factory('UsersService', function ($http, $q, ENDPOINT_URI) {
+myModule.factory('UsersService', function ($http, $q, AuthService, ENDPOINT_URI) {
     var find = function () {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'users.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
 
         $http.get(url).success(deferred.resolve).error(deferred.reject);
 
@@ -272,7 +283,7 @@ myModule.factory('UsersService', function ($http, $q, ENDPOINT_URI) {
 
     var fetch = function (user_id) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/users/' + user_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
         $http.get(url).success(deferred.resolve).error(deferred.reject)
 
@@ -281,7 +292,7 @@ myModule.factory('UsersService', function ($http, $q, ENDPOINT_URI) {
 
     var create = function (user) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'users.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
 
         $http.post(url, user).success(deferred.resolve).error(deferred.reject);
 
@@ -290,7 +301,7 @@ myModule.factory('UsersService', function ($http, $q, ENDPOINT_URI) {
 
     var update = function (user_id, user) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/users/' + user_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
         $http.put(url, user).success(deferred.resolve).error(deferred.reject);
 
@@ -299,7 +310,7 @@ myModule.factory('UsersService', function ($http, $q, ENDPOINT_URI) {
 
     var destroy = function (user_id) {
         var deferred = $q.defer();
-        var url = ENDPOINT_URI + '/users/' + user_id + '.json';
+        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
         $http.delete(url).success(deferred.resolve).error(deferred.reject);
 
