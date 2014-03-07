@@ -1,8 +1,8 @@
-var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate']);
+var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
 
 myModule.config(function ($routeProvider) {
     $routeProvider.
-        when('/', {templateUrl: 'partials/main.html', controller: 'MainCtrl'}).
+        when('/', {templateUrl: 'partials/storyboard.html', controller: 'StoryboardCtrl'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
         when('/users/:userId', {
@@ -37,6 +37,114 @@ myModule.value('STORY_TYPES', [
     {name: 'Bug'},
     {name: 'Spike'}
 ]);
+
+myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, AuthService) {
+    $scope.currentUser = null;
+
+    $scope.logout = function () {
+        AuthService.logout();
+    };
+
+    $scope.$on('onLogin', function () {
+        $scope.currentUser = AuthService.user();
+    });
+
+    $scope.$on('onLogout', function () {
+        $scope.currentUser = null;
+    });
+
+    // Get the current user
+    AuthService.getCurrentUser();
+}]);
+
+myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT_URI', function ($rootScope, $firebaseSimpleLogin, FIREBASE_URI) {
+    var $scope = $rootScope.$new(false);
+    $scope.user = {};
+    $scope.loginService = $firebaseSimpleLogin(new Firebase(FIREBASE_URI));
+
+    var getCurrentUser = function () {
+        $scope.loginService.$getCurrentUser()
+            .then(function (user) {
+                $scope.user = user;
+                $rootScope.$broadcast('onLogin');
+            }, function (error) {
+                console.error('Login failed: ', error);
+            });
+    };
+
+    var login = function (email, password) {
+        $scope.loginService.$login('password', { email: email, password: password })
+            .then(function (user) {
+                $scope.user = user;
+            }, function (error) {
+                console.error('Login failed: ', error);
+            });
+    };
+
+    var logout = function () {
+        $scope.loginService.$logout();
+    };
+
+    var register = function (email, password) {
+        $scope.loginService.$createUser(email, password);
+    };
+
+    var changePassword = function (email, oldPassword, newPassword) {
+        $scope.loginService.changePassword(email, oldPassword, newPassword);
+    };
+
+    var user = function () {
+        return $scope.user;
+    };
+
+    $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
+        $scope.user = user;
+        $rootScope.$broadcast('onLogin');
+    });
+
+    $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
+        $scope.user = null;
+        $rootScope.$broadcast('onLogout');
+    });
+
+    $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
+        $scope.user = null;
+        $rootScope.$broadcast('onLogout');
+    });
+
+    return {
+        getCurrentUser: getCurrentUser,
+        user: user,
+        login: login,
+        logout: logout,
+        register: register,
+        changePassword: changePassword
+    }
+}]);
+
+myModule.controller('LoginCtrl', function ($scope, AuthService) {
+    $scope.user = {
+        email: '',
+        password: '',
+        register: false
+    };
+
+    $scope.submit = function (email, password, register) {
+        if ($scope.loginForm.$valid) {
+            ((register) ? AuthService.register : AuthService.login)(email, password);
+            $scope.reset();
+        }
+    };
+
+    $scope.reset = function () {
+        $scope.user = {
+            email: '',
+            password: '',
+            register: false
+        };
+    };
+});
+
 
 myModule.factory('StoriesService', function ($http, $q, ENDPOINT_URI) {
     var find = function () {
@@ -224,7 +332,7 @@ myModule.factory('HelperService', function () {
     };
 });
 
-myModule.controller('MainCtrl', ['$scope', 'StoriesService', 'HelperService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
+myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'HelperService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
     function ($scope, StoriesService, HelperService, UsersService, STORY_STATUSES, STORY_TYPES) {
         $scope.detailsVisible = true;
         $scope.currentStoryId = null;
