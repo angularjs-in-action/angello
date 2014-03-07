@@ -17,17 +17,22 @@
         <link rel="stylesheet" href="css/angello.css">
         <link rel="stylesheet" href="css/animations.css">
     </head>
-    <body>
+    <body ng-controller="MainCtrl">
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-header"><a class="logo navbar-brand" href="#/"> <img src="img/angello.png"></a></div>
-            <div class="btn-group pull-right">
+            <div class="btn-group pull-right" ng-show="currentUser">
                 <a class="btn btn-danger" href="#/"><span class="glyphicon glyphicon-home"></span></a>
                 <a class="btn btn-danger" href="#/users"><span class="glyphicon glyphicon-user"></span></a>
                 <a class="btn btn-danger" href="#/dashboard"><span class="glyphicon glyphicon-signal"></span></a>
+                <button class="btn btn-default" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></button>
             </div>
         </div>
 
-        <div ng-view=""></div>
+        <div ng-show="currentUser" ng-view=""></div>
+
+        <div ng-show="!currentUser">
+            <ng-include src="'partials/login.html'"></ng-include>
+        </div>
 
         <script src="lib/jquery.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular.min.js"></script>
@@ -36,7 +41,9 @@
 
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js"></script>
-        <script src="lib/custom.modernizr.js"></script>
+        <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+        <script src='https://cdn.firebase.com/js/simple-login/1.2.3/firebase-simple-login.js'></script>
+        <script src="https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js"></script>
         <script src="lib/jquery-ui-1.10.3.custom.min.js"></script>
         <script src="lib/flot/jquery.flot.js"></script>
         <script src="lib/flot/jquery.flot.categories.js"></script>

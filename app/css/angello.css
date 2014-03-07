@@ -175,3 +175,47 @@ form.ng-dirty input.ng-valid {
     border: 1px solid #d7cebf;
     outline: none
 }
+
+.form-signin {
+    min-height: 200px;
+    max-width: 100%;
+    line-height: 1.428571429;
+    background-image: url(../img/note-blank.png);
+    width: 360px;
+    height: 220px;
+    padding:  20px;
+    margin: 80px auto 20px;
+    background-repeat: no-repeat;
+    background-position: top left;
+    position: relative;
+}
+
+.form-signin button {
+    background:none;
+    border:none;
+    box-shadow:none;
+}
+
+.form-signin button:hover {
+    background:none;
+    border:none;
+    box-shadow:none;
+}
+
+.form-signin .large {
+    color: #333;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.form-signin input[type=text],
+.form-signin input[type=email],
+.form-signin input[type=password],
+.create textarea {
+    color: #a69f95;
+    border: 1px solid #d7cebf;
+    width: 100%;
+    resize: none;
+    background-color: #f5ead9;
+    margin-bottom: 5px;
+}
