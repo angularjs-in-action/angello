@@ -20,10 +20,11 @@
     <body ng-controller="MainCtrl">
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-header"><a class="logo navbar-brand" href="#/"> <img src="img/angello.png"></a></div>
-            <div class="btn-group pull-right">
+            <div class="btn-group pull-right" ng-show="currentUser">
                 <a class="btn btn-danger" href="#/"><span class="glyphicon glyphicon-home"></span></a>
                 <a class="btn btn-danger" href="#/users"><span class="glyphicon glyphicon-user"></span></a>
                 <a class="btn btn-danger" href="#/dashboard"><span class="glyphicon glyphicon-signal"></span></a>
+                <button class="btn btn-default" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></button>
             </div>
         </div>
 
