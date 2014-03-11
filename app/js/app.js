@@ -3,6 +3,7 @@ var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
 myModule.config(function ($routeProvider) {
     $routeProvider.
         when('/', {templateUrl: 'partials/storyboard.html', controller: 'StoryboardCtrl'}).
+        when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
         when('/users/:userId', {
@@ -19,6 +20,16 @@ myModule.config(function ($routeProvider) {
             }
         }).
         otherwise({redirectTo: '/'});
+});
+
+myModule.run(function ($rootScope, $location, AuthService) {
+    $rootScope.$on('$locationChangeStart',function(event, next, current){
+        if(next != 'http://dev.angello.com/index.html#/login' && !AuthService.getCurrentUserId()){
+            console.log('NEXT', next);
+            $location.path('login');
+            // event.preventDefault();
+        }
+    });
 });
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
