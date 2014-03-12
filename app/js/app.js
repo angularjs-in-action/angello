@@ -2,12 +2,12 @@ var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
 
 myModule.config(function ($routeProvider) {
     $routeProvider.
-        when('/', {templateUrl: 'partials/storyboard.html', controller: 'StoryboardCtrl'}).
-        when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'}).
-        when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
-        when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
+        when('/', {templateUrl: 'views/storyboard.html', controller: 'StoryboardCtrl'}).
+        when('/login', {templateUrl: 'views/login.html', controller: 'LoginCtrl'}).
+        when('/dashboard', {templateUrl: 'views/dashboard.html', controller: 'DashboardCtrl'}).
+        when('/users', {templateUrl: 'views/users.html', controller: 'UsersCtrl'}).
         when('/users/:userId', {
-            templateUrl: 'partials/user.html',
+            templateUrl: 'views/user.html',
             controller: 'UserCtrl',
             resolve: {
                 user: function ($route, UsersService) {
