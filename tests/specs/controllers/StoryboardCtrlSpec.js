@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Controller: MainCtrl', function () {
+describe('Controller: StoryboardCtrl', function () {
 
     // load the controller's module
     beforeEach(module('Angello'));
@@ -9,9 +9,9 @@ describe('Controller: MainCtrl', function () {
         scope;
 
     // Initialize the controller and a mock scope
-    beforeEach(inject(function ($controller) {
-        scope = {};
-        MainCtrl = $controller('MainCtrl', {
+    beforeEach(inject(function ($controller, $rootScope) {
+        scope = $rootScope.$new();
+        MainCtrl = $controller('StoryboardCtrl', {
             $scope: scope,
             angelloModel: angelloModelMock()
         });

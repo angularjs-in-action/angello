@@ -5,12 +5,7 @@ describe('Service: angelloModel', function () {
     // load the service's module
     beforeEach(module('Angello'));
 
-    var modelService;
-
-    // Initialize the service
-    beforeEach(inject(function (angelloModel) {
-        modelService = angelloModel;
-    }));
+    var modelService = angelloModelMock();
 
     describe('#getStatuses', function () {
 

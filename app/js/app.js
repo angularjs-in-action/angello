@@ -32,6 +32,8 @@ myModule.run(function ($rootScope, $location, AuthService) {
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
 
+myModule.value('Firebase', window.Firebase);
+
 myModule.value('STORY_STATUSES', [
     {name: 'To Do'},
     {name: 'In Progress'},
@@ -47,7 +49,7 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'ENDPOINT_URI', function ($rootScope, $firebaseSimpleLogin, FIREBASE_URI) {
+myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase', 'ENDPOINT_URI', function ($rootScope, $firebaseSimpleLogin, Firebase, FIREBASE_URI) {
     var $scope = $rootScope.$new(false);
     $scope.user = {};
     $scope.loginService = $firebaseSimpleLogin(new Firebase(FIREBASE_URI));
