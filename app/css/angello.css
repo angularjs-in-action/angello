@@ -1,8 +1,15 @@
 html,
 body {
     height: 100%;
-    /* The html and body elements cannot have any padding or margin. */
     background-color: #36393D;
+    background: url(../img/bg-wood.jpg)
+}
+
+.navbar {
+    min-height: 65px;
+    -moz-box-shadow: 0 7px 30px 2px #000;
+    -webkit-box-shadow: 0 7px 30px 2px #000;
+    box-shadow: 0 7px 30px 2px #000;
 }
 
 .navbar .logo {
@@ -14,51 +21,35 @@ body {
 }
 
 .list {
-    background: #E3E3E3;
-    border-radius: 3px;
     list-style-type: none;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.1);
     float: left;
     margin: 60px 5px 80px;
     padding: 4px 3px 3px 3px;
     position: relative;
-    width: 200px;
+    width: 300px;
+}
+
+.status {
+    color: #FAF4ED;
+}
+
+.type-bar {
+    height: 5px;
+    width: 100%;
 }
 
 .story article {
-    color: #36393D;
-    border-radius: 3px;
-    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.1);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 1px 0 rgba(0, 0, 0, 0.1);
-    padding: 3px;
+    background-image: url(../img/note-bg.png);
+    height: 145px;
+    padding: 10px;
     margin: 3px;
     cursor: pointer;
 }
 
-form.ng-dirty input.ng-invalid {
-    border: 1px solid #B02B2C;
+.story .title {
+    font-size: 24px;
 }
 
-form.ng-dirty input.ng-valid {
-    border: 1px solid #6BBA70;
-}
-
-.Feature {
-    background: #F9F7ED;
-}
-
-.Enhancement {
-    background: #FFFF88;
-}
-
-.Bug {
-    background: #CDEB8B;
-}
-
-.Spike {
-    background: #C3D9FF;
-}
 
 .list-area {
     position: absolute;
@@ -73,12 +64,12 @@ form.ng-dirty input.ng-valid {
 
 .list-wrapper {
     padding: 10px;
-    width: 1200px;
+    width: 2400px;
 }
 
 .user-wrapper {
     padding: 10px;
-    margin-top: 60px;
+    padding-top: 80px;
     background-color: #FFF;
 }
 
@@ -160,6 +151,30 @@ form.ng-dirty input.ng-valid {
     line-height: 1.2em;
 }
 
+form.ng-dirty input.ng-invalid {
+    border: 1px solid #B02B2C;
+}
+
+form.ng-dirty input.ng-valid {
+    border: 1px solid #6BBA70;
+}
+
+.Feature {
+    background: #F9F7ED;
+}
+
+.Enhancement {
+    background: #FFFF88;
+}
+
+.Bug {
+    background: #CDEB8B;
+}
+
+.Spike {
+    background: #C3D9FF;
+}
+
 .edit input[type=text] {
     border: 1px solid #ffffff;
     width: 100%;
@@ -177,12 +192,12 @@ form.ng-dirty input.ng-valid {
 }
 
 .form-signin {
-    min-height: 200px;
+    min-height: 215px;
     max-width: 100%;
     line-height: 1.428571429;
-    background-image: url(../img/note-blank.png);
-    width: 360px;
-    height: 220px;
+    background-image: url(../img/bg-login.png);
+    width: 400px;
+    height: 215px;
     padding:  20px;
     margin: 80px auto 20px;
     background-repeat: no-repeat;
@@ -212,10 +227,13 @@ form.ng-dirty input.ng-valid {
 .form-signin input[type=email],
 .form-signin input[type=password],
 .create textarea {
+    outline: none;
+    /*
     color: #a69f95;
+    background-color: #f5ead9;
     border: 1px solid #d7cebf;
+    */
     width: 100%;
     resize: none;
-    background-color: #f5ead9;
     margin-bottom: 5px;
 }

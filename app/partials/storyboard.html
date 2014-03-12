@@ -2,16 +2,17 @@
 <div class="list-area">
     <div class="list-wrapper">
         <ul class="list my-repeat-animation" sortable="" ng-repeat="status in statuses">
-            <h3>{{status.name}}</h3>
+            <h3 class="status">{{status.name}}</h3>
             <hr>
             <!-- TODO Filter by status -->
             <li userstory ng-repeat="(id, story) in storiesWithStatus(status)" class="story my-repeat-animation" ng-click="setCurrentStory(id, story)">
-                <article class="{{story.type}}">
-                    <div class="modal-header">
+                <article>
+                    <div>
                         <button type="button" class="close" ng-click="deleteStory(id);">×</button>
-                        <h3>{{story.title}}</h3>
+                        <p class="title">{{story.title}}</p>
                     </div>
-                    <div class="modal-body">
+                    <div class="type-bar {{story.type}}"></div>
+                    <div>
                         <p>{{story.description}}</p>
                     </div>
                 </article>
@@ -19,6 +20,7 @@
         </ul>
     </div>
 </div>
+
 
 <!-- STORY DETAILS -->
 <div class="details details-animation" ng-class="{'details-visible':detailsVisible}">

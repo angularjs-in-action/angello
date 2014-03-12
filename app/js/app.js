@@ -3,6 +3,7 @@ var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
 myModule.config(function ($routeProvider) {
     $routeProvider.
         when('/', {templateUrl: 'partials/storyboard.html', controller: 'StoryboardCtrl'}).
+        when('/login', {templateUrl: 'partials/login.html', controller: 'LoginCtrl'}).
         when('/dashboard', {templateUrl: 'partials/dashboard.html', controller: 'DashboardCtrl'}).
         when('/users', {templateUrl: 'partials/users.html', controller: 'UsersCtrl'}).
         when('/users/:userId', {
@@ -19,6 +20,14 @@ myModule.config(function ($routeProvider) {
             }
         }).
         otherwise({redirectTo: '/'});
+});
+
+myModule.run(function ($rootScope, $location, AuthService) {
+    $rootScope.$on('$locationChangeStart',function(event, next, current){
+        if($location.path() != '/login' && !AuthService.getCurrentUserId()){
+            $location.path('/login');
+        }
+    });
 });
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
@@ -189,7 +198,7 @@ myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
         $scope.stories = $scope.getAssignedStories($scope.userId, stories);
     }]);
 
-myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, AuthService) {
+myModule.controller('MainCtrl', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
     $scope.currentUser = null;
 
     $scope.logout = function () {
@@ -202,13 +211,14 @@ myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, Auth
 
     $scope.$on('onLogout', function () {
         $scope.currentUser = null;
+        $location.path('login');
     });
 
     // Get the current user
     AuthService.getCurrentUser();
 }]);
 
-myModule.controller('LoginCtrl', function ($scope, AuthService) {
+myModule.controller('LoginCtrl', function ($scope, $location, AuthService) {
     $scope.user = {
         email: '',
         password: '',
@@ -229,6 +239,14 @@ myModule.controller('LoginCtrl', function ($scope, AuthService) {
             register: false
         };
     };
+
+    $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
+        $location.path('');
+    });
+
+    $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
+        console.log('ERROR', err);
+    });
 });
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
