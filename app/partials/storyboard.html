@@ -1,5 +1,5 @@
 <!-- STORIES -->
-<div class="list-area">
+<div class="list-area" ng-class="{'list-area-expanded':!detailsVisible}">
     <div class="list-wrapper">
         <ul class="list my-repeat-animation" sortable="" ng-repeat="status in statuses">
             <h3 class="status">{{status.name}}</h3>
