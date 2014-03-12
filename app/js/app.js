@@ -10,11 +10,11 @@ myModule.config(function ($routeProvider) {
             templateUrl: 'partials/user.html',
             controller: 'UserCtrl',
             resolve: {
-                user: function($route, UsersService){
+                user: function ($route, UsersService) {
                     var userId = $route.current.params.userId;
                     return UsersService.fetch(userId);
                 },
-                stories: function(StoriesService) {
+                stories: function (StoriesService) {
                     return StoriesService.find();
                 }
             }
@@ -23,8 +23,8 @@ myModule.config(function ($routeProvider) {
 });
 
 myModule.run(function ($rootScope, $location, AuthService) {
-    $rootScope.$on('$locationChangeStart',function(event, next, current){
-        if($location.path() != '/login' && !AuthService.getCurrentUserId()){
+    $rootScope.$on('$locationChangeStart', function (event, next, current) {
+        if ($location.path() != '/login' && !AuthService.getCurrentUserId()) {
             $location.path('/login');
         }
     });
@@ -49,145 +49,147 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase', 'ENDPOINT_URI', function ($rootScope, $firebaseSimpleLogin, Firebase, FIREBASE_URI) {
-    var $scope = $rootScope.$new(false);
-    $scope.user = {};
-    $scope.loginService = $firebaseSimpleLogin(new Firebase(FIREBASE_URI));
+myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase', 'ENDPOINT_URI',
+    function ($rootScope, $firebaseSimpleLogin, Firebase, FIREBASE_URI) {
+        var $scope = $rootScope.$new(false);
+        $scope.user = {};
+        $scope.loginService = $firebaseSimpleLogin(new Firebase(FIREBASE_URI));
 
-    var getCurrentUser = function () {
-        $scope.loginService.$getCurrentUser()
-            .then(function (user) {
-                $scope.user = user;
-                $rootScope.$broadcast('onLogin');
-            }, function (error) {
-                console.error('Login failed: ', error);
-            });
-    };
+        var getCurrentUser = function () {
+            $scope.loginService.$getCurrentUser()
+                .then(function (user) {
+                    $scope.user = user;
+                    $rootScope.$broadcast('onLogin');
+                }, function (error) {
+                    console.error('Login failed: ', error);
+                });
+        };
 
-    var login = function (email, password) {
-        $scope.loginService.$login('password', { email: email, password: password })
-            .then(function (user) {
-                $scope.user = user;
-            }, function (error) {
-                console.error('Login failed: ', error);
-            });
-    };
+        var login = function (email, password) {
+            $scope.loginService.$login('password', { email: email, password: password })
+                .then(function (user) {
+                    $scope.user = user;
+                }, function (error) {
+                    console.error('Login failed: ', error);
+                });
+        };
 
-    var logout = function () {
-        $scope.loginService.$logout();
-    };
+        var logout = function () {
+            $scope.loginService.$logout();
+        };
 
-    var register = function (email, password) {
-        $scope.loginService.$createUser(email, password);
-    };
+        var register = function (email, password) {
+            $scope.loginService.$createUser(email, password);
+        };
 
-    var changePassword = function (email, oldPassword, newPassword) {
-        $scope.loginService.changePassword(email, oldPassword, newPassword);
-    };
+        var changePassword = function (email, oldPassword, newPassword) {
+            $scope.loginService.changePassword(email, oldPassword, newPassword);
+        };
 
-    var user = function () {
-        return $scope.user;
-    };
+        var user = function () {
+            return $scope.user;
+        };
 
-    var existy = function (x) {
-        return x != null;
-    };
+        var existy = function (x) {
+            return x != null;
+        };
 
-    var userExists = function () {
-        return existy($scope.user) && existy($scope.user.id);
-    };
+        var userExists = function () {
+            return existy($scope.user) && existy($scope.user.id);
+        };
 
-    var getCurrentUserId = function () {
-        return userExists() ? $scope.user.id : null;
-    };
+        var getCurrentUserId = function () {
+            return userExists() ? $scope.user.id : null;
+        };
 
-    $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
-        $scope.user = user;
-        $rootScope.$broadcast('onLogin');
-    });
+        $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
+            $scope.user = user;
+            $rootScope.$broadcast('onLogin');
+        });
 
-    $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
-        $scope.user = null;
-        $rootScope.$broadcast('onLogout');
-    });
+        $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
+            $scope.user = null;
+            $rootScope.$broadcast('onLogout');
+        });
 
-    $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
-        $scope.user = null;
-        $rootScope.$broadcast('onLogout');
-    });
+        $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
+            $scope.user = null;
+            $rootScope.$broadcast('onLogout');
+        });
 
-    return {
-        getCurrentUser: getCurrentUser,
-        getCurrentUserId: getCurrentUserId,
-        user: user,
-        login: login,
-        logout: logout,
-        register: register,
-        changePassword: changePassword
-    }
-}]);
+        return {
+            getCurrentUser: getCurrentUser,
+            getCurrentUserId: getCurrentUserId,
+            user: user,
+            login: login,
+            logout: logout,
+            register: register,
+            changePassword: changePassword
+        }
+    }]);
 
-myModule.factory('StoriesService', function ($http, $q, AuthService, ENDPOINT_URI) {
-    var find = function () {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
+myModule.factory('StoriesService', ['$http', '$q', 'AuthService', 'ENDPOINT_URI',
+    function ($http, $q, AuthService, ENDPOINT_URI) {
+        var find = function () {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
 
-        $http.get(url).success(deferred.resolve).error(deferred.reject);
+            $http.get(url).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var fetch = function (story_id) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
+        var fetch = function (story_id) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
-        $http.get(url).success(deferred.resolve).error(deferred.reject)
+            $http.get(url).success(deferred.resolve).error(deferred.reject)
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var create = function (story) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
+        var create = function (story) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
 
-        $http.post(url, story).success(deferred.resolve).error(deferred.reject);
+            $http.post(url, story).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var update = function (story_id, story) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
+        var update = function (story_id, story) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
-        $http.put(url, story).success(deferred.resolve).error(deferred.reject);
+            $http.put(url, story).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var destroy = function (story_id) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
+        var destroy = function (story_id) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
 
-        $http.delete(url).success(deferred.resolve).error(deferred.reject);
+            $http.delete(url).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    return {
-        find: find,
-        fetch: fetch,
-        create: create,
-        update: update,
-        destroy: destroy
-    };
-});
+        return {
+            find: find,
+            fetch: fetch,
+            create: create,
+            update: update,
+            destroy: destroy
+        };
+    }]);
 
 myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
     function ($scope, $routeParams, user, stories) {
         $scope.userId = $routeParams['userId'];
         $scope.user = user;
 
-        $scope.getAssignedStories = function(userId, stories) {
+        $scope.getAssignedStories = function (userId, stories) {
             var assignedStories = {};
             var keys = Object.keys(stories);
             for (var i = 0, len = keys.length; i < len; i++) {
@@ -200,56 +202,57 @@ myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
         $scope.stories = $scope.getAssignedStories($scope.userId, stories);
     }]);
 
-myModule.controller('MainCtrl', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
-    $scope.currentUser = null;
-
-    $scope.logout = function () {
-        AuthService.logout();
-    };
-
-    $scope.$on('onLogin', function () {
-        $scope.currentUser = AuthService.user();
-    });
-
-    $scope.$on('onLogout', function () {
+myModule.controller('MainCtrl', ['$scope', '$location', 'AuthService',
+    function ($scope, $location, AuthService) {
         $scope.currentUser = null;
-        $location.path('login');
-    });
 
-    // Get the current user
-    AuthService.getCurrentUser();
-}]);
+        $scope.logout = function () {
+            AuthService.logout();
+        };
 
-myModule.controller('LoginCtrl', function ($scope, $location, AuthService) {
-    $scope.user = {
-        email: '',
-        password: '',
-        register: false
-    };
+        $scope.$on('onLogin', function () {
+            $scope.currentUser = AuthService.user();
+        });
 
-    $scope.submit = function (email, password, register) {
-        if ($scope.loginForm.$valid) {
-            ((register) ? AuthService.register : AuthService.login)(email, password);
-            $scope.reset();
-        }
-    };
+        $scope.$on('onLogout', function () {
+            $scope.currentUser = null;
+            $location.path('login');
+        });
 
-    $scope.reset = function () {
+        AuthService.getCurrentUser();
+    }]);
+
+myModule.controller('LoginCtrl', ['$scope', '$location', 'AuthService',
+    function ($scope, $location, AuthService) {
         $scope.user = {
             email: '',
             password: '',
             register: false
         };
-    };
 
-    $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
-        $location.path('');
-    });
+        $scope.submit = function (email, password, register) {
+            if ($scope.loginForm.$valid) {
+                ((register) ? AuthService.register : AuthService.login)(email, password);
+                $scope.reset();
+            }
+        };
 
-    $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
-        console.log('ERROR', err);
-    });
-});
+        $scope.reset = function () {
+            $scope.user = {
+                email: '',
+                password: '',
+                register: false
+            };
+        };
+
+        $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
+            $location.path('');
+        });
+
+        $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
+            console.log('ERROR', err);
+        });
+    }]);
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
     $scope.newUser = { name: '', email: '' };
@@ -291,60 +294,61 @@ myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, Us
     $scope.getUsers();
 }]);
 
-myModule.factory('UsersService', function ($http, $q, AuthService, ENDPOINT_URI) {
-    var find = function () {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
+myModule.factory('UsersService', ['$http', '$q', 'AuthService', 'ENDPOINT_URI',
+    function ($http, $q, AuthService, ENDPOINT_URI) {
+        var find = function () {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
 
-        $http.get(url).success(deferred.resolve).error(deferred.reject);
+            $http.get(url).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var fetch = function (user_id) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
+        var fetch = function (user_id) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
-        $http.get(url).success(deferred.resolve).error(deferred.reject)
+            $http.get(url).success(deferred.resolve).error(deferred.reject)
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var create = function (user) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
+        var create = function (user) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
 
-        $http.post(url, user).success(deferred.resolve).error(deferred.reject);
+            $http.post(url, user).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var update = function (user_id, user) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
+        var update = function (user_id, user) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
-        $http.put(url, user).success(deferred.resolve).error(deferred.reject);
+            $http.put(url, user).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    var destroy = function (user_id) {
-        var deferred = $q.defer();
-        var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
+        var destroy = function (user_id) {
+            var deferred = $q.defer();
+            var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
 
-        $http.delete(url).success(deferred.resolve).error(deferred.reject);
+            $http.delete(url).success(deferred.resolve).error(deferred.reject);
 
-        return deferred.promise;
-    };
+            return deferred.promise;
+        };
 
-    return {
-        find: find,
-        fetch: fetch,
-        create: create,
-        update: update,
-        destroy: destroy
-    };
-});
+        return {
+            find: find,
+            fetch: fetch,
+            create: create,
+            update: update,
+            destroy: destroy
+        };
+    }]);
 
 
 myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
@@ -420,14 +424,14 @@ myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'UsersService
             $scope.detailsVisible = visible;
         };
 
-        $scope.storiesWithStatus = function(status) {
-          var stories = {};
-          var keys = Object.keys($scope.stories);
-          for (var i = 0, len = keys.length; i < len; i++) {
-            var key = keys[i];
-            if ($scope.stories[key].status == status.name) stories[key] = $scope.stories[key];
-          }
-          return stories;
+        $scope.storiesWithStatus = function (status) {
+            var stories = {};
+            var keys = Object.keys($scope.stories);
+            for (var i = 0, len = keys.length; i < len; i++) {
+                var key = keys[i];
+                if ($scope.stories[key].status == status.name) stories[key] = $scope.stories[key];
+            }
+            return stories;
         };
 
         $scope.$on('storyDeleted', function () {
@@ -444,16 +448,16 @@ myModule.controller('DashboardCtrl', ['$scope', 'StoriesService', 'STORY_STATUSE
         $scope.statuses = STORY_STATUSES;
         $scope.stories = [];
 
-        StoriesService.find().then(function(stories) {
-          var arr = [];
-          for (var key in stories) {
-            arr.push(stories[key]);
-          }
-          $scope.stories = arr;
+        StoriesService.find().then(function (stories) {
+            var arr = [];
+            for (var key in stories) {
+                arr.push(stories[key]);
+            }
+            $scope.stories = arr;
         });
     }]);
 
-myModule.directive('userstory', function ($rootScope, StoriesService) {
+myModule.directive('userstory', ['$rootScope', 'StoriesService', function ($rootScope, StoriesService) {
     var linker = function (scope, element, attrs) {
         element
             .mouseover(function () {
@@ -479,9 +483,9 @@ myModule.directive('userstory', function ($rootScope, StoriesService) {
         controller: controller,
         link: linker
     };
-});
+}]);
 
-myModule.directive('sortable', function (StoriesService) {
+myModule.directive('sortable', ['StoriesService', function (StoriesService) {
     var linker = function (scope, element, attrs) {
         var status = scope.status.name;
 
@@ -505,9 +509,9 @@ myModule.directive('sortable', function (StoriesService) {
         restrict: 'A',
         link: linker
     };
-});
+}]);
 
-myModule.directive('chart', function () {
+myModule.directive('chart', [function () {
     var parseDataForCharts = function (sourceArray, sourceProp, referenceArray, referenceProp) {
         var data = [];
         referenceArray.each(function (r) {
@@ -520,7 +524,7 @@ myModule.directive('chart', function () {
     };
 
     var linker = function (scope, element, attrs) {
-        scope.$watch('sourceArray', function() {
+        scope.$watch('sourceArray', function () {
             scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
 
             if (element.is(':visible')) {
@@ -549,9 +553,9 @@ myModule.directive('chart', function () {
             referenceArray: '='
         }
     };
-});
+}]);
 
-myModule.animation('.list-area-expanded', function () {
+myModule.animation('.list-area-expanded', [function () {
     return {
         addClass: function (element, className, done) {
             if (className == 'list-area-expanded') {
@@ -570,9 +574,9 @@ myModule.animation('.list-area-expanded', function () {
             }
         }
     };
-});
+}]);
 
-myModule.animation('.details-animation', function () {
+myModule.animation('.details-animation', [function () {
     return {
         addClass: function (element, className, done) {
             if (className == 'details-visible') {
@@ -591,4 +595,4 @@ myModule.animation('.details-animation', function () {
             }
         }
     };
-});
+}]);
