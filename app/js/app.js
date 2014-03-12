@@ -22,17 +22,15 @@ myModule.config(function ($routeProvider) {
         otherwise({redirectTo: '/'});
 });
 
-myModule.run(function ($rootScope, $location, AuthService, LOGIN_URI) {
+myModule.run(function ($rootScope, $location, AuthService) {
     $rootScope.$on('$locationChangeStart',function(event, next, current){
-        if(next != LOGIN_URI && !AuthService.getCurrentUserId()){
-            $location.path('login');
+        if($location.path() != '/login' && !AuthService.getCurrentUserId()){
+            $location.path('/login');
         }
     });
 });
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
-
-myModule.constant('LOGIN_URI', 'http://dev.angello.com/index.html#/login');
 
 myModule.value('STORY_STATUSES', [
     {name: 'To Do'},
