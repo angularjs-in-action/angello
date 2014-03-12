@@ -51,7 +51,7 @@
                 <label class="control-label" for="inputStatus">*Status</label>
 
                 <div class="controls">
-                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="currentStatus" ng-options="l.name for l in statuses" ng-change="setCurrentStatus(currentStatus)" ng-required="true">
+                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="editedStory.status" ng-options="l.name as l.name for l in statuses" ng-required="true">
                         <option value="">Select Status</option>
                     </select>
 
@@ -64,7 +64,7 @@
                 <label class="control-label" for="inputType">*Type</label>
 
                 <div class="controls">
-                    <select id="inputType" name="inputType" class="form-control" ng-model="currentType" ng-options="t.name for t in types" ng-change="setCurrentType(currentType)" ng-required="true">
+                    <select id="inputType" name="inputType" class="form-control" ng-model="editedStory.type" ng-options="t.name as t.name for t in types" ng-required="true">
                         <option value="">Select Type</option>
                     </select>
 

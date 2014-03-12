@@ -327,36 +327,16 @@ myModule.factory('UsersService', function ($http, $q, AuthService, ENDPOINT_URI)
 });
 
 
-myModule.factory('HelperService', function () {
-    var buildIndex = function (source, property) {
-        var tempArray = [];
-
-        for (var i = 0, len = source.length; i < len; ++i) {
-            tempArray[source[i][property]] = source[i];
-        }
-
-        return tempArray;
-    };
-
-    return {
-        buildIndex: buildIndex
-    };
-});
-
-myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'HelperService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
-    function ($scope, StoriesService, HelperService, UsersService, STORY_STATUSES, STORY_TYPES) {
+myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
+    function ($scope, StoriesService, UsersService, STORY_STATUSES, STORY_TYPES) {
         $scope.detailsVisible = true;
         $scope.currentStoryId = null;
         $scope.currentStory = null;
-        $scope.currentStatus = null;
-        $scope.currentType = null;
         $scope.editedStory = {};
         $scope.stories = [];
 
         $scope.types = STORY_TYPES;
         $scope.statuses = STORY_STATUSES;
-        $scope.typesIndex = HelperService.buildIndex($scope.types, 'name');
-        $scope.statusesIndex = HelperService.buildIndex($scope.statuses, 'name');
 
         $scope.users = {};
 
@@ -371,9 +351,6 @@ myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'HelperServic
             $scope.currentStoryId = id;
             $scope.currentStory = story;
             $scope.editedStory = angular.copy($scope.currentStory);
-
-            $scope.currentStatus = $scope.statusesIndex[story.status];
-            $scope.currentType = $scope.typesIndex[story.type];
         };
 
         $scope.getStories = function () {
@@ -414,19 +391,9 @@ myModule.controller('StoryboardCtrl', ['$scope', 'StoriesService', 'HelperServic
 
         $scope.resetForm = function () {
             $scope.currentStory = null;
-            $scope.currentStatus = null;
-            $scope.currentType = null;
             $scope.editedStory = {};
 
             $scope.detailsForm.$setPristine();
-        };
-
-        $scope.setCurrentStatus = function (status) {
-            $scope.editedStory.status = status.name;
-        };
-
-        $scope.setCurrentType = function (type) {
-            $scope.editedStory.type = type.name;
         };
 
         $scope.setDetailsVisible = function (visible) {
