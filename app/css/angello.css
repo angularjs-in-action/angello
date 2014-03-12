@@ -54,7 +54,7 @@ body {
 .list-area {
     position: absolute;
     left: 0;
-    right: 0;
+    right: 250px;
     top: 0;
     bottom: 0;
     overflow-x: auto;
@@ -64,7 +64,7 @@ body {
 
 .list-wrapper {
     padding: 10px;
-    width: 2400px;
+    display: inline-flex;
 }
 
 .user-wrapper {
