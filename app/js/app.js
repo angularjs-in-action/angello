@@ -227,8 +227,6 @@ myModule.controller('LoginCtrl', function ($scope, $location, AuthService) {
         register: false
     };
 
-    $scope.message = null;
-    
     $scope.submit = function (email, password, register) {
         if ($scope.loginForm.$valid) {
             ((register) ? AuthService.register : AuthService.login)(email, password);
@@ -249,7 +247,7 @@ myModule.controller('LoginCtrl', function ($scope, $location, AuthService) {
     });
 
     $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
-        $scope.message = err;
+        console.log('ERROR', err);
     });
 });
 
