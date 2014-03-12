@@ -22,17 +22,17 @@ myModule.config(function ($routeProvider) {
         otherwise({redirectTo: '/'});
 });
 
-myModule.run(function ($rootScope, $location, AuthService) {
+myModule.run(function ($rootScope, $location, AuthService, LOGIN_URI) {
     $rootScope.$on('$locationChangeStart',function(event, next, current){
-        if(next != 'http://dev.angello.com/index.html#/login' && !AuthService.getCurrentUserId()){
-            console.log('NEXT', next);
+        if(next != LOGIN_URI && !AuthService.getCurrentUserId()){
             $location.path('login');
-            // event.preventDefault();
         }
     });
 });
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
+
+myModule.constant('LOGIN_URI', 'http://dev.angello.com/index.html#/login');
 
 myModule.value('STORY_STATUSES', [
     {name: 'To Do'},
@@ -200,7 +200,7 @@ myModule.controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
         $scope.stories = $scope.getAssignedStories($scope.userId, stories);
     }]);
 
-myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, AuthService) {
+myModule.controller('MainCtrl', ['$scope', '$location', 'AuthService', function ($scope, $location, AuthService) {
     $scope.currentUser = null;
 
     $scope.logout = function () {
@@ -213,19 +213,22 @@ myModule.controller('MainCtrl', ['$scope', 'AuthService', function ($scope, Auth
 
     $scope.$on('onLogout', function () {
         $scope.currentUser = null;
+        $location.path('login');
     });
 
     // Get the current user
     AuthService.getCurrentUser();
 }]);
 
-myModule.controller('LoginCtrl', function ($scope, AuthService) {
+myModule.controller('LoginCtrl', function ($scope, $location, AuthService) {
     $scope.user = {
         email: '',
         password: '',
         register: false
     };
 
+    $scope.message = null;
+    
     $scope.submit = function (email, password, register) {
         if ($scope.loginForm.$valid) {
             ((register) ? AuthService.register : AuthService.login)(email, password);
@@ -240,6 +243,14 @@ myModule.controller('LoginCtrl', function ($scope, AuthService) {
             register: false
         };
     };
+
+    $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
+        $location.path('');
+    });
+
+    $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
+        $scope.message = err;
+    });
 });
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {

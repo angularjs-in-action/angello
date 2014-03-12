@@ -1,5 +1,6 @@
 <form name="loginForm" role="form" class="form-signin" novalidate ng-submit="submit(user.email, user.password, user.register);">
     <p class="large">Please Sign In</p>
+    <div ng-if="message" class="alert alert-danger">{{message}}</div>
     <fieldset>
         <div><input type="email" ng-model="user.email" placeholder="Enter Email" required /></div>
         <div><input type="password" ng-model="user.password" placeholder="Enter Password" required /></div>
