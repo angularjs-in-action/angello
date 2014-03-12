@@ -1,8 +1,8 @@
 html,
 body {
-    height: 100%;
     background-color: #36393D;
-    background: url(../img/bg-wood.jpg)
+    background: url(../img/bg-wood.jpg);
+    overflow: hidden;
 }
 
 .navbar {
@@ -94,7 +94,7 @@ body {
 }
 
 .details-nav .btn {
-    margin-top: 12px;
+    margin-top: 48px;
 }
 
 .chart {
