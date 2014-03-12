@@ -553,7 +553,7 @@ myModule.animation('.list-area-expanded', function () {
     return {
         addClass: function (element, className, done) {
             if (className == 'list-area-expanded') {
-                TweenMax.to(element, 0.5, {right: 0, onComplete: done });
+                TweenMax.to(element, 0.5, {right: 68, onComplete: done });
             }
             else {
                 done();
