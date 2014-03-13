@@ -10,12 +10,12 @@ describe('Login redirection', function () {
       $rootScope = _$rootScope_;
       AuthService = _AuthService_;
 
-      spyOn($location, 'path').andReturn('/users');
+      spyOn($location, 'path').and.returnValue('/users');
     }));
 
     describe('when the user is not logged in', function () {
         beforeEach(function() {
-            spyOn(AuthService, 'getCurrentUserId').andReturn(null);
+            spyOn(AuthService, 'getCurrentUserId').and.returnValue(null);
         });
 
         it('should redirect to /login', function () {
@@ -27,7 +27,7 @@ describe('Login redirection', function () {
 
     describe('when the user is logged in', function() {
         beforeEach(function() {
-            spyOn(AuthService, 'getCurrentUserId').andReturn(1);
+            spyOn(AuthService, 'getCurrentUserId').and.returnValue(1);
         });
 
         it('should not redirect', function() {

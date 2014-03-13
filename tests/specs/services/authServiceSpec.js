@@ -26,7 +26,7 @@ describe('Serivce: AuthService', function () {
     describe('#getCurrentUser', function () {
         it('should ask the login service for the current user', function () {
             var user = null;
-            mockLoginService.$getCurrentUser.andReturn($q.when('fakeUser'));
+            mockLoginService.$getCurrentUser.and.returnValue($q.when('fakeUser'));
             AuthService.getCurrentUser();
             $rootScope.$on('onLogin', function() {
                 user = AuthService.user();

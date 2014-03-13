@@ -22,7 +22,7 @@ describe('Controller: MainCtrl', function () {
 
     describe('onLogin event', function () {
         it('sets scope.currentUser to the logged in user', function () {
-            spyOn(AuthService, 'user').andReturn('fakeUser');
+            spyOn(AuthService, 'user').and.returnValue('fakeUser');
             scope.$broadcast('onLogin');
             scope.$apply();
             expect(scope.currentUser).toEqual('fakeUser');
