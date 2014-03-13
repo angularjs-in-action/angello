@@ -14,7 +14,7 @@
     "url": "git://github.com/angularjs-in-action/angello.git"
   },
   "devDependencies": {
-    "karma": "~0.8"
+    "karma": "~0.12"
   },
   "contributors": [
     "Brian Ford <btford@umich.edu> (http://briantford.com/)",
