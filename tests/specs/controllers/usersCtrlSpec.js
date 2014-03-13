@@ -8,7 +8,7 @@ describe('Controller: UsersCtrl', function () {
     beforeEach(inject(function($rootScope, $controller, _$q_, _UsersService_) {
         $q = _$q_;
         UsersService = _UsersService_;
-        spyOn(UsersService, 'find').andReturn($q.when('fakeUsers'));
+        spyOn(UsersService, 'find').and.returnValue($q.when('fakeUsers'));
         scope = $rootScope.$new();
         ctrl = $controller('UsersCtrl', {$scope: scope});
     }));

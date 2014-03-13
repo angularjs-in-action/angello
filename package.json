@@ -7,14 +7,17 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "karma start --single-run --browsers PhantomJS karma.unit.conf"
+    "test": "karma start --single-run --browsers PhantomJS karma.conf.js"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/angularjs-in-action/angello.git"
   },
   "devDependencies": {
-    "karma": "~0.8"
+    "karma": "~0.12",
+    "karma-cli": "0.0.4",
+    "karma-jasmine": "^0.2.2",
+    "karma-phantomjs-launcher": "^0.1.2"
   },
   "contributors": [
     "Brian Ford <btford@umich.edu> (http://briantford.com/)",
