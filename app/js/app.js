@@ -246,7 +246,7 @@ myModule.controller('LoginCtrl', ['$scope', '$location', 'AuthService',
         };
 
         $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
-            $location.path('');
+            $location.path('/');
         });
 
         $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
