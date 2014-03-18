@@ -136,6 +136,10 @@ body.loading .modal {
 }
 
 .chart-wrapper {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
     padding: 10px;
     padding-top: 80px;
 }
@@ -148,6 +152,7 @@ body.loading .modal {
     box-sizing: border-box;
 
     height: 450px;
+    width: 1130px;
     padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;
     border: 1px solid #DDD;
