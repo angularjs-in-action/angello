@@ -41,7 +41,7 @@ describe('Controller: MainCtrl', function () {
             spyOn($location, 'path');
             scope.$broadcast('onLogout');
             scope.$apply();
-            expect($location.path).toHaveBeenCalledWith('/login');
+            expect($location.path).toHaveBeenCalledWith('login');
         });
     });
 });

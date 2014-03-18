@@ -1,39 +1,34 @@
 'use strict';
 
 describe('Login redirection', function () {
-    var $location, $rootScope, AuthService;
+    var $location, $rootScope, $q, AuthService;
 
     beforeEach(module('Angello'));
 
-    beforeEach(inject(function(_$location_, _$rootScope_, _AuthService_) {
-      $location = _$location_;
-      $rootScope = _$rootScope_;
-      AuthService = _AuthService_;
-
-      spyOn($location, 'path').and.returnValue('/users');
+    beforeEach(inject(function (_$location_, _$rootScope_, _$q_, _AuthService_) {
+        $location = _$location_;
+        $rootScope = _$rootScope_;
+        $q = _$q_;
+        AuthService = _AuthService_;
     }));
 
     describe('when the user is not logged in', function () {
-        beforeEach(function() {
-            spyOn(AuthService, 'getCurrentUserId').and.returnValue(null);
+        beforeEach(function () {
+            spyOn(AuthService, 'getCurrentUser').and.returnValue($q.when(null));
         });
 
         it('should redirect to /login', function () {
-            $rootScope.$broadcast('$locationChangeStart');
-            $rootScope.$apply();
-            expect($location.path).toHaveBeenCalledWith('/login');
+
         });
     });
 
-    describe('when the user is logged in', function() {
-        beforeEach(function() {
-            spyOn(AuthService, 'getCurrentUserId').and.returnValue(1);
+    describe('when the user is logged in', function () {
+        beforeEach(function () {
+            spyOn(AuthService, 'getCurrentUser').and.returnValue($q.when({id: 1}));
         });
 
-        it('should not redirect', function() {
-            $rootScope.$broadcast('$locationChangeStart');
-            $rootScope.$apply();
-            expect($location.path).not.toHaveBeenCalledWith('/login');
+        it('should not redirect', function () {
+
         });
     });
 });
