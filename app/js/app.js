@@ -1,15 +1,39 @@
 var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
 
 myModule.config(function ($routeProvider) {
+    var getCurrentUser = function (AuthService, $location) {
+        return AuthService.getCurrentUser().then(function (user) {
+            if (!user) $location.path('/login');
+        });
+    };
+
     $routeProvider.
-        when('/', {templateUrl: 'views/storyboard.html', controller: 'StoryboardCtrl'}).
-        when('/login', {templateUrl: 'views/login.html', controller: 'LoginCtrl'}).
-        when('/dashboard', {templateUrl: 'views/dashboard.html', controller: 'DashboardCtrl'}).
-        when('/users', {templateUrl: 'views/users.html', controller: 'UsersCtrl'}).
+        when('/', {
+            templateUrl: 'views/storyboard.html',
+            controller: 'StoryboardCtrl',
+            resolve: {
+                currentUser: getCurrentUser
+            }
+        }).
+        when('/dashboard', {
+            templateUrl: 'views/dashboard.html',
+            controller: 'DashboardCtrl',
+            resolve: {
+                currentUser: getCurrentUser
+            }
+        }).
+        when('/users', {
+            templateUrl: 'views/users.html',
+            controller: 'UsersCtrl',
+            resolve: {
+                currentUser: getCurrentUser
+            }
+        }).
         when('/users/:userId', {
             templateUrl: 'views/user.html',
             controller: 'UserCtrl',
             resolve: {
+                currentUser: getCurrentUser,
                 user: function ($route, UsersService) {
                     var userId = $route.current.params.userId;
                     return UsersService.fetch(userId);
@@ -19,14 +43,19 @@ myModule.config(function ($routeProvider) {
                 }
             }
         }).
+        when('/login', {templateUrl: 'views/login.html', controller: 'LoginCtrl'}).
         otherwise({redirectTo: '/'});
 });
 
-myModule.run(function ($rootScope, $location, AuthService) {
-    $rootScope.$on('$locationChangeStart', function (event, next, current) {
-        if ($location.path() != '/login' && !AuthService.getCurrentUserId()) {
-            $location.path('/login');
+myModule.run(function ($rootScope, LoadingService) {
+    $rootScope.$on('$routeChangeStart', function (e, curr, prev) {
+        if (curr.$$route && curr.$$route.resolve) {
+            LoadingService.setLoading(true);
         }
+    });
+
+    $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
+        LoadingService.setLoading(false);
     });
 });
 
@@ -49,40 +78,37 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase', 'ENDPOINT_URI',
-    function ($rootScope, $firebaseSimpleLogin, Firebase, FIREBASE_URI) {
+myModule.factory('AuthService', ['$rootScope', 'LoadingService', '$firebaseSimpleLogin', 'ENDPOINT_URI',
+    function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
         var $scope = $rootScope.$new(false);
-        $scope.user = {};
-        $scope.loginService = $firebaseSimpleLogin(new Firebase(FIREBASE_URI));
+        $scope.user = null;
+        $scope.loginService = $firebaseSimpleLogin(new Firebase(ENDPOINT_URI));
 
         var getCurrentUser = function () {
-            $scope.loginService.$getCurrentUser()
-                .then(function (user) {
-                    $scope.user = user;
-                    $rootScope.$broadcast('onLogin');
-                }, function (error) {
-                    console.error('Login failed: ', error);
-                });
+            return $scope.loginService.$getCurrentUser();
         };
 
         var login = function (email, password) {
-            $scope.loginService.$login('password', { email: email, password: password })
-                .then(function (user) {
-                    $scope.user = user;
-                }, function (error) {
-                    console.error('Login failed: ', error);
-                });
+            LoadingService.setLoading(true);
+
+            $scope.loginService.$login('password', { email: email, password: password });
         };
 
         var logout = function () {
+            LoadingService.setLoading(true);
+
             $scope.loginService.$logout();
         };
 
         var register = function (email, password) {
+            LoadingService.setLoading(true);
+
             $scope.loginService.$createUser(email, password);
         };
 
         var changePassword = function (email, oldPassword, newPassword) {
+            LoadingService.setLoading(true);
+
             $scope.loginService.changePassword(email, oldPassword, newPassword);
         };
 
@@ -104,16 +130,19 @@ myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase
 
         $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
             $scope.user = user;
+            LoadingService.setLoading(false);
             $rootScope.$broadcast('onLogin');
         });
 
         $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
             $scope.user = null;
+            LoadingService.setLoading(false);
             $rootScope.$broadcast('onLogout');
         });
 
         $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
             $scope.user = null;
+            LoadingService.setLoading(false);
             $rootScope.$broadcast('onLogout');
         });
 
@@ -125,6 +154,17 @@ myModule.factory('AuthService', ['$rootScope', '$firebaseSimpleLogin', 'Firebase
             logout: logout,
             register: register,
             changePassword: changePassword
+        }
+    }]);
+
+myModule.factory('LoadingService', ['$rootScope',
+    function ($rootScope) {
+        var setLoading = function (loading) {
+            $rootScope.loadingView = loading;
+        };
+
+        return {
+            setLoading: setLoading
         }
     }]);
 

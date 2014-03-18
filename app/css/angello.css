@@ -5,6 +5,25 @@ body {
     overflow: hidden;
 }
 
+body.loading {
+    overflow: hidden;
+}
+
+body.loading .modal {
+    display: block;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(244, 249, 251, 0.80) url(../img/loader.gif) 50% 50% no-repeat;
+}
+
 .navbar {
     min-height: 65px;
     -moz-box-shadow: 0 7px 30px 2px #000;
@@ -49,7 +68,6 @@ body {
 .story .title {
     font-size: 24px;
 }
-
 
 .list-area {
     position: absolute;
@@ -117,16 +135,18 @@ body {
     -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
-#content {
-    width: 880px;
-    margin: 0 auto;
-    margin-top: 60px;
+.chart-wrapper {
     padding: 10px;
+    padding-top: 80px;
+}
+
+.chart-wrapper h3 {
+    color: #FFF;
 }
 
 .chart-container {
     box-sizing: border-box;
-    width: 850px;
+
     height: 450px;
     padding: 20px 15px 15px 15px;
     margin: 15px auto 30px auto;
@@ -198,7 +218,7 @@ form.ng-dirty input.ng-valid {
     background-image: url(../img/bg-login.png);
     width: 400px;
     height: 215px;
-    padding:  20px;
+    padding: 20px;
     margin: 80px auto 20px;
     background-repeat: no-repeat;
     background-position: top left;
@@ -206,15 +226,15 @@ form.ng-dirty input.ng-valid {
 }
 
 .form-signin button {
-    background:none;
-    border:none;
-    box-shadow:none;
+    background: none;
+    border: none;
+    box-shadow: none;
 }
 
 .form-signin button:hover {
-    background:none;
-    border:none;
-    box-shadow:none;
+    background: none;
+    border: none;
+    box-shadow: none;
 }
 
 .form-signin .large {

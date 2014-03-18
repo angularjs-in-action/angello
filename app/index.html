@@ -17,7 +17,7 @@
         <link rel="stylesheet" href="css/angello.css">
         <link rel="stylesheet" href="css/animations.css">
     </head>
-    <body ng-controller="MainCtrl">
+    <body ng-controller="MainCtrl" ng-class="{loading:loadingView}">
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-header"><a class="logo navbar-brand" href="#/"> <img src="img/angello.png"></a></div>
             <div class="btn-group pull-right" ng-show="currentUser">
@@ -29,6 +29,8 @@
         </div>
 
         <div ng-view=""></div>
+
+        <div class="modal"></div>
 
         <script src="lib/jquery.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js"></script>
