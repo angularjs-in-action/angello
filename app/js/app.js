@@ -61,7 +61,7 @@ myModule.run(function ($rootScope, LoadingService) {
 
 myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
 
-myModule.value('Firebase', window.Firebase);
+myModule.constant('Firebase', window.Firebase);
 
 myModule.value('STORY_STATUSES', [
     {name: 'To Do'},
