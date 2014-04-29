@@ -1,4 +1,4 @@
-var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase']);
+var myModule = angular.module('Angello', ['ngRoute', 'ngAnimate', 'firebase', 'Angello.Login', 'Angello.Common']);
 
 myModule.config(function ($routeProvider) {
     var getCurrentUser = function (AuthService, $location) {
@@ -9,33 +9,33 @@ myModule.config(function ($routeProvider) {
 
     $routeProvider.
         when('/', {
-            templateUrl: 'views/storyboard.html',
+            templateUrl: 'src/angello/storyboard/storyboard.html',
             controller: 'StoryboardCtrl',
             resolve: {
                 currentUser: getCurrentUser
             }
         }).
         when('/dashboard', {
-            templateUrl: 'views/dashboard.html',
+            templateUrl: 'src/angello/dashboard/dashboard.html',
             controller: 'DashboardCtrl',
             resolve: {
                 currentUser: getCurrentUser
             }
         }).
         when('/users', {
-            templateUrl: 'views/users.html',
+            templateUrl: 'src/angello/user/users.html',
             controller: 'UsersCtrl',
             resolve: {
                 currentUser: getCurrentUser
             }
         }).
         when('/users/:userId', {
-            templateUrl: 'views/user.html',
+            templateUrl: 'src/angello/user/user.html',
             controller: 'UserCtrl',
             resolve: {
                 currentUser: getCurrentUser,
-                user: function ($route, UsersService) {
-                    var userId = $route.current.params.userId;
+                user: function ($routeParams, UsersService) {
+                    var userId = $routeParams['userId'];
                     return UsersService.fetch(userId);
                 },
                 stories: function (StoriesService) {
@@ -43,15 +43,13 @@ myModule.config(function ($routeProvider) {
                 }
             }
         }).
-        when('/login', {templateUrl: 'views/login.html', controller: 'LoginCtrl'}).
+        when('/login', {templateUrl: 'src/angello/login/tmpl/login.html', controller: 'LoginCtrl'}).
         otherwise({redirectTo: '/'});
 });
 
 myModule.run(function ($rootScope, LoadingService) {
     $rootScope.$on('$routeChangeStart', function (e, curr, prev) {
-        if (curr.$$route && curr.$$route.resolve) {
-            LoadingService.setLoading(true);
-        }
+        LoadingService.setLoading(true);
     });
 
     $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
@@ -78,95 +76,8 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.factory('AuthService', ['$rootScope', 'LoadingService', '$firebaseSimpleLogin', 'ENDPOINT_URI',
-    function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
-        var $scope = $rootScope.$new(false);
-        $scope.user = null;
-        $scope.loginService = $firebaseSimpleLogin(new Firebase(ENDPOINT_URI));
 
-        var getCurrentUser = function () {
-            return $scope.loginService.$getCurrentUser();
-        };
 
-        var login = function (email, password) {
-            LoadingService.setLoading(true);
-
-            $scope.loginService.$login('password', { email: email, password: password });
-        };
-
-        var logout = function () {
-            LoadingService.setLoading(true);
-
-            $scope.loginService.$logout();
-        };
-
-        var register = function (email, password) {
-            LoadingService.setLoading(true);
-
-            $scope.loginService.$createUser(email, password);
-        };
-
-        var changePassword = function (email, oldPassword, newPassword) {
-            LoadingService.setLoading(true);
-
-            $scope.loginService.changePassword(email, oldPassword, newPassword);
-        };
-
-        var user = function () {
-            return $scope.user;
-        };
-
-        var existy = function (x) {
-            return x != null;
-        };
-
-        var userExists = function () {
-            return existy($scope.user) && existy($scope.user.id);
-        };
-
-        var getCurrentUserId = function () {
-            return userExists() ? $scope.user.id : null;
-        };
-
-        $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
-            $scope.user = user;
-            LoadingService.setLoading(false);
-            $rootScope.$broadcast('onLogin');
-        });
-
-        $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
-            $scope.user = null;
-            LoadingService.setLoading(false);
-            $rootScope.$broadcast('onLogout');
-        });
-
-        $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
-            $scope.user = null;
-            LoadingService.setLoading(false);
-            $rootScope.$broadcast('onLogout');
-        });
-
-        return {
-            getCurrentUser: getCurrentUser,
-            getCurrentUserId: getCurrentUserId,
-            user: user,
-            login: login,
-            logout: logout,
-            register: register,
-            changePassword: changePassword
-        }
-    }]);
-
-myModule.factory('LoadingService', ['$rootScope',
-    function ($rootScope) {
-        var setLoading = function (loading) {
-            $rootScope.loadingView = loading;
-        };
-
-        return {
-            setLoading: setLoading
-        }
-    }]);
 
 myModule.factory('StoriesService', ['$http', '$q', 'AuthService', 'ENDPOINT_URI',
     function ($http, $q, AuthService, ENDPOINT_URI) {
@@ -262,37 +173,7 @@ myModule.controller('MainCtrl', ['$scope', '$location', 'AuthService',
         AuthService.getCurrentUser();
     }]);
 
-myModule.controller('LoginCtrl', ['$scope', '$location', 'AuthService',
-    function ($scope, $location, AuthService) {
-        $scope.user = {
-            email: '',
-            password: '',
-            register: false
-        };
 
-        $scope.submit = function (email, password, register) {
-            if ($scope.loginForm.$valid) {
-                ((register) ? AuthService.register : AuthService.login)(email, password);
-                $scope.reset();
-            }
-        };
-
-        $scope.reset = function () {
-            $scope.user = {
-                email: '',
-                password: '',
-                register: false
-            };
-        };
-
-        $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
-            $location.path('/');
-        });
-
-        $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
-            console.log('ERROR', err);
-        });
-    }]);
 
 myModule.controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
     $scope.newUser = { name: '', email: '' };
