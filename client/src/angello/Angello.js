@@ -81,70 +81,7 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.directive('sortable', ['StoriesService', function (StoriesService) {
-    var linker = function (scope, element, attrs) {
-        var status = scope.status.name;
+myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
+myModule.constant('Firebase', window.Firebase);
 
-        element.sortable({
-            items: 'li',
-            connectWith: ".list",
-            receive: function (event, ui) {
-                var prevScope = angular.element(ui.item.prev()).scope();
-                var curScope = angular.element(ui.item).scope();
 
-                scope.$apply(function () {
-                    // TODO Fix the entire drag and drop to order mechanism
-                    // StoriesService.insertStoryAfter(curScope.story, prevScope.story);
-                    // curScope.story.status = status; // Update the status
-                });
-            }
-        });
-    };
-
-    return {
-        restrict: 'A',
-        link: linker
-    };
-}]);
-
-myModule.animation('.list-area-expanded', [function () {
-    return {
-        addClass: function (element, className, done) {
-            if (className == 'list-area-expanded') {
-                TweenMax.to(element, 0.5, {right: 68, onComplete: done });
-            }
-            else {
-                done();
-            }
-        },
-        removeClass: function (element, className, done) {
-            if (className == 'list-area-expanded') {
-                TweenMax.to(element, 0.5, {right: 250, onComplete: done });
-            }
-            else {
-                done();
-            }
-        }
-    };
-}]);
-
-myModule.animation('.details-animation', [function () {
-    return {
-        addClass: function (element, className, done) {
-            if (className == 'details-visible') {
-                TweenMax.to(element, 0.5, {right: 0, onComplete: done });
-            }
-            else {
-                done();
-            }
-        },
-        removeClass: function (element, className, done) {
-            if (className == 'details-visible') {
-                TweenMax.to(element, 0.5, {right: -element.width() + 50, onComplete: done });
-            }
-            else {
-                done();
-            }
-        }
-    };
-}]);
