@@ -1,4 +1,4 @@
-angular.module('Angello.Common', [])
+angular.module('Angello.Common')
     .factory('LoadingService', ['$rootScope',
         function ($rootScope) {
             var setLoading = function (loading) {

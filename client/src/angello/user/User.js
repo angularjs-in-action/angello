@@ -1,3 +1,1 @@
-/**
- * Created by lukas on 4/29/14.
- */
+angular.module('Angello.User', ['Angello.Common']);

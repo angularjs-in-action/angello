@@ -1,4 +1,4 @@
-angular.module('Angello.Login', [])
+angular.module('Angello.Login')
     .controller('LoginCtrl', ['$scope', '$location', 'AuthService',
         function ($scope, $location, AuthService) {
             $scope.user = {

@@ -1,4 +1,4 @@
-angular.module('Angello.Login', [])
+angular.module('Angello.Common')
     .factory('AuthService', ['$rootScope', 'LoadingService', '$firebaseSimpleLogin', 'ENDPOINT_URI',
         function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
             var $scope = $rootScope.$new(false);
