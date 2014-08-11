@@ -17,14 +17,14 @@
         <link rel="stylesheet" href="assets/css/angello.css">
         <link rel="stylesheet" href="assets/css/animations.css">
     </head>
-    <body ng-controller="MainCtrl" ng-class="{loading:loadingView}">
+    <body ng-controller="MainCtrl as main" ng-class="{loading:loadingView}">
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-header"><a class="logo navbar-brand" href="#/"> <img src="assets/img/angello.png"></a></div>
-            <div class="btn-group pull-right" ng-show="currentUser">
+            <div class="btn-group pull-right" ng-show="main.currentUser">
                 <a class="btn btn-danger" href="#/"><span class="glyphicon glyphicon-home"></span></a>
                 <a class="btn btn-danger" href="#/users"><span class="glyphicon glyphicon-user"></span></a>
                 <a class="btn btn-danger" href="#/dashboard"><span class="glyphicon glyphicon-signal"></span></a>
-                <button class="btn btn-default" ng-click="logout()"><span class="glyphicon glyphicon-log-out"></span></button>
+                <button class="btn btn-default" ng-click="main.logout()"><span class="glyphicon glyphicon-log-out"></span></button>
             </div>
         </div>
 
