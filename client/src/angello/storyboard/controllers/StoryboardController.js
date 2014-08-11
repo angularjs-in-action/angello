@@ -12,9 +12,9 @@ angular.module('Angello.Storyboard')
 
             $scope.users = {};
 
-            UsersService.find()
+            UsersService.all()
                 .then(function (result) {
-                    $scope.users = (result !== 'null') ? result : {};
+                    $scope.users = (result.data !== 'null') ? result.data : {};
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });
@@ -27,8 +27,8 @@ angular.module('Angello.Storyboard')
             };
 
             $scope.getStories = function () {
-                StoriesService.find().then(function (result) {
-                    $scope.stories = (result !== 'null') ? result : {};
+                StoriesService.all().then(function (result) {
+                    $scope.stories = (result.data !== 'null') ? result.data : {};
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });

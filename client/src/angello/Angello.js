@@ -49,7 +49,7 @@ myModule.config(function ($routeProvider) {
                     return UsersService.fetch(userId);
                 },
                 stories: function (StoriesService) {
-                    return StoriesService.find();
+                    return StoriesService.all();
                 }
             }
         }).

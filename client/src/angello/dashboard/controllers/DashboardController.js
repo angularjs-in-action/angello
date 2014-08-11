@@ -1,15 +1,15 @@
 angular.module('Angello.Dashboard')
-    .controller('DashboardCtrl', ['$scope', 'StoriesService', 'STORY_STATUSES', 'STORY_TYPES',
+    .controller('DashboardCtrl',
         function ($scope, StoriesService, STORY_STATUSES, STORY_TYPES) {
             $scope.types = STORY_TYPES;
             $scope.statuses = STORY_STATUSES;
             $scope.stories = [];
 
-            StoriesService.find().then(function (stories) {
+            StoriesService.all().then(function (stories) {
                 var arr = [];
-                for (var key in stories) {
-                    arr.push(stories[key]);
+                for (var key in stories.data) {
+                    arr.push(stories.data[key]);
                 }
                 $scope.stories = arr;
             });
-        }]);
+        });

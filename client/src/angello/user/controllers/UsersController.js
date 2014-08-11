@@ -4,8 +4,8 @@ angular.module('Angello.User')
         $scope.users = {};
 
         $scope.getUsers = function () {
-            UsersService.find().then(function (result) {
-                $scope.users = (result !== 'null') ? result : {};
+            UsersService.all().then(function (result) {
+                $scope.users = (result.data !== 'null') ? result.data : {};
             }, function (reason) {
                 console.log('ERROR', reason);
             });

@@ -1,5 +1,5 @@
 angular.module('Angello.Common')
-    .service('StoriesService',
+    .service('UsersService',
     function ($http, $q, AuthService, ENDPOINT_URI) {
         var service = this,
             root = 'clients/',
