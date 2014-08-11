@@ -1,5 +1,5 @@
 angular.module('Angello.Common')
-    .animation('.details-animation', [function () {
+    .animation('.details-animation', function () {
         return {
             addClass: function (element, className, done) {
                 if (className == 'details-visible') {
@@ -18,4 +18,4 @@ angular.module('Angello.Common')
                 }
             }
         };
-    }]);
+    });

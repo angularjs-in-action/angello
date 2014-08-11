@@ -1,5 +1,5 @@
 angular.module('Angello.Storyboard')
-    .directive('sortable', ['StoriesService', function (StoriesService) {
+    .directive('sortable', function (StoriesService) {
         var linker = function (scope, element, attrs) {
             var status = scope.status.name;
 
@@ -23,4 +23,4 @@ angular.module('Angello.Storyboard')
             restrict: 'A',
             link: linker
         };
-    }]);
+    });

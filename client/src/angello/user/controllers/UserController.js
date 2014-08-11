@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .controller('UserCtrl', ['$scope', '$routeParams', 'user', 'stories',
+    .controller('UserCtrl',
         function ($scope, $routeParams, user, stories) {
             $scope.userId = $routeParams['userId'];
             $scope.user = user;
@@ -15,4 +15,4 @@ angular.module('Angello.User')
             };
 
             $scope.stories = $scope.getAssignedStories($scope.userId, stories);
-        }]);
+        });

@@ -1,5 +1,5 @@
 angular.module('Angello.Storyboard')
-    .controller('StoryboardCtrl', ['$scope', 'StoriesService', 'UsersService', 'STORY_STATUSES', 'STORY_TYPES',
+    .controller('StoryboardCtrl',
         function ($scope, StoriesService, UsersService, STORY_STATUSES, STORY_TYPES) {
             $scope.detailsVisible = true;
             $scope.currentStoryId = null;
@@ -89,4 +89,4 @@ angular.module('Angello.Storyboard')
             });
 
             $scope.getStories();
-        }]);
+        });

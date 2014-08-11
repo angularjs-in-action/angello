@@ -1,5 +1,5 @@
 angular.module('Angello.Dashboard')
-    .directive('chart', [function () {
+    .directive('chart', function () {
         var parseDataForCharts = function (sourceArray, sourceProp, referenceArray, referenceProp) {
             var data = [];
             referenceArray.each(function (r) {
@@ -41,4 +41,4 @@ angular.module('Angello.Dashboard')
                 referenceArray: '='
             }
         };
-    }]);
+    });

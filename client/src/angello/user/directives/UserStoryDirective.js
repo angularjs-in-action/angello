@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .directive('userstory', ['$rootScope', 'StoriesService', function ($rootScope, StoriesService) {
+    .directive('userstory', function ($rootScope, StoriesService) {
         var linker = function (scope, element, attrs) {
             element
                 .mouseover(function () {
@@ -25,4 +25,4 @@ angular.module('Angello.User')
             controller: controller,
             link: linker
         };
-    }]);
+    });

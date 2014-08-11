@@ -1,5 +1,5 @@
 angular.module('Angello.Login')
-    .controller('LoginCtrl', ['$scope', '$location', 'AuthService',
+    .controller('LoginCtrl',
         function ($scope, $location, AuthService) {
             $scope.user = {
                 email: '',
@@ -29,4 +29,4 @@ angular.module('Angello.Login')
             $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
                 console.log('ERROR', err);
             });
-        }]);
+        });

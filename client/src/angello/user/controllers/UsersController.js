@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .controller('UsersCtrl', ['$scope', 'UsersService', function ($scope, UsersService) {
+    .controller('UsersCtrl', function ($scope, UsersService) {
         $scope.newUser = { name: '', email: '' };
         $scope.users = {};
 
@@ -37,4 +37,4 @@ angular.module('Angello.User')
         };
 
         $scope.getUsers();
-    }]);
+    });

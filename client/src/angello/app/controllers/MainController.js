@@ -1,5 +1,5 @@
 angular.module('Angello.Common', [])
-    .controller('MainCtrl', ['$scope', '$location', 'AuthService',
+    .controller('MainCtrl',
         function ($scope, $location, AuthService) {
             $scope.currentUser = null;
 
@@ -17,4 +17,4 @@ angular.module('Angello.Common', [])
             });
 
             AuthService.getCurrentUser();
-        }]);
+        });
