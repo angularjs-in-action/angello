@@ -1,79 +1,69 @@
 angular.module('Angello.Common')
-    .factory('AuthService', ['$rootScope', 'LoadingService', '$firebaseSimpleLogin', 'ENDPOINT_URI',
+    .service('AuthService',
         function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
-            var $scope = $rootScope.$new(false);
-            $scope.user = null;
-            $scope.loginService = $firebaseSimpleLogin(new Firebase(ENDPOINT_URI));
-
-            var getCurrentUser = function () {
-                return $scope.loginService.$getCurrentUser();
-            };
-
-            var login = function (email, password) {
-                LoadingService.setLoading(true);
-
-                $scope.loginService.$login('password', { email: email, password: password });
-            };
-
-            var logout = function () {
-                LoadingService.setLoading(true);
-
-                $scope.loginService.$logout();
-            };
-
-            var register = function (email, password) {
-                LoadingService.setLoading(true);
-
-                $scope.loginService.$createUser(email, password);
-            };
-
-            var changePassword = function (email, oldPassword, newPassword) {
-                LoadingService.setLoading(true);
-
-                $scope.loginService.changePassword(email, oldPassword, newPassword);
-            };
-
-            var user = function () {
-                return $scope.user;
-            };
+            var service = this,
+                user = null,
+                loginService = $firebaseSimpleLogin(new Firebase(ENDPOINT_URI));
 
             var existy = function (x) {
                 return x != null;
             };
 
             var userExists = function () {
-                return existy($scope.user) && existy($scope.user.id);
+                return existy(user) && existy(user.id);
             };
 
-            var getCurrentUserId = function () {
-                return userExists() ? $scope.user.id : null;
+            service.getCurrentUser = function () {
+                return loginService.$getCurrentUser();
             };
 
-            $rootScope.$on('$firebaseSimpleLogin:login', function (e, user) {
-                $scope.user = user;
+            service.login = function (email, password) {
+                LoadingService.setLoading(true);
+
+                loginService.$login('password', { email: email, password: password });
+            };
+
+            service.logout = function () {
+                LoadingService.setLoading(true);
+
+                loginService.$logout();
+            };
+
+            service.register = function (email, password) {
+                LoadingService.setLoading(true);
+
+                loginService.$createUser(email, password);
+            };
+
+            service.changePassword = function (email, oldPassword, newPassword) {
+                LoadingService.setLoading(true);
+
+                loginService.changePassword(email, oldPassword, newPassword);
+            };
+
+            service.user = function () {
+                return user;
+            };
+
+            service.getCurrentUserId = function () {
+                return userExists() ? user.id : null;
+            };
+
+            $rootScope.$on('$firebaseSimpleLogin:login', function (e, u) {
+                user = u;
                 LoadingService.setLoading(false);
                 $rootScope.$broadcast('onLogin');
             });
 
             $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
-                $scope.user = null;
+                user = null;
                 LoadingService.setLoading(false);
                 $rootScope.$broadcast('onLogout');
             });
 
             $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
-                $scope.user = null;
+                user = null;
                 LoadingService.setLoading(false);
                 $rootScope.$broadcast('onLogout');
             });
-
-            return {
-                getCurrentUser: getCurrentUser,
-                getCurrentUserId: getCurrentUserId,
-                user: user,
-                login: login,
-                logout: logout,
-                register: register,
-                changePassword: changePassword
-            }
-        }]);
+        });

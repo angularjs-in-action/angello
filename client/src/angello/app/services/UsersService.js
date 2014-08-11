@@ -1,56 +1,36 @@
 angular.module('Angello.Common')
-    .factory('UsersService', ['$http', '$q', 'AuthService', 'ENDPOINT_URI',
-        function ($http, $q, AuthService, ENDPOINT_URI) {
-            var find = function () {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
+    .service('StoriesService',
+    function ($http, $q, AuthService, ENDPOINT_URI) {
+        var service = this,
+            root = 'clients/',
+            format = ".json",
+            path = "/users";
 
-                $http.get(url).success(deferred.resolve).error(deferred.reject);
+        function getUrl(postfix) {
+            return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;
+        };
 
-                return deferred.promise;
-            };
+        function getUrlForId(user_id) {
+            return getUrl(path) + user_id + format;
+        }
 
-            var fetch = function (user_id) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
+        service.all = function () {
+            return $http.get(getUrl(path + format));
+        };
 
-                $http.get(url).success(deferred.resolve).error(deferred.reject)
+        service.fetch = function (user_id) {
+            return $http.get(getUrlForId(user_id));
+        };
 
-                return deferred.promise;
-            };
+        service.create = function (user) {
+            return $http.post(getUrl(path + format), user);
+        };
 
-            var create = function (user) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users.json';
+        service.update = function (user_id, user) {
+            return $http.put(getUrlForId(user_id), user);
+        };
 
-                $http.post(url, user).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
-            };
-
-            var update = function (user_id, user) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
-
-                $http.put(url, user).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
-            };
-
-            var destroy = function (user_id) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/users/' + user_id + '.json';
-
-                $http.delete(url).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
-            };
-
-            return {
-                find: find,
-                fetch: fetch,
-                create: create,
-                update: update,
-                destroy: destroy
-            };
-        }]);
+        service.destroy = function (user_id) {
+            return $http.delete(getUrlForId(user_id));
+        };
+    });

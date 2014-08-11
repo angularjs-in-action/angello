@@ -1,56 +1,36 @@
 angular.module('Angello.Common')
-    .factory('StoriesService', ['$http', '$q', 'AuthService', 'ENDPOINT_URI',
+    .service('StoriesService',
         function ($http, $q, AuthService, ENDPOINT_URI) {
-            var find = function () {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
+            var service = this,
+                root = 'clients/',
+                format = ".json",
+                path = "/stories";
 
-                $http.get(url).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
+            function getUrl(postfix) {
+                return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;
             };
 
-            var fetch = function (story_id) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
+            function getUrlForId(story_id) {
+                return getUrl(path) + story_id + format;
+            }
 
-                $http.get(url).success(deferred.resolve).error(deferred.reject)
-
-                return deferred.promise;
+            service.all = function () {
+                return $http.get(getUrl(path + format));
             };
 
-            var create = function (story) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories.json';
-
-                $http.post(url, story).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
+            service.fetch = function (story_id) {
+                return $http.get(getUrlForId(story_id));
             };
 
-            var update = function (story_id, story) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
-
-                $http.put(url, story).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
+            service.create = function (story) {
+                return $http.post(getUrl(path + format), story);
             };
 
-            var destroy = function (story_id) {
-                var deferred = $q.defer();
-                var url = ENDPOINT_URI + 'clients/' + AuthService.getCurrentUserId() + '/stories/' + story_id + '.json';
-
-                $http.delete(url).success(deferred.resolve).error(deferred.reject);
-
-                return deferred.promise;
+            service.update = function (story_id, story) {
+                return $http.put(getUrlForId(story_id), story);
             };
 
-            return {
-                find: find,
-                fetch: fetch,
-                create: create,
-                update: update,
-                destroy: destroy
+            service.destroy = function (story_id) {
+                return $http.delete(getUrlForId(story_id));
             };
-        }]);
+        });

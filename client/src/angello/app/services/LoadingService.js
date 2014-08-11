@@ -1,11 +1,9 @@
 angular.module('Angello.Common')
-    .factory('LoadingService', ['$rootScope',
+    .service('LoadingService',
         function ($rootScope) {
-            var setLoading = function (loading) {
+            var service = this;
+
+            service.setLoading = function (loading) {
                 $rootScope.loadingView = loading;
             };
-
-            return {
-                setLoading: setLoading
-            }
-        }]);
+        });
