@@ -10,7 +10,7 @@ var myModule = angular.module('Angello',
         'Angello.User'
     ]);
 
-myModule.config(function ($routeProvider) {
+myModule.config(function ($routeProvider, $httpProvider) {
     var getCurrentUser = function (AuthService, $location) {
         return AuthService.getCurrentUser().then(function (user) {
             if (!user) $location.path('/login');
@@ -63,6 +63,22 @@ myModule.config(function ($routeProvider) {
             controllerAs: 'login'
         }).
         otherwise({redirectTo: '/'});
+
+    $httpProvider.interceptors.push('loadingInterceptor');
+});
+
+myModule.factory('loadingInterceptor', function(LoadingService) {
+    var loadingInterceptor = {
+        request: function(config) {
+            LoadingService.setLoading(true);
+            return config;
+        },
+        response: function(response) {
+            LoadingService.setLoading(false);
+            return response;
+        }
+    };
+    return loadingInterceptor;
 });
 
 myModule.run(function ($rootScope, LoadingService) {
