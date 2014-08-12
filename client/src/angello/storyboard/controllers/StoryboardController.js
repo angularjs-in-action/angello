@@ -1,92 +1,95 @@
 angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl',
         function ($scope, StoriesService, UsersService, STORY_STATUSES, STORY_TYPES) {
-            $scope.detailsVisible = true;
-            $scope.currentStoryId = null;
-            $scope.currentStory = null;
-            $scope.editedStory = {};
-            $scope.stories = [];
+            var myStory = this;
 
-            $scope.types = STORY_TYPES;
-            $scope.statuses = STORY_STATUSES;
+            myStory.detailsVisible = true;
+            myStory.currentStoryId = null;
+            myStory.currentStory = null;
+            myStory.editedStory = {};
+            myStory.stories = [];
 
-            $scope.users = {};
+            myStory.types = STORY_TYPES;
+            myStory.statuses = STORY_STATUSES;
+
+            myStory.users = {};
 
             UsersService.all()
                 .then(function (result) {
-                    $scope.users = (result.data !== 'null') ? result.data : {};
+                    myStory.users = (result.data !== 'null') ? result.data : {};
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });
 
 
-            $scope.setCurrentStory = function (id, story) {
-                $scope.currentStoryId = id;
-                $scope.currentStory = story;
-                $scope.editedStory = angular.copy($scope.currentStory);
+            myStory.setCurrentStory = function (id, story) {
+                console.log(id, story)
+                myStory.currentStoryId = id;
+                myStory.currentStory = story;
+                myStory.editedStory = angular.copy(myStory.currentStory);
             };
 
-            $scope.getStories = function () {
+            myStory.getStories = function () {
                 StoriesService.all().then(function (result) {
-                    $scope.stories = (result.data !== 'null') ? result.data : {};
+                    myStory.stories = (result.data !== 'null') ? result.data : {};
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });
             };
 
-            $scope.createStory = function () {
-                StoriesService.create($scope.editedStory).then(function (result) {
-                    $scope.getStories();
-                    $scope.resetForm();
+            myStory.createStory = function () {
+                StoriesService.create(myStory.editedStory).then(function (result) {
+                    myStory.getStories();
+                    myStory.resetForm();
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });
             };
 
-            $scope.updateStory = function () {
+            myStory.updateStory = function () {
                 var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
 
                 fields.forEach(function (field) {
-                    $scope.currentStory[field] = $scope.editedStory[field]
+                    myStory.currentStory[field] = myStory.editedStory[field]
                 });
 
-                StoriesService.update($scope.currentStoryId, $scope.editedStory).then(function (result) {
-                    $scope.getStories();
-                    $scope.resetForm();
+                StoriesService.update(myStory.currentStoryId, myStory.editedStory).then(function (result) {
+                    myStory.getStories();
+                    myStory.resetForm();
                 }, function (reason) {
                     console.log('ERROR', reason);
                 });
             };
 
-            $scope.updateCancel = function () {
-                $scope.resetForm();
+            myStory.updateCancel = function () {
+                myStory.resetForm();
             };
 
-            $scope.resetForm = function () {
-                $scope.currentStory = null;
-                $scope.editedStory = {};
+            myStory.resetForm = function () {
+                myStory.currentStory = null;
+                myStory.editedStory = {};
 
-                $scope.detailsForm.$setPristine();
+                myStory.detailsForm.$setPristine();
             };
 
-            $scope.setDetailsVisible = function (visible) {
-                $scope.detailsVisible = visible;
+            myStory.setDetailsVisible = function (visible) {
+                myStory.detailsVisible = visible;
             };
 
-            $scope.storiesWithStatus = function (status) {
+            myStory.storiesWithStatus = function (status) {
                 var stories = {};
-                var keys = Object.keys($scope.stories);
+                var keys = Object.keys(myStory.stories);
                 for (var i = 0, len = keys.length; i < len; i++) {
                     var key = keys[i];
-                    if ($scope.stories[key].status == status.name) stories[key] = $scope.stories[key];
+                    if (myStory.stories[key].status == status.name) stories[key] = myStory.stories[key];
                 }
                 return stories;
             };
 
             $scope.$on('storyDeleted', function () {
-                $scope.getStories();
-                $scope.resetForm();
+                myStory.getStories();
+                myStory.resetForm();
             });
 
-            $scope.getStories();
+            myStory.getStories();
         });

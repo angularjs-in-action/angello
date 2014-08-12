@@ -1,9 +1,9 @@
-<form name="loginForm" role="form" class="form-signin" novalidate ng-submit="submit(user.email, user.password, user.register);">
+<form name="login.loginForm" role="form" class="form-signin" novalidate ng-submit="login.submit(login.user.email, login.user.password, login.user.register);">
     <p class="large">Please Sign In</p>
     <fieldset>
-        <div><input type="email" ng-model="user.email" placeholder="Enter Email" required /></div>
-        <div><input type="password" ng-model="user.password" placeholder="Enter Password" required /></div>
-        <div class="bottom x-small"><input type="checkbox" ng-model="user.register"> New User?</div>
+        <div><input type="email" ng-model="login.user.email" placeholder="Enter Email" required /></div>
+        <div><input type="password" ng-model="login.user.password" placeholder="Enter Password" required /></div>
+        <div class="bottom x-small"><input type="checkbox" ng-model="login.user.register"> New User?</div>
         <button type="submit" class="btn btn-default btn-sm pull-right">
             <span class="glyphicon glyphicon-ok"></span> Sign In
         </button>

@@ -10,8 +10,8 @@ angular.module('Angello.User')
                 });
         };
 
-        var controller = function ($scope) {
-            $scope.deleteStory = function (id) {
+        var controller = function () {
+            this.deleteStory = function (id) {
                 StoriesService.destroy(id).then(function (result) {
                     $rootScope.$broadcast('storyDeleted');
                 }, function (reason) {
@@ -23,6 +23,7 @@ angular.module('Angello.User')
         return {
             restrict: 'A',
             controller: controller,
+            controllerAs: 'storyDir',
             link: linker
         };
     });

@@ -1,21 +1,23 @@
 angular.module('Angello.Login')
     .controller('LoginCtrl',
         function ($scope, $location, AuthService) {
-            $scope.user = {
+            var login = this;
+
+            login.user = {
                 email: '',
                 password: '',
                 register: false
             };
 
-            $scope.submit = function (email, password, register) {
-                if ($scope.loginForm.$valid) {
+            login.submit = function (email, password, register) {
+                if (login.loginForm.$valid) {
                     ((register) ? AuthService.register : AuthService.login)(email, password);
-                    $scope.reset();
+                    login.reset();
                 }
             };
 
-            $scope.reset = function () {
-                $scope.user = {
+            login.reset = function () {
+                login.user = {
                     email: '',
                     password: '',
                     register: false

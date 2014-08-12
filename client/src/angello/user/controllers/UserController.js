@@ -1,10 +1,14 @@
 angular.module('Angello.User')
     .controller('UserCtrl',
-        function ($scope, $routeParams, user, stories) {
-            $scope.userId = $routeParams['userId'];
-            $scope.user = user;
+        function ($routeParams, user, stories) {
+            var myUser = this;
 
-            $scope.getAssignedStories = function (userId, stories) {
+            myUser.userId = $routeParams['userId'];
+            myUser.user = user.data;
+
+            console.log('user: ', user, '   stories: ', stories)
+            myUser.stories = stories.data;
+            myUser.getAssignedStories = function (userId, stories) {
                 var assignedStories = {};
                 var keys = Object.keys(stories);
                 for (var i = 0, len = keys.length; i < len; i++) {
@@ -14,5 +18,5 @@ angular.module('Angello.User')
                 return assignedStories;
             };
 
-            $scope.stories = $scope.getAssignedStories($scope.userId, stories);
+            myUser.stories = myUser.getAssignedStories(myUser.userId, myUser.stories);
         });

@@ -1,14 +1,14 @@
 <!-- STORIES -->
-<div class="list-area" ng-class="{'list-area-expanded':!detailsVisible}">
+<div class="list-area" ng-class="{'list-area-expanded':!storyboard.detailsVisible}">
     <div class="list-wrapper">
-        <ul class="list my-repeat-animation" sortable="" ng-repeat="status in statuses">
+        <ul class="list my-repeat-animation" sortable="" ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
             <hr>
             <!-- TODO Filter by status -->
-            <li userstory ng-repeat="(id, story) in storiesWithStatus(status)" class="story my-repeat-animation" ng-click="setCurrentStory(id, story)">
+            <li userstory ng-repeat="(id, story) in storyboard.storiesWithStatus(status)" class="story my-repeat-animation" ng-click="storyboard.setCurrentStory(id, story)">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="deleteStory(id);">×</button>
+                        <button type="button" class="close" ng-click="storyDir.deletestoryboard(id);">×</button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>
@@ -23,29 +23,29 @@
 
 
 <!-- STORY DETAILS -->
-<div class="details details-animation" ng-class="{'details-visible':detailsVisible}">
+<div class="details details-animation" ng-class="{'details-visible':storyboard.detailsVisible}">
     <div class="details-nav">
-        <div ng-if="!detailsVisible">
-            <button class="btn pull-left btn-default" ng-click="setDetailsVisible(true)"><span class="glyphicon glyphicon-arrow-left"></span></button>
+        <div ng-if="!storyboard.detailsVisible">
+            <button class="btn pull-left btn-default" ng-click="storyboard.setDetailsVisible(true)"><span class="glyphicon glyphicon-arrow-left"></span></button>
         </div>
-        <div ng-if="detailsVisible">
-            <button class="btn pull-right btn-default" ng-click="setDetailsVisible(false)"><span class="glyphicon glyphicon-arrow-right"></span></button>
+        <div ng-if="storyboard.detailsVisible">
+            <button class="btn pull-right btn-default" ng-click="storyboard.setDetailsVisible(false)"><span class="glyphicon glyphicon-arrow-right"></span></button>
         </div>
     </div>
 
-    <div ng-if="detailsVisible" class="my-fade-animation">
+    <div ng-if="storyboard.detailsVisible" class="my-fade-animation">
         <h3>Card Details</h3>
 
-        <form name="$parent.detailsForm" novalidate="">
+        <form name="storyboard.detailsForm" novalidate="">
             <div class="form-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
-                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
+                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="storyboard.editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputTitle.$dirty && detailsForm.inputTitle.$invalid">
-                        <small ng-if="detailsForm.inputTitle.$error.required">Required!</small>
-                        <small ng-if="detailsForm.inputTitle.$error.minlength">Too short!</small>
-                        <small ng-if="detailsForm.inputTitle.$error.maxlength">Too long!</small>
+                    <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputTitle.$dirty && storyboard.detailsForm.inputTitle.$invalid">
+                        <small ng-if="storyboard.detailsForm.inputTitle.$error.required">Required!</small>
+                        <small ng-if="storyboard.detailsForm.inputTitle.$error.minlength">Too short!</small>
+                        <small ng-if="storyboard.detailsForm.inputTitle.$error.maxlength">Too long!</small>
                     </div>
                 </div>
             </div>
@@ -53,12 +53,12 @@
                 <label class="control-label" for="inputStatus">*Status</label>
 
                 <div class="controls">
-                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="editedStory.status" ng-options="l.name as l.name for l in statuses" ng-required="true">
+                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="storyboard.editedStory.status" ng-options="l.name as l.name for l in storyboard.statuses" ng-required="true">
                         <option value="">Select Status</option>
                     </select>
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputStatus.$dirty && detailsForm.inputStatus.$invalid">
-                        <small ng-if="detailsForm.inputStatus.$error.required">Required!</small>
+                    <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputStatus.$dirty && storyboard.detailsForm.inputStatus.$invalid">
+                        <small ng-if="storyboard.detailsForm.inputStatus.$error.required">Required!</small>
                     </div>
                 </div>
             </div>
@@ -66,12 +66,12 @@
                 <label class="control-label" for="inputType">*Type</label>
 
                 <div class="controls">
-                    <select id="inputType" name="inputType" class="form-control" ng-model="editedStory.type" ng-options="t.name as t.name for t in types" ng-required="true">
+                    <select id="inputType" name="inputType" class="form-control" ng-model="storyboard.editedStory.type" ng-options="t.name as t.name for t in storyboard.types" ng-required="true">
                         <option value="">Select Type</option>
                     </select>
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputType.$dirty && detailsForm.inputType.$invalid">
-                        <small ng-if="detailsForm.inputType.$error.required">Required!</small>
+                    <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputType.$dirty && storyboard.detailsForm.inputType.$invalid">
+                        <small ng-if="storyboard.detailsForm.inputType.$error.required">Required!</small>
                     </div>
                 </div>
             </div>
@@ -79,26 +79,26 @@
                 <label class="control-label" for="inputDescription">Description</label>
 
                 <div class="controls">
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3" ng-model="editedStory.description"></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3" ng-model="storyboard.editedStory.description"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
 
                 <div class="controls">
-                    <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3" ng-model="editedStory.criteria"></textarea>
+                    <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3" ng-model="storyboard.editedStory.criteria"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label">*Reporter</label>
 
                 <div class="controls">
-                    <select ng-model="editedStory.reporter" class="form-control"
-                        name="inputReporter" ng-required="true" ng-options="id as user.name for (id, user) in users">
+                    <select ng-model="storyboard.editedStory.reporter" class="form-control"
+                        name="inputReporter" ng-required="true" ng-options="id as user.name for (id, user) in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputReporter.$dirty && detailsForm.inputReporter.$invalid">
-                        <small ng-if="detailsForm.inputReporter.$error.required">Required!</small>
+                    <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputReporter.$dirty && storyboard.detailsForm.inputReporter.$invalid">
+                        <small ng-if="storyboard.detailsForm.inputReporter.$error.required">Required!</small>
                     </div>
                 </div>
             </div>
@@ -106,24 +106,24 @@
                 <label class="control-label">*Assignee</label>
 
                 <div class="controls">
-                    <select ng-model="editedStory.assignee" class="form-control"
-                        name="inputAssignee" ng-required="true" ng-options="id as user.name for (id, user) in users">
+                    <select ng-model="storyboard.editedStory.assignee" class="form-control"
+                        name="inputAssignee" ng-required="true" ng-options="id as user.name for (id, user) in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
 
-                    <div class="alert alert-error alert-warning" ng-show="detailsForm.inputAssignee.$dirty && detailsForm.inputAssignee.$invalid">
-                        <small ng-if="detailsForm.inputAssignee.$error.required">Required!</small>
+                    <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputAssignee.$dirty && storyboard.detailsForm.inputAssignee.$invalid">
+                        <small ng-if="storyboard.detailsForm.inputAssignee.$error.required">Required!</small>
                     </div>
                 </div>
             </div>
         </form>
         <hr>
-        <div ng-if="currentStory">
-            <button class="btn btn-default" ng-click="updateCancel()">Cancel</button>
-            <button class="btn pull-right btn-default" ng-disabled="!detailsForm.$valid" ng-click="updateStory()">Update</button>
+        <div ng-if="storyboard.currentStory">
+            <button class="btn btn-default" ng-click="storyboard.updateCancel()">Cancel</button>
+            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.updateStory()">Update</button>
         </div>
-        <div ng-if="!currentStory">
-            <button class="btn pull-right btn-default" ng-disabled="!detailsForm.$valid" ng-click="createStory()">New Story</button>
+        <div ng-if="!storyboard.currentStory">
+            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.createStory()">New storyboard</button>
         </div>
     </div>
 </div>

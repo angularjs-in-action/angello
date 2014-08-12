@@ -1,26 +1,28 @@
 angular.module('Angello.User')
     .controller('UsersCtrl', function ($scope, UsersService) {
-        $scope.newUser = { name: '', email: '' };
-        $scope.users = {};
+        var myUsers = this;
 
-        $scope.getUsers = function () {
+        myUsers.newUser = { name: '', email: '' };
+        myUsers.users = {};
+
+        myUsers.getUsers = function () {
             UsersService.all().then(function (result) {
-                $scope.users = (result.data !== 'null') ? result.data : {};
+                myUsers.users = (result.data !== 'null') ? result.data : {};
             }, function (reason) {
                 console.log('ERROR', reason);
             });
         };
 
-        $scope.addUser = function () {
-            UsersService.create(angular.copy($scope.newUser)).then(function (result) {
-                $scope.getUsers();
-                $scope.newUser = { name: '', email: '' };
+        myUsers.addUser = function () {
+            UsersService.create(angular.copy(myUsers.newUser)).then(function (result) {
+                myUsers.getUsers();
+                myUsers.newUser = { name: '', email: '' };
             }, function (reason) {
                 console.log('ERROR', reason);
             });
         };
 
-        $scope.updateUser = function (id, user) {
+        myUsers.updateUser = function (id, user) {
             UsersService.update(id, user).then(function (result) {
                 // console.log('RESULT', result);
             }, function (reason) {
@@ -28,13 +30,13 @@ angular.module('Angello.User')
             });
         };
 
-        $scope.removeUser = function (id) {
+        myUsers.removeUser = function (id) {
             UsersService.destroy(id).then(function (result) {
-                $scope.getUsers();
+                myUsers.getUsers();
             }, function (reason) {
                 console.log('ERROR', reason);
             });
         };
 
-        $scope.getUsers();
+        myUsers.getUsers();
     });

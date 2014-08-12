@@ -8,11 +8,11 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="(id, user) in users">
-            <td><input type="text" class="form-control" ng-model="user.name" ng-blur="updateUser(id, user)"/></td>
-            <td><input type="text" class="form-control" ng-model="user.email" ng-blur="updateUser(id, user)"/></td>
+        <tr ng-repeat="(id, user) in users.users">
+            <td><input type="text" class="form-control" ng-model="user.name" ng-blur="users.updateUser(id, user)"/></td>
+            <td><input type="text" class="form-control" ng-model="user.email" ng-blur="users.updateUser(id, user)"/></td>
             <td>
-                <button type="button" class="btn btn-link" ng-click="removeUser(id)">Remove</button>
+                <button type="button" class="btn btn-link" ng-click="users.removeUser(id)">Remove</button>
                 <a class="btn btn-link" href="#/users/{{id}}">View</a>
             </td>
         </tr>
@@ -22,12 +22,12 @@
     <div class="well">
         <h4>Add User</h4>
 
-        <form class="form-inline" role="form" novalidate ng-submit="addUser()">
+        <form class="form-inline" role="form" novalidate ng-submit="users.addUser()">
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="newUser.name" placeholder="Name">
+                <input type="text" class="form-control" ng-model="users.newUser.name" placeholder="Name">
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" ng-model="newUser.email" placeholder="Email">
+                <input type="text" class="form-control" ng-model="users.newUser.email" placeholder="Email">
             </div>
             <button type="submit" class="btn btn-default">Add</button>
         </form>

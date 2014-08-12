@@ -1,15 +1,16 @@
 angular.module('Angello.Dashboard')
     .controller('DashboardCtrl',
-        function ($scope, StoriesService, STORY_STATUSES, STORY_TYPES) {
-            $scope.types = STORY_TYPES;
-            $scope.statuses = STORY_STATUSES;
-            $scope.stories = [];
+        function (StoriesService, STORY_STATUSES, STORY_TYPES) {
+            var dashboard = this;
+            dashboard.types = STORY_TYPES;
+            dashboard.statuses = STORY_STATUSES;
+            dashboard.stories = [];
 
             StoriesService.all().then(function (stories) {
                 var arr = [];
                 for (var key in stories.data) {
                     arr.push(stories.data[key]);
                 }
-                $scope.stories = arr;
+                dashboard.stories = arr;
             });
         });

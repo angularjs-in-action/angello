@@ -21,6 +21,7 @@ myModule.config(function ($routeProvider) {
         when('/', {
             templateUrl: 'src/angello/storyboard/tmpl/storyboard.html',
             controller: 'StoryboardCtrl',
+            controllerAs: 'storyboard',
             resolve: {
                 currentUser: getCurrentUser
             }
@@ -28,6 +29,7 @@ myModule.config(function ($routeProvider) {
         when('/dashboard', {
             templateUrl: 'src/angello/dashboard/tmpl/dashboard.html',
             controller: 'DashboardCtrl',
+            controllerAs: 'dashboard',
             resolve: {
                 currentUser: getCurrentUser
             }
@@ -35,6 +37,7 @@ myModule.config(function ($routeProvider) {
         when('/users', {
             templateUrl: 'src/angello/user/tmpl/users.html',
             controller: 'UsersCtrl',
+            controllerAs: 'users',
             resolve: {
                 currentUser: getCurrentUser
             }
@@ -42,10 +45,11 @@ myModule.config(function ($routeProvider) {
         when('/users/:userId', {
             templateUrl: 'src/angello/user/tmpl/user.html',
             controller: 'UserCtrl',
+            controllerAs: 'User',
             resolve: {
                 currentUser: getCurrentUser,
-                user: function ($routeParams, UsersService) {
-                    var userId = $routeParams['userId'];
+                user: function ($route, $routeParams, UsersService) {
+                    var userId = $route.current.params['userId'] ? $route.current.params['userId'] : $routeParams['userId'];
                     return UsersService.fetch(userId);
                 },
                 stories: function (StoriesService) {
@@ -53,7 +57,11 @@ myModule.config(function ($routeProvider) {
                 }
             }
         }).
-        when('/login', {templateUrl: 'src/angello/login/tmpl/login.html', controller: 'LoginCtrl'}).
+        when('/login', {
+            templateUrl: 'src/angello/login/tmpl/login.html', 
+            controller: 'LoginCtrl',
+            controllerAs: 'login'
+        }).
         otherwise({redirectTo: '/'});
 });
 
