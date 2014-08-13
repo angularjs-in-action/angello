@@ -8,7 +8,7 @@ describe('Controller: UsersCtrl', function () {
     beforeEach(inject(function($rootScope, $controller, _$q_, _UsersModel_) {
         $q = _$q_;
         UsersModel = _UsersModel_;
-        spyOn(UsersModel, 'find').and.returnValue($q.when('fakeUsers'));
+        spyOn(UsersModel, 'all').and.returnValue($q.when('fakeUsers'));
         scope = $rootScope.$new();
         ctrl = $controller('UsersCtrl', {$scope: scope});
     }));
@@ -20,7 +20,7 @@ describe('Controller: UsersCtrl', function () {
     describe('#getUsers', function () {
         it('sets scope.users based on the UsersModel', function () {
             var users = null;
-            scope.getUsers;
+            scope.getUsers();
             scope.$apply();
             expect(scope.users).toEqual('fakeUsers');
         });
