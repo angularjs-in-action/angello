@@ -17,6 +17,7 @@ head.load(
     { file: 'src/angello/app/animations/ListAreaAnimation.js' },
     { file: 'src/angello/app/controllers/MainController.js' },
     { file: 'src/angello/app/models/AuthModel.js' },
+    { file: 'src/angello/app/models/EndpointsModel.js' },
     { file: 'src/angello/app/models/StoriesModel.js' },
     { file: 'src/angello/app/models/UsersModel.js' },
     { file: 'src/angello/app/services/LoadingService.js' },

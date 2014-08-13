@@ -160,5 +160,4 @@ myModule.value('STORY_TYPES', [
     {name: 'Spike'}
 ]);
 
-myModule.constant('ENDPOINT_URI', 'https://angello.firebaseio.com/');
 myModule.constant('Firebase', window.Firebase);
