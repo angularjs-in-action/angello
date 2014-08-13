@@ -4,7 +4,6 @@ function MainCtrl($scope, $location, AuthService) {
     var main = this;
     main.currentUser = null;
 
-
     $scope.$on('onLogin', function () {
         main.currentUser = AuthService.user();
     });

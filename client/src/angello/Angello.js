@@ -10,11 +10,12 @@ var myModule = angular.module('Angello',
         'Angello.User'
     ]);
 
-myModule.config(function ($routeProvider, $httpProvider,$provide) {
+myModule.config(function ($routeProvider, $httpProvider, $provide) {
     var getCurrentUser = function (AuthService, $location) {
-        return AuthService.getCurrentUser().then(function (user) {
-            if (!user) $location.path('/login');
-        });
+        return AuthService.getCurrentUser()
+            .then(function (user) {
+                if (!user) $location.path('/login');
+            });
     };
 
     $routeProvider.
@@ -45,7 +46,7 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
         when('/users/:userId', {
             templateUrl: 'src/angello/user/tmpl/user.html',
             controller: 'UserCtrl',
-            controllerAs: 'User',
+            controllerAs: 'myUser',
             resolve: {
                 currentUser: getCurrentUser,
                 user: function ($route, $routeParams, UsersService) {
@@ -58,7 +59,7 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
             }
         }).
         when('/login', {
-            templateUrl: 'src/angello/login/tmpl/login.html', 
+            templateUrl: 'src/angello/login/tmpl/login.html',
             controller: 'LoginCtrl',
             controllerAs: 'login'
         }).
@@ -71,8 +72,7 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
     // Decorator
     // Use the `decorator` solution to substitute or attach behaviors to
     // original service instance; @see angular-mocks for more examples....
-    $provide.decorator( '$log', function( $delegate )
-    {
+    $provide.decorator('$log', function ($delegate) {
         // Save the original $log.debug()
         var debugFn = $delegate.debug;
 
@@ -107,9 +107,8 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
             return date.join("/") + " " + time.join(":") + " " + suffix;
         }
 
-        $delegate.debug = function( )
-        {
-            var args    = [].slice.call(arguments);
+        $delegate.debug = function () {
+            var args = [].slice.call(arguments);
 
             // Prepend timestamp
             args[0] = timeStamp() + ' - ' + args[0];
@@ -122,13 +121,13 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
     });
 });
 
-myModule.factory('loadingInterceptor', function(LoadingService) {
+myModule.factory('loadingInterceptor', function (LoadingService) {
     var loadingInterceptor = {
-        request: function(config) {
+        request: function (config) {
             LoadingService.setLoading(true);
             return config;
         },
-        response: function(response) {
+        response: function (response) {
             LoadingService.setLoading(false);
             return response;
         }

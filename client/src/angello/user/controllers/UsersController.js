@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .controller('UsersCtrl', function ($scope, UsersService) {
+    .controller('UsersCtrl', function ($scope, $log, UsersService) {
         var myUsers = this;
 
         myUsers.newUser = { name: '', email: '' };
