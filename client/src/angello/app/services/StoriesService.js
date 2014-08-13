@@ -8,7 +8,7 @@ angular.module('Angello.Common')
 
             function getUrl(postfix) {
                 return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;
-            };
+            }
 
             function getUrlForId(story_id) {
                 return getUrl(path) + story_id + format;

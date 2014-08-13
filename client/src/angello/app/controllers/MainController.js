@@ -15,7 +15,7 @@ function MainCtrl($scope, $location, AuthService) {
 
     main.logout = function() {
         AuthService.logout();
-    }
+    };
 
     AuthService.getCurrentUser();
 };
