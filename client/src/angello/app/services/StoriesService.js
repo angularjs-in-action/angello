@@ -4,7 +4,7 @@ angular.module('Angello.Common')
             var service = this,
                 root = 'clients/',
                 format = ".json",
-                path = "/stories";
+                path = "/stories/";
 
             function getUrl(postfix) {
                 return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;

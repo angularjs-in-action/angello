@@ -8,7 +8,7 @@
             <li userstory ng-repeat="(id, story) in storyboard.storiesWithStatus(status)" class="story my-repeat-animation" ng-click="storyboard.setCurrentStory(id, story)">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="storyDir.deletestoryboard(id);">×</button>
+                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(id);">×</button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>

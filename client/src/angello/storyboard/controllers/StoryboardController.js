@@ -23,7 +23,7 @@ angular.module('Angello.Storyboard')
             });
 
         myStory.setCurrentStory = function (id, story) {
-            console.log(id, story)
+            $log.debug(id, story)
             myStory.currentStoryId = id;
             myStory.currentStory = story;
             myStory.editedStory = angular.copy(myStory.currentStory);
@@ -43,8 +43,9 @@ angular.module('Angello.Storyboard')
                 .then(function (result) {
                     myStory.getStories();
                     myStory.resetForm();
+                    $log.debug('RESULT', result);
                 }, function (reason) {
-                    console.log('ERROR', reason);
+                    $log.debug('ERROR', reason);
                 });
         };
 

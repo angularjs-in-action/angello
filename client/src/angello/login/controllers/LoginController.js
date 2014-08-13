@@ -1,6 +1,6 @@
 angular.module('Angello.Login')
     .controller('LoginCtrl',
-        function ($scope, $location, AuthService) {
+        function ($scope, $location, $log, AuthService) {
             var login = this;
 
             login.user = {
@@ -29,6 +29,6 @@ angular.module('Angello.Login')
             });
 
             $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
-                console.log('ERROR', err);
+                $log.debug('ERROR', err);
             });
         });

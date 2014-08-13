@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .directive('userstory', function ($rootScope, StoriesService) {
+    .directive('userstory', function ($rootScope, StoriesService, $log) {
         var linker = function (scope, element, attrs) {
             element
                 .mouseover(function () {
@@ -11,19 +11,22 @@ angular.module('Angello.User')
         };
 
         var controller = function () {
-            this.deleteStory = function (id) {
-                StoriesService.destroy(id).then(function (result) {
-                    $rootScope.$broadcast('storyDeleted');
-                }, function (reason) {
-                    console.log('ERROR', reason);
-                });
+            var userStory = this;
+            userStory.deleteStoryBoard = function (id) {
+                StoriesService.destroy(id)
+                    .then(function (result) {
+                        $rootScope.$broadcast('storyDeleted');
+                        $log.debug('RESULT', result);
+                    }, function (reason) {
+                        $log.debug('ERROR', reason);
+                    });
             };
         };
 
         return {
             restrict: 'A',
             controller: controller,
-            controllerAs: 'storyDir',
+            controllerAs: 'userStory',
             link: linker
         };
     });

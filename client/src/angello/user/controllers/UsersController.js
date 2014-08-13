@@ -6,36 +6,43 @@ angular.module('Angello.User')
         myUsers.users = {};
 
         myUsers.getUsers = function () {
-            UsersService.all().then(function (result) {
-                myUsers.users = (result.data !== 'null') ? result.data : {};
-            }, function (reason) {
-                console.log('ERROR', reason);
-            });
+            UsersService.all()
+                .then(function (result) {
+                    myUsers.users = (result.data !== 'null') ? result.data : {};
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('ERROR', reason);
+                });
         };
 
         myUsers.addUser = function () {
-            UsersService.create(angular.copy(myUsers.newUser)).then(function (result) {
-                myUsers.getUsers();
-                myUsers.newUser = { name: '', email: '' };
-            }, function (reason) {
-                console.log('ERROR', reason);
-            });
+            UsersService.create(angular.copy(myUsers.newUser))
+                .then(function (result) {
+                    myUsers.getUsers();
+                    myUsers.newUser = { name: '', email: '' };
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('ERROR', reason);
+                });
         };
 
         myUsers.updateUser = function (id, user) {
-            UsersService.update(id, user).then(function (result) {
-                // console.log('RESULT', result);
-            }, function (reason) {
-                console.log('ERROR', reason);
-            });
+            UsersService.update(id, user)
+                .then(function (result) {
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('ERROR', reason);
+                });
         };
 
         myUsers.removeUser = function (id) {
-            UsersService.destroy(id).then(function (result) {
-                myUsers.getUsers();
-            }, function (reason) {
-                console.log('ERROR', reason);
-            });
+            UsersService.destroy(id)
+                .then(function (result) {
+                    myUsers.getUsers();
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('ERROR', reason);
+                });
         };
 
         myUsers.getUsers();

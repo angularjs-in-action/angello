@@ -76,6 +76,7 @@ myModule.config(function ($routeProvider, $httpProvider,$provide) {
         // Save the original $log.debug()
         var debugFn = $delegate.debug;
 
+        // TODO Extract this into a utility service
         function timeStamp() {
             // Create a date object with the current time
             var now = new Date();
