@@ -1,6 +1,6 @@
 angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl',
-    function ($scope, $log, StoriesService, UsersService, STORY_STATUSES, STORY_TYPES) {
+    function ($scope, $log, StoriesModel, UsersModel, STORY_STATUSES, STORY_TYPES) {
         var myStory = this;
 
         myStory.detailsVisible = true;
@@ -14,7 +14,7 @@ angular.module('Angello.Storyboard')
 
         myStory.users = {};
 
-        UsersService.all()
+        UsersModel.all()
             .then(function (result) {
                 myStory.users = (result.data !== 'null') ? result.data : {};
                 $log.debug('RESULT', result);
@@ -30,7 +30,7 @@ angular.module('Angello.Storyboard')
         };
 
         myStory.getStories = function () {
-            StoriesService.all().then(function (result) {
+            StoriesModel.all().then(function (result) {
                 myStory.stories = (result.data !== 'null') ? result.data : {};
                 $log.debug('RESULT', result);
             }, function (reason) {
@@ -39,7 +39,7 @@ angular.module('Angello.Storyboard')
         };
 
         myStory.createStory = function () {
-            StoriesService.create(myStory.editedStory)
+            StoriesModel.create(myStory.editedStory)
                 .then(function (result) {
                     myStory.getStories();
                     myStory.resetForm();
@@ -56,7 +56,7 @@ angular.module('Angello.Storyboard')
                 myStory.currentStory[field] = myStory.editedStory[field]
             });
 
-            StoriesService.update(myStory.currentStoryId, myStory.editedStory)
+            StoriesModel.update(myStory.currentStoryId, myStory.editedStory)
                 .then(function (result) {
                     myStory.getStories();
                     myStory.resetForm();

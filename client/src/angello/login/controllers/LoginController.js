@@ -1,6 +1,6 @@
 angular.module('Angello.Login')
     .controller('LoginCtrl',
-        function ($scope, $location, $log, AuthService) {
+        function ($scope, $location, $log, AuthModel) {
             var login = this;
 
             login.user = {
@@ -11,7 +11,7 @@ angular.module('Angello.Login')
 
             login.submit = function (email, password, register) {
                 if (login.loginForm.$valid) {
-                    ((register) ? AuthService.register : AuthService.login)(email, password);
+                    ((register) ? AuthModel.register : AuthModel.login)(email, password);
                     login.reset();
                 }
             };

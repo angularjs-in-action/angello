@@ -11,8 +11,8 @@ var myModule = angular.module('Angello',
     ]);
 
 myModule.config(function ($routeProvider, $httpProvider, $provide) {
-    var getCurrentUser = function (AuthService, $location) {
-        return AuthService.getCurrentUser()
+    var getCurrentUser = function (AuthModel, $location) {
+        return AuthModel.getCurrentUser()
             .then(function (user) {
                 if (!user) $location.path('/login');
             });
@@ -49,12 +49,12 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
             controllerAs: 'myUser',
             resolve: {
                 currentUser: getCurrentUser,
-                user: function ($route, $routeParams, UsersService) {
+                user: function ($route, $routeParams, UsersModel) {
                     var userId = $route.current.params['userId'] ? $route.current.params['userId'] : $routeParams['userId'];
-                    return UsersService.fetch(userId);
+                    return UsersModel.fetch(userId);
                 },
-                stories: function (StoriesService) {
-                    return StoriesService.all();
+                stories: function (StoriesModel) {
+                    return StoriesModel.all();
                 }
             }
         }).

@@ -1,13 +1,13 @@
 angular.module('Angello.Common')
-    .service('UsersService',
-    function ($http, $q, AuthService, ENDPOINT_URI) {
+    .service('UsersModel',
+    function ($http, $q, AuthModel, ENDPOINT_URI) {
         var service = this,
             root = 'clients/',
             format = ".json",
             path = "/users/";
 
         function getUrl(postfix) {
-            return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;
+            return ENDPOINT_URI + root + AuthModel.getCurrentUserId() + postfix;
         }
 
         function getUrlForId(user_id) {

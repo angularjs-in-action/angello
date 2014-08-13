@@ -1,13 +1,13 @@
 angular.module('Angello.Common')
-    .service('StoriesService',
-        function ($http, $q, AuthService, ENDPOINT_URI) {
+    .service('StoriesModel',
+        function ($http, $q, AuthModel, ENDPOINT_URI) {
             var service = this,
                 root = 'clients/',
                 format = ".json",
                 path = "/stories/";
 
             function getUrl(postfix) {
-                return ENDPOINT_URI + root + AuthService.getCurrentUserId() + postfix;
+                return ENDPOINT_URI + root + AuthModel.getCurrentUserId() + postfix;
             }
 
             function getUrlForId(story_id) {

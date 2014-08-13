@@ -1,14 +1,14 @@
 'use strict';
 
 describe('Controller: UsersCtrl', function () {
-    var $q, scope, ctrl, UsersService;
+    var $q, scope, ctrl, UsersModel;
 
     beforeEach(module('Angello'));
 
-    beforeEach(inject(function($rootScope, $controller, _$q_, _UsersService_) {
+    beforeEach(inject(function($rootScope, $controller, _$q_, _UsersModel_) {
         $q = _$q_;
-        UsersService = _UsersService_;
-        spyOn(UsersService, 'find').and.returnValue($q.when('fakeUsers'));
+        UsersModel = _UsersModel_;
+        spyOn(UsersModel, 'find').and.returnValue($q.when('fakeUsers'));
         scope = $rootScope.$new();
         ctrl = $controller('UsersCtrl', {$scope: scope});
     }));
@@ -18,7 +18,7 @@ describe('Controller: UsersCtrl', function () {
     })
 
     describe('#getUsers', function () {
-        it('sets scope.users based on the UsersService', function () {
+        it('sets scope.users based on the UsersModel', function () {
             var users = null;
             scope.getUsers;
             scope.$apply();

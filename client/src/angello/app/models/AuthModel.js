@@ -1,5 +1,5 @@
 angular.module('Angello.Common')
-    .service('AuthService',
+    .service('AuthModel',
         function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
             var service = this,
                 user = null,

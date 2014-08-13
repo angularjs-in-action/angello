@@ -1,5 +1,5 @@
 angular.module('Angello.User')
-    .directive('userstory', function ($rootScope, StoriesService, $log) {
+    .directive('userstory', function ($rootScope, StoriesModel, $log) {
         var linker = function (scope, element, attrs) {
             element
                 .mouseover(function () {
@@ -13,7 +13,7 @@ angular.module('Angello.User')
         var controller = function () {
             var userStory = this;
             userStory.deleteStoryBoard = function (id) {
-                StoriesService.destroy(id)
+                StoriesModel.destroy(id)
                     .then(function (result) {
                         $rootScope.$broadcast('storyDeleted');
                         $log.debug('RESULT', result);

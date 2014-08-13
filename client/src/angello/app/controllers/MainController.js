@@ -1,11 +1,11 @@
 angular.module('Angello.Common', [])
     .controller('MainCtrl', MainCtrl);
-function MainCtrl($scope, $location, AuthService) {
+function MainCtrl($scope, $location, AuthModel) {
     var main = this;
     main.currentUser = null;
 
     $scope.$on('onLogin', function () {
-        main.currentUser = AuthService.user();
+        main.currentUser = AuthModel.user();
     });
 
     $scope.$on('onLogout', function () {
@@ -14,8 +14,8 @@ function MainCtrl($scope, $location, AuthService) {
     });
 
     main.logout = function() {
-        AuthService.logout();
+        AuthModel.logout();
     };
 
-    AuthService.getCurrentUser();
+    AuthModel.getCurrentUser();
 };

@@ -1,28 +1,28 @@
 'use strict';
 
 describe('Controller: MainCtrl', function () {
-    var $location, scope, ctrl, AuthService;
+    var $location, scope, ctrl, AuthModel;
 
     beforeEach(module('Angello'));
 
-    beforeEach(inject(function($rootScope, $controller, _$location_, _AuthService_) {
+    beforeEach(inject(function($rootScope, $controller, _$location_, _AuthModel_) {
         $location = _$location_;
-        AuthService = _AuthService_;
+        AuthModel = _AuthModel_;
         scope = $rootScope.$new();
         ctrl = $controller('MainCtrl', {$scope: scope});
     }));
 
     describe('#logout', function() {
-        it('logs out via the AuthService', function () {
-            spyOn(AuthService, 'logout');
+        it('logs out via the AuthModel', function () {
+            spyOn(AuthModel, 'logout');
             scope.logout();
-            expect(AuthService.logout).toHaveBeenCalled();
+            expect(AuthModel.logout).toHaveBeenCalled();
         })
     });
 
     describe('onLogin event', function () {
         it('sets scope.currentUser to the logged in user', function () {
-            spyOn(AuthService, 'user').and.returnValue('fakeUser');
+            spyOn(AuthModel, 'user').and.returnValue('fakeUser');
             scope.$broadcast('onLogin');
             scope.$apply();
             expect(scope.currentUser).toEqual('fakeUser');

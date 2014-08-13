@@ -1,5 +1,5 @@
 angular.module('Angello.Storyboard')
-    .directive('sortable', function (StoriesService) {
+    .directive('sortable', function (StoriesModel) {
         var linker = function (scope, element, attrs) {
             var status = scope.status.name;
 
@@ -12,7 +12,7 @@ angular.module('Angello.Storyboard')
 
                     scope.$apply(function () {
                         // TODO Fix the entire drag and drop to order mechanism
-                        // StoriesService.insertStoryAfter(curScope.story, prevScope.story);
+                        // StoriesModel.insertStoryAfter(curScope.story, prevScope.story);
                         // curScope.story.status = status; // Update the status
                     });
                 }
