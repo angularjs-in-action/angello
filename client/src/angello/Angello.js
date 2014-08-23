@@ -18,32 +18,32 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
             });
     };
 
-    $routeProvider.
-        when('/', {
+    $routeProvider
+        .when('/', {
             templateUrl: 'src/angello/storyboard/tmpl/storyboard.html',
             controller: 'StoryboardCtrl',
             controllerAs: 'storyboard',
             resolve: {
                 currentUser: getCurrentUser
             }
-        }).
-        when('/dashboard', {
+        })
+        .when('/dashboard', {
             templateUrl: 'src/angello/dashboard/tmpl/dashboard.html',
             controller: 'DashboardCtrl',
             controllerAs: 'dashboard',
             resolve: {
                 currentUser: getCurrentUser
             }
-        }).
-        when('/users', {
+        })
+        .when('/users', {
             templateUrl: 'src/angello/user/tmpl/users.html',
             controller: 'UsersCtrl',
             controllerAs: 'users',
             resolve: {
                 currentUser: getCurrentUser
             }
-        }).
-        when('/users/:userId', {
+        })
+        .when('/users/:userId', {
             templateUrl: 'src/angello/user/tmpl/user.html',
             controller: 'UserCtrl',
             controllerAs: 'myUser',
@@ -57,13 +57,13 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
                     return StoriesModel.all();
                 }
             }
-        }).
-        when('/login', {
+        })
+        .when('/login', {
             templateUrl: 'src/angello/login/tmpl/login.html',
             controller: 'LoginCtrl',
             controllerAs: 'login'
-        }).
-        otherwise({redirectTo: '/'});
+        })
+        .otherwise({redirectTo: '/'});
 
     // Interceptor
     $httpProvider.interceptors.push('loadingInterceptor');
@@ -108,13 +108,11 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
         }
 
         $delegate.debug = function () {
-            var args = [].slice.call(arguments);
-
             // Prepend timestamp
-            args[0] = timeStamp() + ' - ' + args[0];
+            arguments[0] = timeStamp() + ' - ' + arguments[0];
 
             // Call the original with the output prepended with formatted timestamp
-            debugFn.apply(null, args)
+            debugFn.apply(null, arguments)
         };
 
         return $delegate;

@@ -1,6 +1,6 @@
 angular.module('Angello.Common')
     .service('UsersModel',
-    function ($http, $q, AuthModel, ENDPOINT_URI) {
+    function ($http, AuthModel, ENDPOINT_URI) {
         var service = this,
             root = 'clients/',
             format = ".json",
