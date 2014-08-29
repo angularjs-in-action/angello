@@ -1,7 +1,7 @@
 'use strict';
 
 describe('Stories Model', function () {
-    var $http, StoriesModel;
+    var $http;
 
     beforeEach(module('Angello.Common'));
 
@@ -17,29 +17,34 @@ describe('Stories Model', function () {
         })
     }));
 
-    beforeEach(inject(function ($httpBackend, _StoriesModel_) {
-        $http = $httpBackend;
-        StoriesModel = _StoriesModel_;
-
-        $http.when('GET', 'https://angello.firebaseio.com/clients/1/stories/.json').respond({
-            '-JHSpH5x_TdTxmCSEgs6': {
-                assignee: "-JHSp9umZMUEu6Dc7Wut",
-                criteria: "It tests!",
-                description: "This is a test",
-                reporter: "-JHSp14iy601A1AKil5s",
-                status: "To Do",
-                title: "Test",
-                type: "Feature"
-        }});
+    afterEach(inject(function($httpBackend) {
+        $httpBackend.verifyNoOutstandingExpectation();
+        $httpBackend.verifyNoOutstandingRequest();
     }));
 
-    afterEach(function() {
-        $http.verifyNoOutstandingExpectation();
-        $http.verifyNoOutstandingRequest();
-    });
+    it('test1', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {a:3};
+        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
 
-    it('test', function () {
-        StoriesModel.all();
-        $http.flush();
-    });
+        var promise = StoriesModel.all();
+        $httpBackend.flush();
+        
+        promise.then(function(result) {
+            expect(result.data).toEqual(response);
+        });
+        $rootScope.$digest();
+    })); 
+
+    it('test1', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {a:4};
+        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/2/stories/.json').respond(response);
+
+        var promise = StoriesModel.all();
+        $httpBackend.flush();
+        
+        promise.then(function(result) {
+            expect(result.data).toEqual(response);
+        });
+        $rootScope.$digest();
+    })); 
 });
