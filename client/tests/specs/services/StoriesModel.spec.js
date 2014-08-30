@@ -1,7 +1,6 @@
 'use strict';
 
 describe('Stories Model', function () {
-    var $http;
 
     beforeEach(module('Angello.Common'));
 
@@ -12,9 +11,7 @@ describe('Stories Model', function () {
             }
         });
 
-        $provide.value('ENDPOINT_URI', function(){
-            return 'http://test.com';
-        })
+        $provide.constant('ENDPOINT_URI', 'http://test.com/');
     }));
 
     afterEach(inject(function($httpBackend) {
@@ -22,9 +19,9 @@ describe('Stories Model', function () {
         $httpBackend.verifyNoOutstandingRequest();
     }));
 
-    it('test1', inject(function(StoriesModel, $httpBackend, $rootScope) {
-        var response = {a:3};
-        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
+    it('Should get all', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {};
+        $httpBackend.when('GET', 'http://test.com/clients/1/stories/.json').respond(response);
 
         var promise = StoriesModel.all();
         $httpBackend.flush();
@@ -33,18 +30,57 @@ describe('Stories Model', function () {
             expect(result.data).toEqual(response);
         });
         $rootScope.$digest();
-    })); 
+    }));
 
-    it('test1', inject(function(StoriesModel, $httpBackend, $rootScope) {
-        var response = {a:4};
-        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/2/stories/.json').respond(response);
+    it('Should fetch', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {};
+        $httpBackend.when('GET', 'http://test.com/clients/1/stories/1.json').respond(response);
 
-        var promise = StoriesModel.all();
+        var promise = StoriesModel.fetch(1);
         $httpBackend.flush();
-        
+
         promise.then(function(result) {
             expect(result.data).toEqual(response);
         });
         $rootScope.$digest();
-    })); 
+    }));
+
+    it('Should create', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {};
+        $httpBackend.when('POST', 'http://test.com/clients/1/stories/.json').respond(response);
+
+        var promise = StoriesModel.create({});
+        $httpBackend.flush();
+
+        promise.then(function(result) {
+            expect(result.data).toEqual(response);
+        });
+        $rootScope.$digest();
+    }));
+
+    it('Should update', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {};
+        $httpBackend.when('PUT', 'http://test.com/clients/1/stories/1.json').respond(response);
+
+        var promise = StoriesModel.update(1, {});
+        $httpBackend.flush();
+
+        promise.then(function(result) {
+            expect(result.data).toEqual(response);
+        });
+        $rootScope.$digest();
+    }));
+
+    it('Should destroy', inject(function(StoriesModel, $httpBackend, $rootScope) {
+        var response = {};
+        $httpBackend.when('DELETE', 'http://test.com/clients/1/stories/1.json').respond(response);
+
+        var promise = StoriesModel.destroy(1);
+        $httpBackend.flush();
+
+        promise.then(function(result) {
+            expect(result.data).toEqual(response);
+        });
+        $rootScope.$digest();
+    }));
 });
