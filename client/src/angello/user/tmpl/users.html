@@ -8,12 +8,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="(id, user) in users.users">
-            <td><input type="text" class="form-control" ng-model="user.name" ng-blur="users.updateUser(id, user)"/></td>
-            <td><input type="text" class="form-control" ng-model="user.email" ng-blur="users.updateUser(id, user)"/></td>
+        <tr ng-repeat="user in users.users">
+            <td><input type="text" class="form-control" ng-model="user.name" ng-blur="users.updateUser(user.id, user)"/></td>
+            <td><input type="text" class="form-control" ng-model="user.email" ng-blur="users.updateUser(user.id, user)"/></td>
             <td>
-                <button type="button" class="btn btn-link" ng-click="users.removeUser(id)">Remove</button>
-                <a class="btn btn-link" href="#/users/{{id}}">View</a>
+                <button type="button" class="btn btn-link" ng-click="users.removeUser(user.id)">Remove</button>
+                <a class="btn btn-link" href="#/users/{{user.id}}">View</a>
             </td>
         </tr>
         </tbody>

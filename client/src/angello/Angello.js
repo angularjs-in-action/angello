@@ -11,11 +11,18 @@ var myModule = angular.module('Angello',
     ]);
 
 myModule.config(function ($routeProvider, $httpProvider, $provide) {
-    var getCurrentUser = function (AuthModel, $location) {
-        return AuthModel.getCurrentUser()
-            .then(function (user) {
-                if (!user) $location.path('/login');
-            });
+    var getCurrentUser = function (AuthModel, $location, ENDPOINT_URI) {
+        if (ENDPOINT_URI.BACKEND == 'firebase') {
+            return AuthModel.getCurrentUser()
+                .then(function (user) {
+                    if (!user) $location.path('/login');
+                });
+        } else {
+            var user = AuthModel.getCurrentUser();
+            if (!user) {
+                return $location.path('/login');
+            }
+        }
     };
 
     $routeProvider
@@ -67,6 +74,7 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
 
     // Interceptor
     $httpProvider.interceptors.push('loadingInterceptor');
+    $httpProvider.interceptors.push('requestInterceptor');
 
 
     // Decorator
@@ -131,6 +139,26 @@ myModule.factory('loadingInterceptor', function (LoadingService) {
         }
     };
     return loadingInterceptor;
+});
+
+myModule.factory('requestInterceptor', function (UserService, ENDPOINT_URI) {
+    if (ENDPOINT_URI.BACKEND !== 'firebase') {
+        var requestInterceptor = {
+            request: function (config) {
+                var user = UserService.getCurrentUser();
+                var access_token = user ? user.access_token : null;
+
+                if(access_token) {
+                  config.headers.authorization = access_token;
+                }
+                return config;
+            }
+        };
+    } else {
+        var requestInterceptor = {};
+    }
+
+    return requestInterceptor;
 });
 
 myModule.run(function ($rootScope, LoadingService) {

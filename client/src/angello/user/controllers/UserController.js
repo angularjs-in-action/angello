@@ -5,6 +5,7 @@ angular.module('Angello.User')
         myUser.userId = $routeParams['userId'];
         myUser.user = user.data;
 
+
         myUser.getAssignedStories = function (userId, stories) {
             var assignedStories = {};
 
@@ -15,5 +16,5 @@ angular.module('Angello.User')
             return assignedStories;
         };
 
-        myUser.stories = myUser.getAssignedStories(myUser.userId, stories.data);
+        myUser.stories = myUser.getAssignedStories(myUser.userId, stories);
     });

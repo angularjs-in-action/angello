@@ -5,10 +5,10 @@
             <h3 class="status">{{status.name}}</h3>
             <hr>
             <!-- TODO Filter by status -->
-            <li userstory ng-repeat="(id, story) in storyboard.storiesWithStatus(status)" class="story my-repeat-animation" ng-click="storyboard.setCurrentStory(id, story)">
+            <li userstory ng-repeat="story in storyboard.storiesWithStatus(status)" class="story my-repeat-animation" ng-click="storyboard.setCurrentStory(story.id, story)">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(id);">×</button>
+                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id);">×</button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>
@@ -94,7 +94,7 @@
 
                 <div class="controls">
                     <select ng-model="storyboard.editedStory.reporter" class="form-control"
-                        name="inputReporter" ng-required="true" ng-options="id as user.name for (id, user) in storyboard.users">
+                        name="inputReporter" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
                     <div class="alert alert-error alert-warning" ng-show="storyboard.detailsForm.inputReporter.$dirty && storyboard.detailsForm.inputReporter.$invalid">
@@ -107,7 +107,7 @@
 
                 <div class="controls">
                     <select ng-model="storyboard.editedStory.assignee" class="form-control"
-                        name="inputAssignee" ng-required="true" ng-options="id as user.name for (id, user) in storyboard.users">
+                        name="inputAssignee" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
 

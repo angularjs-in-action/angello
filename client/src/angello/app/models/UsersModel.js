@@ -1,13 +1,20 @@
 angular.module('Angello.Common')
     .service('UsersModel',
-    function ($http, AuthModel, ENDPOINT_URI) {
-        var service = this,
-            root = 'clients/',
-            format = ".json",
-            path = "/users/";
+    function ($http, AuthModel, ENDPOINT_URI, UtilsService) {
+        var service = this;
+
+        if (ENDPOINT_URI.BACKEND == 'firebase') {
+            var root = 'clients/',
+                format = ".json",
+                path = "/users/";
+        } else {
+            var root = 'api/clients/',
+                format = "",
+                path = "/users/";
+        }
 
         function getUrl(postfix) {
-            return ENDPOINT_URI + root + AuthModel.getCurrentUserId() + postfix;
+            return ENDPOINT_URI.URI + root + AuthModel.getCurrentUserId() + postfix;
         }
 
         function getUrlForId(user_id) {
@@ -15,7 +22,13 @@ angular.module('Angello.Common')
         }
 
         service.all = function () {
-            return $http.get(getUrl(path + format));
+            return $http.get(getUrl(path + format))
+                    .then(
+                        function(result) {
+                            return UtilsService.objectToArray(result);
+                        }
+                    );
+            ;
         };
 
         service.fetch = function (user_id) {

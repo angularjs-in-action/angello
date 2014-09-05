@@ -9,8 +9,8 @@ angular.module('Angello.Dashboard')
         StoriesModel.all()
             .then(function (stories) {
                 var arr = [];
-                for (var key in stories.data) {
-                    arr.push(stories.data[key]);
+                for (var key in stories) {
+                    arr.push(stories[key]);
                 }
                 dashboard.stories = arr;
             });

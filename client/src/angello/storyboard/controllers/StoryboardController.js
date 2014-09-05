@@ -16,7 +16,7 @@ angular.module('Angello.Storyboard')
 
         UsersModel.all()
             .then(function (result) {
-                myStory.users = (result.data !== 'null') ? result.data : {};
+                myStory.users = (result !== 'null') ? result : {};
                 $log.debug('RESULT', result);
             }, function (reason) {
                 $log.debug('REASON', reason);
@@ -31,7 +31,7 @@ angular.module('Angello.Storyboard')
 
         myStory.getStories = function () {
             StoriesModel.all().then(function (result) {
-                myStory.stories = (result.data !== 'null') ? result.data : {};
+                myStory.stories = (result !== 'null') ? result : {};
                 $log.debug('RESULT', result);
             }, function (reason) {
                 $log.debug('REASON', reason);
@@ -84,6 +84,7 @@ angular.module('Angello.Storyboard')
         myStory.storiesWithStatus = function (status) {
             var stories = {};
             var keys = Object.keys(myStory.stories);
+
             for (var i = 0, len = keys.length; i < len; i++) {
                 var key = keys[i];
                 if (myStory.stories[key].status == status.name) stories[key] = myStory.stories[key];

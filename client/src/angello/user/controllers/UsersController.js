@@ -8,7 +8,8 @@ angular.module('Angello.User')
         myUsers.getUsers = function () {
             UsersModel.all()
                 .then(function (result) {
-                    myUsers.users = (result.data !== 'null') ? result.data : {};
+
+                    myUsers.users = (result !== 'null') ? result : {};
                     $log.debug('RESULT', result);
                 }, function (reason) {
                     $log.debug('ERROR', reason);

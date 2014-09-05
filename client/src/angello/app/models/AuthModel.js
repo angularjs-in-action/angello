@@ -1,9 +1,9 @@
 angular.module('Angello.Common')
     .service('AuthModel',
-        function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI) {
+        function ($rootScope, LoadingService, $firebaseSimpleLogin, ENDPOINT_URI, RESTLoginService) {
             var service = this,
                 user = null,
-                loginService = $firebaseSimpleLogin(new Firebase(ENDPOINT_URI));
+                loginService = ENDPOINT_URI.BACKEND == 'firebase' ? $firebaseSimpleLogin(new Firebase(ENDPOINT_URI.URI)) : RESTLoginService;
 
             var existy = function (x) {
                 return x != null;
@@ -49,21 +49,38 @@ angular.module('Angello.Common')
                 return userExists() ? user.id : null;
             };
 
-            $rootScope.$on('$firebaseSimpleLogin:login', function (e, u) {
-                user = u;
-                LoadingService.setLoading(false);
-                $rootScope.$broadcast('onLogin');
-            });
+            if (ENDPOINT_URI.BACKEND == 'firebase') {
+                $rootScope.$on('$firebaseSimpleLogin:login', function (e, u) {
+                    user = u;
+                    LoadingService.setLoading(false);
+                    $rootScope.$broadcast('onLogin');
+                });
 
-            $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
-                user = null;
-                LoadingService.setLoading(false);
-                $rootScope.$broadcast('onLogout');
-            });
+                $rootScope.$on('$firebaseSimpleLogin:logout', function (e) {
+                    user = null;
+                    LoadingService.setLoading(false);
+                    $rootScope.$broadcast('onLogout');
+                });
 
-            $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
-                user = null;
-                LoadingService.setLoading(false);
-                $rootScope.$broadcast('onLogout');
-            });
+                $rootScope.$on('$firebaseSimpleLogin:error', function (e, err) {
+                    user = null;
+                    LoadingService.setLoading(false);
+                    $rootScope.$broadcast('onLogout');
+                });
+            } else {
+                $rootScope.$on('onLogin', function () {
+                    /*loginService.$getCurrentUser()
+                            .then(function(currentUser) {
+                                user = currentUser;
+                            });*/
+                    user = loginService.$getCurrentUser();
+                    LoadingService.setLoading(false);
+                });
+
+                $rootScope.$on('onLogout', function (e) {
+                    user = null;
+                    LoadingService.setLoading(false);
+                });
+            }
+
         });

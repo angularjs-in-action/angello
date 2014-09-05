@@ -24,7 +24,7 @@ angular.module('Angello.Login')
                 };
             };
 
-            $scope.$on('$firebaseSimpleLogin:login', function (e, user) {
+            $scope.$on('onLogin', function (e, user) {
                 $location.path('/');
             });
 
