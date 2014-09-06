@@ -4,12 +4,11 @@ angular.module('Angello.Common')
             var service = this;
 
             service.$getCurrentUser = function() {
-                /*var deferred = $q.defer(),
+                var deferred = $q.defer(),
                     user = UserService.getCurrentUser();
 
-                deferred.resolve(user);*/
-                return UserService.getCurrentUser();
-                // return deferred.promise;
+                deferred.resolve(user);
+                return deferred.promise;
             };
 
             service.$login = function(type, creds) {
@@ -52,7 +51,6 @@ angular.module('Angello.Common')
             };
 
             service.$createUser = function(email, password) {
-                console.log(email, password);
 
                 $http.post(
                     ENDPOINT_URI.URI + 'api/clients',
@@ -63,7 +61,7 @@ angular.module('Angello.Common')
                 )
                 .then(
                     function(response) {
-                        $rootScope.$broadcast('onLogin');
+                        service.$login({}, {email:email, password:password});
                     },
                     function(error) {
                         console.log(error);

@@ -69,11 +69,10 @@ angular.module('Angello.Common')
                 });
             } else {
                 $rootScope.$on('onLogin', function () {
-                    /*loginService.$getCurrentUser()
+                    loginService.$getCurrentUser()
                             .then(function(currentUser) {
                                 user = currentUser;
-                            });*/
-                    user = loginService.$getCurrentUser();
+                            });
                     LoadingService.setLoading(false);
                 });
 

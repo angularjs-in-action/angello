@@ -12,17 +12,10 @@ var myModule = angular.module('Angello',
 
 myModule.config(function ($routeProvider, $httpProvider, $provide) {
     var getCurrentUser = function (AuthModel, $location, ENDPOINT_URI) {
-        if (ENDPOINT_URI.BACKEND == 'firebase') {
-            return AuthModel.getCurrentUser()
+        return AuthModel.getCurrentUser()
                 .then(function (user) {
                     if (!user) $location.path('/login');
                 });
-        } else {
-            var user = AuthModel.getCurrentUser();
-            if (!user) {
-                return $location.path('/login');
-            }
-        }
     };
 
     $routeProvider

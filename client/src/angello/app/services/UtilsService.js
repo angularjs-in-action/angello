@@ -5,7 +5,7 @@ angular.module('Angello.Common')
 
             service.objectToArray = function(content) {
                 // normalizes data from node and firebase so both get returned as arrays
-                if (!Array.isArray(content.data)) {
+                if (content.data instanceof Object && !Array.isArray(content.data)) {
                     var newArray = [];
 
                     for (var key in content.data) {

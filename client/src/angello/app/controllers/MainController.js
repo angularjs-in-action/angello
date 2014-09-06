@@ -5,7 +5,9 @@ function MainCtrl($scope, $location, AuthModel) {
     main.currentUser = null;
 
     $scope.$on('onLogin', function () {
-        main.currentUser = AuthModel.user();
+        $scope.$watch(AuthModel.user(), function() {
+            main.currentUser = AuthModel.user();
+        });
     });
 
     $scope.$on('onLogout', function () {
