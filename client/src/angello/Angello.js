@@ -134,8 +134,8 @@ myModule.factory('loadingInterceptor', function (LoadingService) {
     return loadingInterceptor;
 });
 
-myModule.factory('requestInterceptor', function (UserService, ENDPOINT_URI) {
-    if (ENDPOINT_URI.BACKEND !== 'firebase') {
+myModule.factory('requestInterceptor', function (UserService, CURRENT_BACKEND) {
+    if (CURRENT_BACKEND !== 'firebase') {
         var requestInterceptor = {
             request: function (config) {
                 var user = UserService.getCurrentUser();

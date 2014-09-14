@@ -1,49 +1,31 @@
 angular.module('Angello.Common')
     .service('StoriesModel',
-        function ($http, AuthModel, ENDPOINT_URI, UtilsService) {
-            var service = this;
-
-            if (ENDPOINT_URI.BACKEND == 'firebase') {
-                var root = 'clients/',
-                    format = ".json",
-                    path = "/stories/";
-            } else {
-                var root = 'api/clients/',
-                    format = "",
-                    path = "/stories/";
-            }
-
-            function getUrl(postfix) {
-                return ENDPOINT_URI.URI + root + AuthModel.getCurrentUserId() + postfix;
-            }
-
-            function getUrlForId(story_id) {
-                return getUrl(path) + story_id + format;
-            }
+        function ($http, EndpointConfigService, UtilsService) {
+            var service = this,
+                MODEL = '/stories/';
 
             service.all = function () {
-                return $http.get(getUrl(path + format))
+                return $http.get(EndpointConfigService.getUrl(MODEL + EndpointConfigService.getCurrentFormat()))
                         .then(
                             function(result) {
                                 return UtilsService.objectToArray(result);
                             }
                         );
-                            
             };
 
             service.fetch = function (story_id) {
-                return $http.get(getUrlForId(story_id));
+                return $http.get(EndpointConfigService.getUrlForId(MODEL, story_id));
             };
 
             service.create = function (story) {
-                return $http.post(getUrl(path + format), story);
+                return $http.post(EndpointConfigService.getUrl(MODEL + EndpointConfigService.getCurrentFormat()), story);
             };
 
             service.update = function (story_id, story) {
-                return $http.put(getUrlForId(story_id), story);
+                return $http.put(EndpointConfigService.getUrlForId(MODEL, story_id), story);
             };
 
             service.destroy = function (story_id) {
-                return $http.delete(getUrlForId(story_id));
+                return $http.delete(EndpointConfigService.getUrlForId(MODEL, story_id));
             };
         });

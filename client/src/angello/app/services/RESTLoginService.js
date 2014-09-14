@@ -1,6 +1,6 @@
 angular.module('Angello.Common')
     .service('RESTLoginService',
-        function ($rootScope, LoadingService, ENDPOINT_URI, $http, UserService, $q) {
+        function ($rootScope, $q, $http, LoadingService, EndpointConfigService, UserService) {
             var service = this;
 
             service.$getCurrentUser = function() {
@@ -13,7 +13,7 @@ angular.module('Angello.Common')
 
             service.$login = function(type, creds) {
                 $http.post(
-                    ENDPOINT_URI.URI + 'api/clients/login',
+                    EndpointConfigService.getCurrentURI() + 'api/clients/login',
                     creds
                 )
                 .then(
@@ -36,7 +36,7 @@ angular.module('Angello.Common')
 
             service.$logout = function() {
                 $http.post(
-                    ENDPOINT_URI.URI + 'api/clients/logout'
+                    EndpointConfigService.getCurrentURI() + 'api/clients/logout'
                 )
                 .then(
                     function(response) {
@@ -51,9 +51,8 @@ angular.module('Angello.Common')
             };
 
             service.$createUser = function(email, password) {
-
                 $http.post(
-                    ENDPOINT_URI.URI + 'api/clients',
+                    EndpointConfigService.getCurrentURI() + 'api/clients',
                     {
                         email: email,
                         password: password

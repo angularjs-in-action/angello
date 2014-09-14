@@ -20,6 +20,8 @@ head.load(
     { file: 'src/angello/app/models/EndpointsModel.js' },
     { file: 'src/angello/app/models/StoriesModel.js' },
     { file: 'src/angello/app/models/UsersModel.js' },
+    { file: 'src/angello/app/services/EndpointConfigService.js' },
+    { file: 'src/angello/app/services/FirebaseLoginService.js' },
     { file: 'src/angello/app/services/UtilsService.js' },
     { file: 'src/angello/app/services/LoadingService.js' },
     { file: 'src/angello/app/services/RESTLoginService.js' },

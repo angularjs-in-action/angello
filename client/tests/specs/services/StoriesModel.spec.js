@@ -11,7 +11,7 @@ describe('Stories Model', function () {
             }
         });
 
-        $provide.constant('ENDPOINT_URI', 'http://test.com/');
+        $provide.constant('CURRENT_BACKEND', 'firebase');
     }));
 
     afterEach(inject(function($httpBackend) {
@@ -20,21 +20,21 @@ describe('Stories Model', function () {
     }));
 
     it('Should get all', inject(function(StoriesModel, $httpBackend, $rootScope) {
-        var response = {};
-        $httpBackend.when('GET', 'http://test.com/clients/1/stories/.json').respond(response);
+        var response = [];
+        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
 
         var promise = StoriesModel.all();
         $httpBackend.flush();
         
         promise.then(function(result) {
-            expect(result.data).toEqual(response);
+            expect(result).toEqual(response);
         });
         $rootScope.$digest();
     }));
 
     it('Should fetch', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('GET', 'http://test.com/clients/1/stories/1.json').respond(response);
+        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
 
         var promise = StoriesModel.fetch(1);
         $httpBackend.flush();
@@ -47,7 +47,7 @@ describe('Stories Model', function () {
 
     it('Should create', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('POST', 'http://test.com/clients/1/stories/.json').respond(response);
+        $httpBackend.when('POST', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
 
         var promise = StoriesModel.create({});
         $httpBackend.flush();
@@ -60,7 +60,7 @@ describe('Stories Model', function () {
 
     it('Should update', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('PUT', 'http://test.com/clients/1/stories/1.json').respond(response);
+        $httpBackend.when('PUT', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
 
         var promise = StoriesModel.update(1, {});
         $httpBackend.flush();
@@ -73,7 +73,7 @@ describe('Stories Model', function () {
 
     it('Should destroy', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('DELETE', 'http://test.com/clients/1/stories/1.json').respond(response);
+        $httpBackend.when('DELETE', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
 
         var promise = StoriesModel.destroy(1);
         $httpBackend.flush();
