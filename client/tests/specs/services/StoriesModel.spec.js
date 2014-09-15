@@ -23,6 +23,8 @@ describe('Stories Model', function () {
         var response = [];
         $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
 
+        $rootScope.$broadcast('onCurrentUserId', 1);
+
         var promise = StoriesModel.all();
         $httpBackend.flush();
         
@@ -35,6 +37,8 @@ describe('Stories Model', function () {
     it('Should fetch', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
+
+        $rootScope.$broadcast('onCurrentUserId', 1);
 
         var promise = StoriesModel.fetch(1);
         $httpBackend.flush();
@@ -49,6 +53,8 @@ describe('Stories Model', function () {
         var response = {};
         $httpBackend.when('POST', 'https://angello.firebaseio.com/clients/1/stories/.json').respond(response);
 
+        $rootScope.$broadcast('onCurrentUserId', 1);
+
         var promise = StoriesModel.create({});
         $httpBackend.flush();
 
@@ -62,6 +68,8 @@ describe('Stories Model', function () {
         var response = {};
         $httpBackend.when('PUT', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
 
+        $rootScope.$broadcast('onCurrentUserId', 1);
+
         var promise = StoriesModel.update(1, {});
         $httpBackend.flush();
 
@@ -74,6 +82,8 @@ describe('Stories Model', function () {
     it('Should destroy', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when('DELETE', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
+
+        $rootScope.$broadcast('onCurrentUserId', 1);
 
         var promise = StoriesModel.destroy(1);
         $httpBackend.flush();

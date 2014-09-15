@@ -11,7 +11,7 @@ var myModule = angular.module('Angello',
     ]);
 
 myModule.config(function ($routeProvider, $httpProvider, $provide) {
-    var getCurrentUser = function (AuthModel, $location, ENDPOINT_URI) {
+    var getCurrentUser = function (AuthModel, $location) {
         return AuthModel.getCurrentUser()
                 .then(function (user) {
                     if (!user) $location.path('/login');

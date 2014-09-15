@@ -1,5 +1,5 @@
 angular.module('Angello.Common')
-    .factory('FirebaseLoginService', function($rootScope, $firebaseSimpleLogin, ENDPOINT_URI) {
+    .factory('FirebaseLoginService', function($rootScope, $firebaseSimpleLogin, EndpointConfigService) {
         $rootScope.$on('$firebaseSimpleLogin:login', function (e, u) {
             $rootScope.$broadcast('onLogin');
         });
@@ -12,6 +12,6 @@ angular.module('Angello.Common')
             $rootScope.$broadcast('onLogout');
         });
 
-        return $firebaseSimpleLogin(new Firebase(ENDPOINT_URI.URI));
+        return $firebaseSimpleLogin(new Firebase(EndpointConfigService.getCurrentURI()));
     })
 ;

@@ -53,12 +53,14 @@ angular.module('Angello.Common')
                 loginService.$getCurrentUser()
                     .then(function(currentUser) {
                         user = currentUser;
+                        $rootScope.$broadcast('onCurrentUserId', currentUser.id);
                     });
                 LoadingService.setLoading(false);
             });
 
             $rootScope.$on('onLogout', function (e) {
                 user = null;
+                $rootScope.$broadcast('onCurrentUserId', null);
                 LoadingService.setLoading(false);
             });
 

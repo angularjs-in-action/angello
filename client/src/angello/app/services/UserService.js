@@ -10,7 +10,8 @@ angular.module('Angello.Common')
             };
 
             service.setCurrentUser = function(id, access_token) {
-            	currentUser = {
+
+                currentUser = {
             		id: id,
             		access_token: access_token
             	};

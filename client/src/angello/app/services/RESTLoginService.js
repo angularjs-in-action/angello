@@ -22,7 +22,7 @@ angular.module('Angello.Common')
                         var id = response.data.userId,
                             access_token = response.data.id;
 
-                        UserService.setCurrentUser(id, access_token)
+                        UserService.setCurrentUser(id, access_token);
 
                         $rootScope.$broadcast('onLogin');
                     },
@@ -42,7 +42,7 @@ angular.module('Angello.Common')
                     function(response) {
                         UserService.resetUser();
 
-                        $rootScope.$broadcast('onLogout');        
+                        $rootScope.$broadcast('onLogout');
                     },
                     function(error) {
                         console.log(error);
