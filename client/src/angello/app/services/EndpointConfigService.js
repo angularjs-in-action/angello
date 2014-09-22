@@ -8,7 +8,8 @@ angular.module('Angello.Common')
                 node: { URI: 'http://localhost:3000/', root: 'api/clients/', format: ''}
             },
             currentEndpoint = endpointMap[CURRENT_BACKEND],
-            userId = null;
+            userId = null,
+            backend = CURRENT_BACKEND;
 
         service.getUrl = function(model) {
             return currentEndpoint.URI + currentEndpoint.root + userId + model;

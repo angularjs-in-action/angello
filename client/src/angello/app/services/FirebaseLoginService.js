@@ -1,5 +1,7 @@
 angular.module('Angello.Common')
     .factory('FirebaseLoginService', function($rootScope, $firebaseSimpleLogin, EndpointConfigService) {
+        var isFirebase = EndpointConfigService.getCurrentBackend() === 'firebase';
+
         $rootScope.$on('$firebaseSimpleLogin:login', function (e, u) {
             $rootScope.$broadcast('onLogin');
         });
@@ -12,6 +14,6 @@ angular.module('Angello.Common')
             $rootScope.$broadcast('onLogout');
         });
 
-        return $firebaseSimpleLogin(new Firebase(EndpointConfigService.getCurrentURI()));
+        return isFirebase ? $firebaseSimpleLogin(new Firebase(EndpointConfigService.getCurrentURI())) : '';
     })
 ;

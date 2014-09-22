@@ -53,7 +53,12 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
                     var userId = $route.current.params['userId'] ? $route.current.params['userId'] : $routeParams['userId'];
                     return UsersModel.fetch(userId);
                 },
-                stories: function (StoriesModel) {
+                stories: function ($rootScope, StoriesModel) {
+                    // On page refresh, this is getting fired before the userId is set,
+                    // resulting in a null userId which in turn breaks the StoriesModel.all() http request. 
+                    // Either the following code needs to be moved to the controller, or the StoriesModel.all()
+                    // method needs to take a userId parameter that we can then set from the route params.
+
                     return StoriesModel.all();
                 }
             }
