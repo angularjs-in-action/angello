@@ -44,7 +44,26 @@ If you don't have a local web server and/or don't want to set one up, just `cd` 
 #### Use it!
 At this point, you should see the login portion of the site.
 ![Angello Login Screen](https://cloud.githubusercontent.com/assets/590361/4364466/36bf22d8-42a0-11e4-91e5-ab5bc28a20b0.png)
-We've made it to the fun part! Go ahead and play around with the app and see what it does. More info and screenshots coming soon.
+We've made it to the fun part! Go ahead and play around with the app and see what it does. Read on for a tour of the app.
 
+**Registering a client**
+![Registering Client](https://cloud.githubusercontent.com/assets/590361/4366861/92813990-42c7-11e4-92dd-ce584f140c33.png)
+
+**Adding a user to the storyboard**
+![Adding User](https://cloud.githubusercontent.com/assets/590361/4366972/3d07b13a-42ca-11e4-8864-4fd67e7f8970.png)
+![User Added](https://cloud.githubusercontent.com/assets/590361/4366999/dde83304-42ca-11e4-8100-20260f70613f.png)
+
+**Adding a story**
+![Adding a story](https://cloud.githubusercontent.com/assets/590361/4367011/29a0ed5e-42cb-11e4-99ad-be5e285e642c.png)
+![Story added](https://cloud.githubusercontent.com/assets/590361/4367015/520e2b26-42cb-11e4-9231-fcb66a21d236.png)
+
+**View stories for a specific user**
+![User Stories](https://cloud.githubusercontent.com/assets/590361/4367026/86e69388-42cb-11e4-94d5-e5df77ea8699.png)
+
+**View stories by status**
+![Stories by status](https://cloud.githubusercontent.com/assets/590361/4367048/ed59af9c-42cb-11e4-9769-b5ee61aee5e9.png)
+
+**View stories by type**
+![Stories by type](https://cloud.githubusercontent.com/assets/590361/4367086/a17ce8c2-42cc-11e4-99f0-432835c3c8f9.png)
 ## License
 MIT
