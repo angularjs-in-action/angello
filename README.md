@@ -20,26 +20,32 @@ There are two options for the backend of the app: NodeJS and Firebase.
 ##### Using Firebase
 
 1. If you do not have one already, set up an account with [firebase.com](https://www.firebase.com/)
-![Firebase Home Page](https://cloud.githubusercontent.com/assets/590361/4364837/749ca694-42a4-11e4-9fa3-d19f25cb1bab.png)
+![Firebase Home Page](https://cloud.githubusercontent.com/assets/590361/4364837/749ca694-42a4-11e4-9fa3-d19f25cb1bab.png)<br>
 2. Create an app (name it whatever you want)
-![Create Firebase App](https://cloud.githubusercontent.com/assets/590361/4364985/dbc240b6-42a6-11e4-81f2-d9a254f25ffd.png)
+![Create Firebase App](https://cloud.githubusercontent.com/assets/590361/4364985/dbc240b6-42a6-11e4-81f2-d9a254f25ffd.png)<br>
 3. Click on your new app's URL <br>
-![Firebase App](https://cloud.githubusercontent.com/assets/590361/4365468/c162bca8-42ad-11e4-91b5-7eb81669748a.png)
+![Firebase App](https://cloud.githubusercontent.com/assets/590361/4365468/c162bca8-42ad-11e4-91b5-7eb81669748a.png)<br>
 4. Click on the `Login & Auth` section of the resulting page on the left hand side, and check the checkbox that says `Enable Email & Password Authentication`
-![Enable Auth](https://cloud.githubusercontent.com/assets/590361/4365643/0027bb0c-42b1-11e4-9b21-45249fcb6eb7.png)
+![Enable Auth](https://cloud.githubusercontent.com/assets/590361/4365643/0027bb0c-42b1-11e4-9b21-45249fcb6eb7.png)<br>
 5. Copy the URL from the address bar of the page you are on
-5. Open the file `angello > client > src > angello > app > services > EndpointConfigService.js` and update the `URI` property of the `firebase` object to your copied URL.
-![Edit File](https://cloud.githubusercontent.com/assets/590361/4365499/45762980-42ae-11e4-99f7-58feeb27b934.png)
-6. You're done! Skip to the *Start it* section
+6. Open the file `/client/src/angello/app/services/EndpointConfigService.js` and update the `URI` property of the `firebase` object to your copied URL.
+![Edit File](https://cloud.githubusercontent.com/assets/590361/4365499/45762980-42ae-11e4-99f7-58feeb27b934.png)<br>
+
+You're done! Skip to the *Start it* section
 
 ##### Using NodeJS
-Coming Soon!
+1. Go to the [Angello NodeJS API](https://github.com/angularjs-in-action/angello-node-api) and follow the directions to get the API running.
+2. Once the API is running, open `/client/src/angello/app/services/EndpointConfigService.js` in a text editor, uncomment `// .constant('CURRENT_BACKEND', 'node')` and comment out `.constant('CURRENT_BACKEND', 'firebase')`.
+![Set the backend](https://cloud.githubusercontent.com/assets/590361/4444425/ce28c818-47f0-11e4-9457-d95a20e9450d.png)
+
+You're done! Go ahead and move on to the *Start it* section.
+ 
 
 #### Start it
 Start up your local web server and navigate to the client folder. <br>
 Example: [http://localhost/~username/angello/client/](http://localhost/~username/angello/client/)
 
-If you don't have a local web server and/or don't want to set one up, just `cd` into the client folder and run `python -m SimpleHTTPServer`. You should get an output that looks like this: `Serving HTTP on 0.0.0.0 port 8000 ...`. Just navigate to the web address and port specified (in this case, [http://0.0.0.0:8000/](http://0.0.0.0:8000/)).
+If you don't have a local web server and/or don't want to set one up, run `python -m SimpleHTTPServer` from the root directory of your project. You should get an output that looks like this: `Serving HTTP on 0.0.0.0 port 8000 ...`. Just navigate to the web address and port specified + /client (in this case, [http://0.0.0.0:8000/client](http://0.0.0.0:8000/client)).
 
 #### Use it!
 At this point, you should see the login portion of the site.
