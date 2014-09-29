@@ -1,7 +1,5 @@
 # Angello
 
-[![Build Status](https://travis-ci.org/angularjs-in-action/angello.png)](https://travis-ci.org/angularjs-in-action/angello)
-
 Welcome to Angello, the AngularJS storyboard! Based off the [Trello App](https://trello.com), this repo holds the code for the app built in the [AngularJS in Action](http://www.manning.com/bford/) book. Read on to get started!
 
 ## Prerequisites
