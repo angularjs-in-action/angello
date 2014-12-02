@@ -1,9 +1,18 @@
 angular.module('Angello.User')
-    .controller('UsersCtrl', function ($scope, $log, UsersModel) {
+    .controller('UsersCtrl', function ($scope, $log, UsersModel, $timeout) {
         var myUsers = this;
 
         myUsers.newUser = { name: '', email: '' };
         myUsers.users = {};
+
+        myUsers.showMessages = function (field) {
+          return myUsers.newUserForm[field].$touched || myUsers.newUserForm.$submitted;
+        };
+
+        var resetForm = function() {
+          myUsers.newUserForm.$setPristine();
+          myUsers.newUserForm.$setUntouched();
+        };
 
         myUsers.getUsers = function () {
             UsersModel.all()
@@ -21,6 +30,7 @@ angular.module('Angello.User')
                 .then(function (result) {
                     myUsers.getUsers();
                     myUsers.newUser = { name: '', email: '' };
+                    resetForm();
                     $log.debug('RESULT', result);
                 }, function (reason) {
                     $log.debug('ERROR', reason);
@@ -28,12 +38,14 @@ angular.module('Angello.User')
         };
 
         myUsers.updateUser = function (id, user) {
+          if (myUsers.userForm.$valid) {
             UsersModel.update(id, user)
                 .then(function (result) {
                     $log.debug('RESULT', result);
                 }, function (reason) {
                     $log.debug('ERROR', reason);
                 });
+          }
         };
 
         myUsers.removeUser = function (id) {

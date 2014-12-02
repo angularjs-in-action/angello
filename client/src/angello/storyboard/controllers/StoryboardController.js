@@ -44,7 +44,7 @@ angular.module('Angello.Storyboard')
                     myStory.getStories();
                     myStory.resetForm();
                     $log.debug('RESULT', result);
-                }, function (reason) {
+              }, function (reason) {
                     $log.debug('ERROR', reason);
                 });
         };
@@ -70,11 +70,16 @@ angular.module('Angello.Storyboard')
             myStory.resetForm();
         };
 
+        myStory.showMessages = function (field) {
+          return myStory.detailsForm[field].$touched || myStory.detailsForm.$submitted
+        };
+
         myStory.resetForm = function () {
             myStory.currentStory = null;
             myStory.editedStory = {};
 
             myStory.detailsForm.$setPristine();
+            myStory.detailsForm.$setUntouched();
         };
 
         myStory.setDetailsVisible = function (visible) {

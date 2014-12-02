@@ -91,6 +91,10 @@ body.loading .modal {
     background-color: #FFF;
 }
 
+.new-user .error {
+  position: absolute;
+}
+
 .details {
     background: #EEEEEE;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.25), -1px 0 1px rgba(0, 0, 0, 0.1);
@@ -200,7 +204,7 @@ form.ng-dirty input.ng-valid {
     background: #C3D9FF;
 }
 
-.edit input[type=text] {
+.edit input {
     border: 1px solid #ffffff;
     width: 100%;
     resize: none;
@@ -210,8 +214,8 @@ form.ng-dirty input.ng-valid {
     box-shadow: none;
 }
 
-.edit input[type=text]:hover,
-.edit input[type=text]:focus {
+.edit input:hover,
+.edit input:focus {
     border: 1px solid #d7cebf;
     outline: none
 }
@@ -221,8 +225,8 @@ form.ng-dirty input.ng-valid {
     max-width: 100%;
     line-height: 1.428571429;
     background-image: url(../img/bg-login.png);
+    background-size: cover;
     width: 400px;
-    height: 215px;
     padding: 20px;
     margin: 80px auto 20px;
     background-repeat: no-repeat;
@@ -246,6 +250,10 @@ form.ng-dirty input.ng-valid {
     color: #333;
     font-size: 24px;
     font-weight: bold;
+}
+
+.error {
+  color: red;
 }
 
 .form-signin input[type=text],

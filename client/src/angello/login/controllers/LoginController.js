@@ -3,6 +3,10 @@ angular.module('Angello.Login')
         function ($scope, $location, $log, AuthModel) {
             var login = this;
 
+            login.showMessages = function (field) {
+              return login.loginForm[field].$touched || login.loginForm.$submitted
+            };
+
             login.user = {
                 email: '',
                 password: '',
