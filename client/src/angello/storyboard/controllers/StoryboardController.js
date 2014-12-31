@@ -22,9 +22,9 @@ angular.module('Angello.Storyboard')
                 $log.debug('REASON', reason);
             });
 
-        myStory.setCurrentStory = function (id, story) {
-            $log.debug(id, story)
-            myStory.currentStoryId = id;
+        myStory.setCurrentStory = function (story) {
+            $log.debug(story);
+            myStory.currentStoryId = story.id;
             myStory.currentStory = story;
             myStory.editedStory = angular.copy(myStory.currentStory);
         };
@@ -44,7 +44,7 @@ angular.module('Angello.Storyboard')
                     myStory.getStories();
                     myStory.resetForm();
                     $log.debug('RESULT', result);
-              }, function (reason) {
+                }, function (reason) {
                     $log.debug('ERROR', reason);
                 });
         };
@@ -71,7 +71,7 @@ angular.module('Angello.Storyboard')
         };
 
         myStory.showMessages = function (field) {
-          return myStory.detailsForm[field].$touched || myStory.detailsForm.$submitted
+            return myStory.detailsForm[field].$touched || myStory.detailsForm.$submitted
         };
 
         myStory.resetForm = function () {
@@ -84,17 +84,6 @@ angular.module('Angello.Storyboard')
 
         myStory.setDetailsVisible = function (visible) {
             myStory.detailsVisible = visible;
-        };
-
-        myStory.storiesWithStatus = function (status) {
-            var stories = {};
-            var keys = Object.keys(myStory.stories);
-
-            for (var i = 0, len = keys.length; i < len; i++) {
-                var key = keys[i];
-                if (myStory.stories[key].status == status.name) stories[key] = myStory.stories[key];
-            }
-            return stories;
         };
 
         $scope.$on('storyDeleted', function () {

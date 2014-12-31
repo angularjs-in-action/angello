@@ -4,8 +4,9 @@
         <ul class="list my-repeat-animation" sortable="" ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
             <hr>
-            <!-- TODO Filter by status -->
-            <li userstory ng-repeat="story in storyboard.storiesWithStatus(status)" class="story my-repeat-animation" ng-click="storyboard.setCurrentStory(story.id, story)">
+            <li userstory ng-repeat="story in storyboard.stories | filter: {status:status.name}"
+                class="story my-repeat-animation"
+                ng-click="storyboard.setCurrentStory(story)">
                 <article>
                     <div>
                         <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id);">×</button>
