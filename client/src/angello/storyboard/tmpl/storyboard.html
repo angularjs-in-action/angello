@@ -1,12 +1,18 @@
 <!-- STORIES -->
 <div class="list-area" ng-class="{'list-area-expanded':!storyboard.detailsVisible}">
     <div class="list-wrapper">
-        <ul class="list my-repeat-animation" sortable="" ng-repeat="status in storyboard.statuses">
+        <ul class="list my-repeat-animation" ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
             <hr>
             <li userstory ng-repeat="story in storyboard.stories | filter: {status:status.name}"
+                drag-container="story" mime-type="application/x-angello-status"
+                drop-container="" accepts="['application/x-angello-status']"
                 class="story my-repeat-animation"
                 ng-click="storyboard.setCurrentStory(story)">
+                
+                <div drop-target="top" on-drag-enter="storyboard.insertAdjacent(story, data, true)"></div>
+                <div drop-target="bottom" on-drag-enter="storyboard.insertAdjacent(story, data, false)"></div>
+            
                 <article>
                     <div>
                         <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id);">×</button>
@@ -18,6 +24,12 @@
                     </div>
                 </article>
             </li>
+            <div
+                class="emptystatus"
+                drop-container="" accepts="['application/x-angello-status']"
+                on-drag-enter="storyboard.changeStatus(data, status)"
+                ng-if="storyboard.isEmptyStatus(status)">
+            </div>
         </ul>
     </div>
 </div>
