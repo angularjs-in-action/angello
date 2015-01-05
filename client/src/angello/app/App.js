@@ -1,1 +1,1 @@
-angular.module('Angello.Common', []);
+angular.module('Angello.Common', ['auth0']);

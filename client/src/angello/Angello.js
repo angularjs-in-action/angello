@@ -8,55 +8,47 @@ var myModule = angular.module('Angello',
         'Angello.Dashboard',
         'Angello.Login',
         'Angello.Storyboard',
-        'Angello.User'
+        'Angello.User',
+        'auth0',
+        'angular-jwt',
+        'angular-storage'
     ]);
 
-myModule.config(function ($routeProvider, $httpProvider, $provide) {
-    var getCurrentUser = function (AuthModel, $location) {
-        return AuthModel.getCurrentUser()
-                .then(function (user) {
-                    if (!user) $location.path('/login');
-                });
-    };
+myModule.config(function ($routeProvider, $httpProvider, $provide,
+  authProvider, CURRENT_BACKEND, jwtInterceptorProvider) {
 
     $routeProvider
         .when('/', {
             templateUrl: 'src/angello/storyboard/tmpl/storyboard.html',
             controller: 'StoryboardCtrl',
             controllerAs: 'storyboard',
-            resolve: {
-                currentUser: getCurrentUser
-            }
+            requiresLogin: true
         })
         .when('/dashboard', {
             templateUrl: 'src/angello/dashboard/tmpl/dashboard.html',
             controller: 'DashboardCtrl',
             controllerAs: 'dashboard',
-            resolve: {
-                currentUser: getCurrentUser
-            }
+            requiresLogin: true
         })
         .when('/users', {
             templateUrl: 'src/angello/user/tmpl/users.html',
             controller: 'UsersCtrl',
             controllerAs: 'users',
-            resolve: {
-                currentUser: getCurrentUser
-            }
+            requiresLogin: true
         })
         .when('/users/:userId', {
             templateUrl: 'src/angello/user/tmpl/user.html',
             controller: 'UserCtrl',
             controllerAs: 'myUser',
+            requiresLogin: true,
             resolve: {
-                currentUser: getCurrentUser,
                 user: function ($route, $routeParams, UsersModel) {
                     var userId = $route.current.params['userId'] ? $route.current.params['userId'] : $routeParams['userId'];
                     return UsersModel.fetch(userId);
                 },
                 stories: function ($rootScope, StoriesModel) {
                     // On page refresh, this is getting fired before the userId is set,
-                    // resulting in a null userId which in turn breaks the StoriesModel.all() http request. 
+                    // resulting in a null userId which in turn breaks the StoriesModel.all() http request.
                     // Either the following code needs to be moved to the controller, or the StoriesModel.all()
                     // method needs to take a userId parameter that we can then set from the route params.
 
@@ -71,9 +63,26 @@ myModule.config(function ($routeProvider, $httpProvider, $provide) {
         })
         .otherwise({redirectTo: '/'});
 
+    // Auth0 Authentication
+    authProvider.init({
+      domain: 'angello.auth0.com',
+      clientID: 'Fq8hKAkghu45WpnqrYTc6dbvXhBUdP7l'
+    });
+
     // Interceptor
     $httpProvider.interceptors.push('loadingInterceptor');
-    $httpProvider.interceptors.push('requestInterceptor');
+    // Request interceptor
+    if (CURRENT_BACKEND === 'firebase') {
+      jwtInterceptorProvider.authPrefix = '';
+    }
+
+    jwtInterceptorProvider.tokenGetter = function(store) {
+      store.get('userToken');
+    }
+
+    $httpProvider.interceptors.push('jwtInterceptor');
+
+
 
 
     // Decorator
@@ -160,13 +169,17 @@ myModule.factory('requestInterceptor', function (UserService, CURRENT_BACKEND) {
     return requestInterceptor;
 });
 
-myModule.run(function ($rootScope, LoadingService) {
+myModule.run(function ($rootScope, LoadingService, LoginService) {
     $rootScope.$on('$routeChangeStart', function (e, curr, prev) {
         LoadingService.setLoading(true);
     });
 
     $rootScope.$on('$routeChangeSuccess', function (e, curr, prev) {
         LoadingService.setLoading(false);
+    });
+
+    $rootScope.$on('$locationChangeStart', function() {
+      LoginService.authenticateUser();
     });
 });
 
