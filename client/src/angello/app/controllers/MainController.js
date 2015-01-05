@@ -1,23 +1,8 @@
 angular.module('Angello.Common', [])
-    .controller('MainCtrl', MainCtrl);
-function MainCtrl($scope, $location, AuthModel) {
-    var main = this;
-    main.currentUser = null;
+    .controller('MainCtrl', function MainCtrl($location) {
+        var main = this;
 
-    $scope.$on('onLogin', function () {
-        $scope.$watch(function() {return AuthModel.user()}, function() {
-            main.currentUser = AuthModel.user();
-        });
+        main.logout = function() {
+            $location.path('login');
+        };
     });
-
-    $scope.$on('onLogout', function () {
-        main.currentUser = null;
-        $location.path('login');
-    });
-
-    main.logout = function() {
-        AuthModel.logout();
-    };
-
-    AuthModel.getCurrentUser();
-};

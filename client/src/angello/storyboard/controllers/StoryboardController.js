@@ -1,52 +1,53 @@
 angular.module('Angello.Storyboard')
-    .controller('StoryboardCtrl',
-    function ($scope, $log, StoriesModel, UsersModel, STORY_STATUSES, STORY_TYPES) {
+    .controller('StoryboardCtrl', function () {
         var myStory = this;
 
         myStory.detailsVisible = true;
         myStory.currentStoryId = null;
         myStory.currentStory = null;
         myStory.editedStory = {};
-        myStory.stories = [];
+        myStory.stories = [
+            {"assignee": "1", "criteria": "It tests!", "description": "This is a test", "id": "1", "reporter": "2", "status": "To Do", "title": "First Story", "type": "Spike"},
+            {"assignee": "2", "description": "testing something", "id": "2", "reporter": "1", "status": "In Progress", "title": "Second Story", "type": "Enhancement"}
+        ];
 
-        myStory.types = STORY_TYPES;
-        myStory.statuses = STORY_STATUSES;
+        myStory.types = [
+            {name: 'Feature'},
+            {name: 'Enhancement'},
+            {name: 'Bug'},
+            {name: 'Spike'}
+        ];
 
-        myStory.users = {};
+        myStory.statuses = [
+            {name: 'To Do'},
+            {name: 'In Progress'},
+            {name: 'Code Review'},
+            {name: 'QA Review'},
+            {name: 'Verified'}
+        ];
 
-        UsersModel.all()
-            .then(function (result) {
-                myStory.users = (result !== 'null') ? result : {};
-                $log.debug('RESULT', result);
-            }, function (reason) {
-                $log.debug('REASON', reason);
-            });
+        myStory.users = [
+            {"email": "one@user.com", "name": "Lukas Ruebbelke", "id": "1"},
+            {"email": "another@user.com", "name": "Another User", "id": "2"}
+        ];
 
         myStory.setCurrentStory = function (story) {
-            $log.debug(story);
             myStory.currentStoryId = story.id;
             myStory.currentStory = story;
             myStory.editedStory = angular.copy(myStory.currentStory);
         };
 
-        myStory.getStories = function () {
-            StoriesModel.all().then(function (result) {
-                myStory.stories = (result !== 'null') ? result : {};
-                $log.debug('RESULT', result);
-            }, function (reason) {
-                $log.debug('REASON', reason);
-            });
+        // Utility function for this example
+        function ID() {
+            return '_' + Math.random().toString(36).substr(2, 9);
         };
 
         myStory.createStory = function () {
-            StoriesModel.create(myStory.editedStory)
-                .then(function (result) {
-                    myStory.getStories();
-                    myStory.resetForm();
-                    $log.debug('RESULT', result);
-                }, function (reason) {
-                    $log.debug('ERROR', reason);
-                });
+            var newStory = angular.copy(myStory.editedStory);
+            newStory.id = ID();
+
+            myStory.stories.push(newStory);
+            myStory.resetForm();
         };
 
         myStory.updateStory = function () {
@@ -56,22 +57,29 @@ angular.module('Angello.Storyboard')
                 myStory.currentStory[field] = myStory.editedStory[field]
             });
 
-            StoriesModel.update(myStory.currentStoryId, myStory.editedStory)
-                .then(function (result) {
-                    myStory.getStories();
-                    myStory.resetForm();
-                    $log.debug('RESULT', result);
-                }, function (reason) {
-                    $log.debug('REASON', reason);
-                });
+            myStory.resetForm();
+        };
+
+        myStory.updateStory = function () {
+            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
+
+            fields.forEach(function (field) {
+                myStory.currentStory[field] = myStory.editedStory[field]
+            });
+
+            myStory.resetForm();
+        };
+
+        myStory.deleteStory = function(storyId) {
+            myStory.stories.remove(function(story) {
+                return story.id === storyId;
+            });
+
+            myStory.resetForm();
         };
 
         myStory.updateCancel = function () {
             myStory.resetForm();
-        };
-
-        myStory.showMessages = function (field) {
-            return myStory.detailsForm[field].$touched || myStory.detailsForm.$submitted
         };
 
         myStory.resetForm = function () {
@@ -81,15 +89,4 @@ angular.module('Angello.Storyboard')
             myStory.detailsForm.$setPristine();
             myStory.detailsForm.$setUntouched();
         };
-
-        myStory.setDetailsVisible = function (visible) {
-            myStory.detailsVisible = visible;
-        };
-
-        $scope.$on('storyDeleted', function () {
-            myStory.getStories();
-            myStory.resetForm();
-        });
-
-        myStory.getStories();
     });

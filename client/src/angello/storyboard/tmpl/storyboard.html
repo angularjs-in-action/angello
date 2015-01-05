@@ -4,12 +4,12 @@
         <ul class="list my-repeat-animation" sortable="" ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
             <hr>
-            <li userstory ng-repeat="story in storyboard.stories | filter: {status:status.name}"
-                class="story my-repeat-animation"
+            <li class="story"
+                ng-repeat="story in storyboard.stories | filter: {status:status.name}"
                 ng-click="storyboard.setCurrentStory(story)">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id);">×</button>
+                        <button type="button" class="close" ng-click="storyboard.deleteStory(story.id);">×</button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>
@@ -22,19 +22,9 @@
     </div>
 </div>
 
-
 <!-- STORY DETAILS -->
-<div class="details details-animation" ng-class="{'details-visible':storyboard.detailsVisible}">
-    <div class="details-nav">
-        <div ng-if="!storyboard.detailsVisible">
-            <button class="btn pull-left btn-default" ng-click="storyboard.setDetailsVisible(true)"><span class="glyphicon glyphicon-arrow-left"></span></button>
-        </div>
-        <div ng-if="storyboard.detailsVisible">
-            <button class="btn pull-right btn-default" ng-click="storyboard.setDetailsVisible(false)"><span class="glyphicon glyphicon-arrow-right"></span></button>
-        </div>
-    </div>
-
-    <div ng-if="storyboard.detailsVisible" class="my-fade-animation">
+<div class="details">
+    <div>
         <h3>Card Details</h3>
 
         <form name="storyboard.detailsForm" novalidate="">
@@ -42,22 +32,6 @@
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
                     <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="storyboard.editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputTitle.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputTitle.$error"
-                      ng-if="storyboard.showMessages('inputTitle')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                      <div ng-message ="minlength">
-                        <small>Too short!</small>
-                      </div>
-                      <div ng-message="maxlength">
-                        <small>Too long!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -67,16 +41,6 @@
                     <select id="inputStatus" name="inputStatus" class="form-control" ng-model="storyboard.editedStory.status" ng-options="l.name as l.name for l in storyboard.statuses" ng-required="true">
                         <option value="">Select Status</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputStatus.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputStatus.$error"
-                      ng-if="storyboard.showMessages('inputStatus')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -86,16 +50,6 @@
                     <select id="inputType" name="inputType" class="form-control" ng-model="storyboard.editedStory.type" ng-options="t.name as t.name for t in storyboard.types" ng-required="true">
                         <option value="">Select Type</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputType.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputType.$error"
-                      ng-if="storyboard.showMessages('inputType')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -120,14 +74,6 @@
                         name="inputReporter" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
-                    <div ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputReporter.$invalid}"
-                         ng-messages="storyboard.detailsForm.inputReporter.$error"
-                         ng-if="storyboard.showMessages('inputReporter')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -138,16 +84,6 @@
                         name="inputAssignee" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputAssignee.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputAssignee.$error"
-                      ng-if="storyboard.showMessages('inputAssignee')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
         </form>

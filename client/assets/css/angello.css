@@ -86,6 +86,7 @@ body.loading .modal {
     display: inline-flex;
 }
 
+.content-wrapper,
 .user-wrapper {
     padding: 10px;
     padding-top: 80px;
