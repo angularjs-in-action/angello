@@ -10,8 +10,8 @@
                 class="story my-repeat-animation"
                 ng-click="storyboard.setCurrentStory(story)">
                 
-                <div drop-target="top" on-drag-enter="storyboard.insertAdjacent(story, data, true)"></div>
-                <div drop-target="bottom" on-drag-enter="storyboard.insertAdjacent(story, data, false)"></div>
+                <div drop-target="top" on-drag-enter="storyboard.insertAdjacent(story, data, true)" on-drop="storyboard.finalizeDrop(data)"></div>
+                <div drop-target="bottom" on-drag-enter="storyboard.insertAdjacent(story, data, false)" on-drop="storyboard.finalizeDrop(data)"></div>
             
                 <article>
                     <div>
@@ -27,6 +27,7 @@
             <div
                 class="emptystatus"
                 drop-container="" accepts="['application/x-angello-status']"
+                on-drop="storyboard.finalizeDrop(data)"
                 on-drag-enter="storyboard.changeStatus(data, status)"
                 ng-if="storyboard.isEmptyStatus(status)">
             </div>
