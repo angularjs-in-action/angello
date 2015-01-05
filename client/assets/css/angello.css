@@ -282,7 +282,7 @@ form.ng-dirty input.ng-valid {
     margin-bottom: 5px;
 }
 
-[plunker-drag-container] {
+[drag-container] {
     -khtml-user-drag: element;
     -webkit-user-drag: element;
     -khtml-user-select: none;
@@ -292,15 +292,15 @@ form.ng-dirty input.ng-valid {
     user-select: none;
 }
 
-[plunker-drop-container] {
+[drop-container] {
     position: relative;
 }
 
-[plunker-drop-target] {
+[drop-target] {
     position: absolute;
     display: none;
 }
-[plunker-drop-target].drop-target-active {
+[drop-target].drop-target-active {
     display: block;
     pointer-events: none;
 }
