@@ -96,14 +96,23 @@ angular.module('Angello.Storyboard')
             return empty;
         };
         
+        myStory.finalizeDrop = function (story) {
+            StoriesModel.update(story.id, story)
+                .then(function (result) {
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('REASON', reason);
+                });
+        };
+        
         myStory.changeStatus = function (story, status) {
             story.status = status;
         };
         
-        myStory.insertAdjacent = function (target, status, insertBefore) {
-            if (target === status) return;
+        myStory.insertAdjacent = function (target, story, insertBefore) {
+            if (target === story) return;
             
-            var fromIdx = myStory.stories.indexOf(status);
+            var fromIdx = myStory.stories.indexOf(story);
             var toIdx = myStory.stories.indexOf(target);
             
             if (!insertBefore) toIdx++;
@@ -113,9 +122,9 @@ angular.module('Angello.Storyboard')
                 
                 if (toIdx >= fromIdx) toIdx--;
                 
-                myStory.stories.splice(toIdx, 0, status);
+                myStory.stories.splice(toIdx, 0, story);
                 
-                status.status = target.status;
+                story.status = target.status;
             }
         };
 
