@@ -1,38 +1,13 @@
 angular.module('Angello.Login')
     .controller('LoginCtrl',
-        function ($scope, $location, $log, AuthModel) {
+        function ($scope, $location, $log, LoginService) {
             var login = this;
 
-            login.showMessages = function (field) {
-              return login.loginForm[field].$touched || login.loginForm.$submitted
-            };
-
-            login.user = {
-                email: '',
-                password: '',
-                register: false
-            };
-
-            login.submit = function (email, password, register) {
-                if (login.loginForm.$valid) {
-                    ((register) ? AuthModel.register : AuthModel.login)(email, password);
-                    login.reset();
-                }
-            };
-
-            login.reset = function () {
-                login.user = {
-                    email: '',
-                    password: '',
-                    register: false
-                };
-            };
-
-            $scope.$on('onLogin', function (e, user) {
-                $location.path('/');
-            });
-
-            $scope.$on('$firebaseSimpleLogin:error', function (e, err) {
-                $log.debug('ERROR', err);
+            LoginService.login({
+              container: 'login-container'
+            }, function() {
+              $location.path('/');
+            }, function(error) {
+              $log.error("There's an error logging in", error);
             });
         });
