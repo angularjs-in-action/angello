@@ -4,14 +4,18 @@ angular.module('Angello.Common')
             CURRENT_BACKEND, $log, $location, jwtHelper) {
             var service = this;
 
+            function saveUserAndProfile(profile, token) {
+              store.set('profile', profile);
+              $rootScope.$broadcast('onLogin', profile);
+              $rootScope.$broadcast('onCurrentUserId', profile.user_id);
+              store.set('id_token', token);
+            }
+
             var loginCallback;
             if (CURRENT_BACKEND === 'firebase') {
                 loginCallback = function(onLogin, error) {
                   return function(profile, token) {
-                    store.set('profile', profile);
-                    $rootScope.$broadcast('onLogin', profile);
-                    store.set('id_token', token);
-                    $rootScope.$broadcast('onCurrentUserId', profile.user_id);
+                    saveUserAndProfile(profile, token);
                     auth.getToken({
                         api: 'firebase'
                     }).then(function(token) {
@@ -26,10 +30,7 @@ angular.module('Angello.Common')
             } else {
                 loginCallback = function(onLogin) {
                   return function(profile, token) {
-                    store.set('profile', profile);
-                    $rootScope.$broadcast('onLogin', profile);
-                    $rootScope.$broadcast('onCurrentUserId', profile.user_id);
-                    store.set('id_token', token);
+                    saveUserAndProfile(profile, token);
                     store.set('userToken', token);
                     onLogin(profile, token);
                   }
