@@ -9,7 +9,8 @@
                 ng-click="storyboard.setCurrentStory(story)">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="storyboard.deleteStory(story.id);">×</button>
+                        <button type="button" class="close"
+                                ng-click="storyboard.deleteStory(story.id);">×</button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>
@@ -31,14 +32,19 @@
             <div class="form-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
-                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="storyboard.editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
+                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title"
+                           ng-model="storyboard.editedStory.title" ng-required="true"
+                           ng-minlength="3" ng-maxlength="30" class="form-control">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputStatus">*Status</label>
 
                 <div class="controls">
-                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="storyboard.editedStory.status" ng-options="l.name as l.name for l in storyboard.statuses" ng-required="true">
+                    <select id="inputStatus" name="inputStatus" class="form-control"
+                            ng-model="storyboard.editedStory.status"
+                            ng-options="l.name as l.name for l in storyboard.statuses"
+                            ng-required="true">
                         <option value="">Select Status</option>
                     </select>
                 </div>
@@ -47,7 +53,10 @@
                 <label class="control-label" for="inputType">*Type</label>
 
                 <div class="controls">
-                    <select id="inputType" name="inputType" class="form-control" ng-model="storyboard.editedStory.type" ng-options="t.name as t.name for t in storyboard.types" ng-required="true">
+                    <select id="inputType" name="inputType" class="form-control"
+                            ng-model="storyboard.editedStory.type"
+                            ng-options="t.name as t.name for t in storyboard.types"
+                            ng-required="true">
                         <option value="">Select Type</option>
                     </select>
                 </div>
@@ -56,14 +65,19 @@
                 <label class="control-label" for="inputDescription">Description</label>
 
                 <div class="controls">
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3" ng-model="storyboard.editedStory.description"></textarea>
+                    <textarea id="inputDescription" name="inputDescription"
+                              class="form-control" placeholder="Description" rows="3"
+                              ng-model="storyboard.editedStory.description"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
 
                 <div class="controls">
-                    <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3" ng-model="storyboard.editedStory.criteria"></textarea>
+                    <textarea id="inputAcceptance"
+                              name="inputAcceptance" class="form-control"
+                              placeholder="Acceptance Criteria" rows="3"
+                              ng-model="storyboard.editedStory.criteria"></textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -71,7 +85,8 @@
 
                 <div class="controls">
                     <select ng-model="storyboard.editedStory.reporter" class="form-control"
-                        name="inputReporter" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
+                        name="inputReporter" ng-required="true"
+                        ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
                 </div>
@@ -81,7 +96,8 @@
 
                 <div class="controls">
                     <select ng-model="storyboard.editedStory.assignee" class="form-control"
-                        name="inputAssignee" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
+                        name="inputAssignee" ng-required="true"
+                        ng-options="user.id as user.name for user in storyboard.users">
                         <option value="">Please select...</option>
                     </select>
                 </div>
@@ -90,10 +106,14 @@
         <hr>
         <div ng-if="storyboard.currentStory">
             <button class="btn btn-default" ng-click="storyboard.updateCancel()">Cancel</button>
-            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.updateStory()">Update</button>
+            <button class="btn pull-right btn-default"
+                    ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.updateStory()">Update</button>
         </div>
         <div ng-if="!storyboard.currentStory">
-            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.createStory()">New storyboard</button>
+            <button class="btn pull-right btn-default"
+                    ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.createStory()">New storyboard</button>
         </div>
     </div>
 </div>
