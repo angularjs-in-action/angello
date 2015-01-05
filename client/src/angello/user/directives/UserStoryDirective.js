@@ -1,13 +1,13 @@
 angular.module('Angello.User')
     .directive('userstory', function ($rootScope, StoriesModel, $log) {
         var linker = function (scope, element, attrs) {
-            element
-                .mouseover(function () {
-                    element.css({ 'opacity': 0.9 });
-                })
-                .mouseout(function () {
-                    element.css({ 'opacity': 1.0 })
-                });
+            // element
+            //     .mouseover(function () {
+            //         element.css({ 'opacity': 0.9 });
+            //     })
+            //     .mouseout(function () {
+            //         element.css({ 'opacity': 1.0 })
+            //     });
         };
 
         var controller = function () {

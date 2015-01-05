@@ -33,7 +33,7 @@ head.load(
     { file: 'src/angello/login/controllers/LoginController.js' },
     { file: 'src/angello/storyboard/Storyboard.js' },
     { file: 'src/angello/storyboard/controllers/StoryboardController.js' },
-    { file: 'src/angello/storyboard/directives/SortableDirective.js' },
+    { file: 'src/angello/storyboard/directives/DragAndDrop.js' },
     { file: 'src/angello/user/User.js' },
     { file: 'src/angello/user/controllers/UserController.js' },
     { file: 'src/angello/user/controllers/UsersController.js' },

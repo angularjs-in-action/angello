@@ -70,6 +70,14 @@ body.loading .modal {
     font-size: 24px;
 }
 
+.story:hover {
+    opacity: 0.9;
+}
+
+.emptystatus {
+    min-height: 100vh;
+}
+
 .list-area {
     position: absolute;
     left: 0;
@@ -272,4 +280,90 @@ form.ng-dirty input.ng-valid {
     width: 100%;
     resize: none;
     margin-bottom: 5px;
+}
+
+[drag-container] {
+    -khtml-user-drag: element;
+    -webkit-user-drag: element;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-drag: element;
+    user-select: none;
+}
+
+[drop-container] {
+    position: relative;
+}
+
+[drop-target] {
+    position: absolute;
+    display: none;
+}
+[drop-target].drop-target-active {
+    display: block;
+    pointer-events: none;
+}
+
+.drop-target-center {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.drop-target-top {
+    top: 0;
+    right: 0;
+    height: 50%;
+    left: 0;
+}
+
+.drop-target-top-right {
+    top: 0;
+    right: 0;
+    height: 50%;
+    width: 50%;
+}
+
+.drop-target-right {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+}
+
+.drop-target-bottom-right {
+    height: 50%;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+}
+
+.drop-target-bottom {
+    height: 50%;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.drop-target-bottom-left {
+    height: 50%;
+    width: 50%;
+    bottom: 0;
+    left: 0;
+}
+
+.drop-target-left {
+    top: 0;
+    right: 50%;
+    bottom: 0;
+    left: 0;
+}
+
+.drop-target-top-left {
+    top: 0;
+    width: 50%;
+    height: 50%;
+    left: 0;
 }

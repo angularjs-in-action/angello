@@ -85,6 +85,39 @@ angular.module('Angello.Storyboard')
         myStory.setDetailsVisible = function (visible) {
             myStory.detailsVisible = visible;
         };
+        
+        myStory.isEmptyStatus = function (status) {
+            var empty = true;
+            
+            myStory.stories.forEach(function (story) {
+                if (story.status === status) empty = false;
+            });
+            
+            return empty;
+        };
+        
+        myStory.changeStatus = function (story, status) {
+            story.status = status;
+        };
+        
+        myStory.insertAdjacent = function (target, status, insertBefore) {
+            if (target === status) return;
+            
+            var fromIdx = myStory.stories.indexOf(status);
+            var toIdx = myStory.stories.indexOf(target);
+            
+            if (!insertBefore) toIdx++;
+            
+            if (fromIdx >= 0 && toIdx >= 0) {
+                myStory.stories.splice(fromIdx, 1);
+                
+                if (toIdx >= fromIdx) toIdx--;
+                
+                myStory.stories.splice(toIdx, 0, status);
+                
+                status.status = target.status;
+            }
+        };
 
         $scope.$on('storyDeleted', function () {
             myStory.getStories();
