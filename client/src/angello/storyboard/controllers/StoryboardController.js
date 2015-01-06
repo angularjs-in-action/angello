@@ -2,8 +2,6 @@ angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl', function () {
         var myStory = this;
 
-        myStory.detailsVisible = true;
-        myStory.currentStoryId = null;
         myStory.currentStory = null;
         myStory.editedStory = {};
         myStory.stories = [
@@ -32,7 +30,6 @@ angular.module('Angello.Storyboard')
         ];
 
         myStory.setCurrentStory = function (story) {
-            myStory.currentStoryId = story.id;
             myStory.currentStory = story;
             myStory.editedStory = angular.copy(myStory.currentStory);
         };
@@ -47,16 +44,6 @@ angular.module('Angello.Storyboard')
             newStory.id = ID();
 
             myStory.stories.push(newStory);
-            myStory.resetForm();
-        };
-
-        myStory.updateStory = function () {
-            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
-
-            fields.forEach(function (field) {
-                myStory.currentStory[field] = myStory.editedStory[field]
-            });
-
             myStory.resetForm();
         };
 
