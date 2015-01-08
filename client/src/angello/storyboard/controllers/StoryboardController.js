@@ -1,22 +1,22 @@
 angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl', function () {
-        var myStory = this;
+        var storyboard = this;
 
-        myStory.currentStory = null;
-        myStory.editedStory = {};
-        myStory.stories = [
+        storyboard.currentStory = null;
+        storyboard.editedStory = {};
+        storyboard.stories = [
             {"assignee": "1", "criteria": "It tests!", "description": "This is a test", "id": "1", "reporter": "2", "status": "To Do", "title": "First Story", "type": "Spike"},
             {"assignee": "2", "description": "testing something", "id": "2", "reporter": "1", "status": "In Progress", "title": "Second Story", "type": "Enhancement"}
         ];
 
-        myStory.types = [
+        storyboard.types = [
             {name: 'Feature'},
             {name: 'Enhancement'},
             {name: 'Bug'},
             {name: 'Spike'}
         ];
 
-        myStory.statuses = [
+        storyboard.statuses = [
             {name: 'To Do'},
             {name: 'In Progress'},
             {name: 'Code Review'},
@@ -24,14 +24,14 @@ angular.module('Angello.Storyboard')
             {name: 'Verified'}
         ];
 
-        myStory.users = [
+        storyboard.users = [
             {"email": "one@user.com", "name": "Lukas Ruebbelke", "id": "1"},
             {"email": "another@user.com", "name": "Another User", "id": "2"}
         ];
 
-        myStory.setCurrentStory = function (story) {
-            myStory.currentStory = story;
-            myStory.editedStory = angular.copy(myStory.currentStory);
+        storyboard.setCurrentStory = function (story) {
+            storyboard.currentStory = story;
+            storyboard.editedStory = angular.copy(storyboard.currentStory);
         };
 
         // Utility function for this example
@@ -39,41 +39,41 @@ angular.module('Angello.Storyboard')
             return '_' + Math.random().toString(36).substr(2, 9);
         };
 
-        myStory.createStory = function () {
-            var newStory = angular.copy(myStory.editedStory);
+        storyboard.createStory = function () {
+            var newStory = angular.copy(storyboard.editedStory);
             newStory.id = ID();
 
-            myStory.stories.push(newStory);
-            myStory.resetForm();
+            storyboard.stories.push(newStory);
+            storyboard.resetForm();
         };
 
-        myStory.updateStory = function () {
+        storyboard.updateStory = function () {
             var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
 
             fields.forEach(function (field) {
-                myStory.currentStory[field] = myStory.editedStory[field]
+                storyboard.currentStory[field] = storyboard.editedStory[field]
             });
 
-            myStory.resetForm();
+            storyboard.resetForm();
         };
 
-        myStory.deleteStory = function(storyId) {
-            myStory.stories.remove(function(story) {
+        storyboard.deleteStory = function(storyId) {
+            storyboard.stories.remove(function(story) {
                 return story.id === storyId;
             });
 
-            myStory.resetForm();
+            storyboard.resetForm();
         };
 
-        myStory.updateCancel = function () {
-            myStory.resetForm();
+        storyboard.updateCancel = function () {
+            storyboard.resetForm();
         };
 
-        myStory.resetForm = function () {
-            myStory.currentStory = null;
-            myStory.editedStory = {};
+        storyboard.resetForm = function () {
+            storyboard.currentStory = null;
+            storyboard.editedStory = {};
 
-            myStory.detailsForm.$setPristine();
-            myStory.detailsForm.$setUntouched();
+            storyboard.detailsForm.$setPristine();
+            storyboard.detailsForm.$setUntouched();
         };
     });
