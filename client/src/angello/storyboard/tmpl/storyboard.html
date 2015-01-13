@@ -43,7 +43,7 @@
                 <div class="controls">
                     <select id="inputStatus" name="inputStatus" class="form-control"
                             ng-model="storyboard.editedStory.status"
-                            ng-options="l.name as l.name for l in storyboard.statuses"
+                            ng-options="story.name as story.name for story in storyboard.statuses"
                             ng-required="true">
                         <option value="">Select Status</option>
                     </select>
@@ -55,7 +55,7 @@
                 <div class="controls">
                     <select id="inputType" name="inputType" class="form-control"
                             ng-model="storyboard.editedStory.type"
-                            ng-options="t.name as t.name for t in storyboard.types"
+                            ng-options="type.name as type.name for type in storyboard.types"
                             ng-required="true">
                         <option value="">Select Type</option>
                     </select>
