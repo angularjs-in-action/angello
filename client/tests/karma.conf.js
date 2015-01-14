@@ -15,11 +15,11 @@ module.exports = function (config) {
           'vendor/angular-route.js',
           'vendor/angular-animate.js',
           'vendor/angular-mocks.js',
+          'vendor/sugar-1.3.9.min.js',
           'tests/mocks/*.js',
           'src/angello/**/*.js',
           'tests/**/*.js'
         ],
-
 
         // list of files to exclude
         exclude: [
@@ -57,7 +57,7 @@ module.exports = function (config) {
         // - Safari (only Mac; has to be installed with `npm install karma-safari-launcher`)
         // - PhantomJS
         // - IE (only Windows; has to be installed with `npm install karma-ie-launcher`)
-        browsers: ['Chrome'],
+        browsers: ['PhantomJS'],
 
 
         // If browser does not capture in given timeout [ms], kill it
