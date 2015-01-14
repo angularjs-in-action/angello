@@ -74,13 +74,14 @@ describe('StoryboardCtrl', function () {
     });
 
     it('should update a story', function () {
-        var oldStory = angular.copy(ctrl.stories[0]);
-        ctrl.currentStory = ctrl.editedStory = oldStory;
-        ctrl.editedStory.assignee = '9';
+        var story = ctrl.stories[0],
+            title = 'Updated Story';
 
+        ctrl.setCurrentStory(story);
+        ctrl.editedStory.title = title;
         ctrl.updateStory();
 
-        expect(ctrl.stories[0]).not.toEqual(oldStory);
+        expect(story.title).toEqual(title);
     });
 
     it('should delete a story', function () {
