@@ -4,9 +4,10 @@ angular.module('Angello.Storyboard')
 
         storyboard.currentStory = null;
         storyboard.editedStory = {};
+
         storyboard.stories = [
             {"assignee": "1", "criteria": "It tests!", "description": "This is a test", "id": "1", "reporter": "2", "status": "To Do", "title": "First Story", "type": "Spike"},
-            {"assignee": "2", "description": "testing something", "id": "2", "reporter": "1", "status": "In Progress", "title": "Second Story", "type": "Enhancement"}
+            {"assignee": "2", "description": "testing something", "id": "2", "reporter": "1", "status": "In Progress", "title": "Second Story", "type": "Enhancement"},
         ];
 
         storyboard.types = [
@@ -41,7 +42,7 @@ angular.module('Angello.Storyboard')
 
         storyboard.createStory = function () {
             var newStory = angular.copy(storyboard.editedStory);
-            newStory.id = ID();
+            if (!newStory.id) newStory.id = ID();
 
             storyboard.stories.push(newStory);
             storyboard.resetForm();
