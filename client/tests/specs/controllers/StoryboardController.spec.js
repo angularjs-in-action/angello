@@ -4,101 +4,90 @@ beforeEach(module('Angello.Storyboard'));
 
 var ctrl, scope, element, compile;
 
-describe('StoryboardCtrl', function() {
+describe('StoryboardCtrl', function () {
 
-  beforeEach(inject(function($controller) {
-    ctrl = $controller('StoryboardCtrl', {});
-    ctrl.detailsForm = { $setPristine: function() {}, $setUntouched: function() {} };
-  }));
+    beforeEach(inject(function ($controller) {
+        ctrl = $controller('StoryboardCtrl', {});
+        ctrl.detailsForm = {
+            $setPristine: function () { },
+            $setUntouched: function () {  }
+        };
+    }));
 
-  function reset()  {
-    ctrl.currentStory = null;
-    ctrl.editedStory = {};
-  };
+    it('should initialize currentStory, editedStory, stories, types, statuses, and users', function () {
+        expect(ctrl.currentStory).toBeNull();
 
-  function ID() {
-    return '_' + Math.random().toString(36).substr(2, 9);
-  };
+        expect(ctrl.editedStory).toBeDefined();
+        expect(ctrl.editedStory).not.toBeNull();
 
-  it('should initialize currentStory, editedStory, stories, types, statuses, and users', function() {
-    expect(ctrl.currentStory).toBeNull();
+        expect(ctrl.stories.length).toEqual(2);
+        expect(ctrl.stories[0].id).toEqual('1');
 
-    expect(ctrl.editedStory).toBeDefined();
-    expect(ctrl.editedStory).not.toBeNull();
+        expect(ctrl.types.length).toEqual(4);
+        expect(ctrl.types[0].name).toEqual('Feature');
 
-    expect(ctrl.stories.length).toEqual(2);
-    expect(ctrl.stories[0].id).toEqual('1');
+        expect(ctrl.statuses.length).toEqual(5);
+        expect(ctrl.statuses[0].name).toEqual('To Do');
 
-    expect(ctrl.types.length).toEqual(4);
-    expect(ctrl.types[0].name).toEqual('Feature');
+        expect(ctrl.users.length).toEqual(2);
+        expect(ctrl.users[0].id).toEqual('1');
+    });
 
-    expect(ctrl.statuses.length).toEqual(5);
-    expect(ctrl.statuses[0].name).toEqual('To Do');
+    it('should reset the form', function () {
+        ctrl.currentStory = {assignee: '1'};
+        ctrl.editedStory = ctrl.currentStory;
 
-    expect(ctrl.users.length).toEqual(2);
-    expect(ctrl.users[0].id).toEqual('1');
-  });
+        ctrl.resetForm();
 
-  it('should reset the form', function() {
-    ctrl.currentStory = {assignee: '1'};
-    ctrl.editedStory = ctrl.currentStory;
+        expect(ctrl.currentStory).toBeNull();
 
-    ctrl.resetForm();
+        expect(ctrl.editedStory).toBeDefined();
+        expect(ctrl.editedStory).not.toBeNull();
+    });
 
-    expect(ctrl.currentStory).toBeNull();
+    it('should cancel the form', function () {
+        ctrl.editedStory = ctrl.currentStory = {assignee: '1'};
 
-    expect(ctrl.editedStory).toBeDefined();
-    expect(ctrl.editedStory).not.toBeNull();
-  });
+        ctrl.updateCancel();
 
-  it('should cancel the form', function() {
-    reset();
-    ctrl.editedStory = ctrl.currentStory = {assignee: '1'};
+        expect(ctrl.currentStory).toBeNull();
 
-    ctrl.updateCancel();
+        expect(ctrl.editedStory).toBeDefined();
+        expect(ctrl.editedStory).not.toBeNull();
+    });
 
-    expect(ctrl.currentStory).toBeNull();
+    it('should set current story', function () {
+        var story = {assignee: '1'};
+        ctrl.setCurrentStory(story);
 
-    expect(ctrl.editedStory).toBeDefined();
-    expect(ctrl.editedStory).not.toBeNull();
-  });
+        expect(ctrl.currentStory.assignee).toEqual('1');
+        expect(ctrl.editedStory).toEqual(ctrl.currentStory);
+    });
 
-  it('should set current story', function() {
-    reset();
-    var story = {assignee: '1'};
-    ctrl.setCurrentStory(story);
+    it('should create a story', function () {
+        var oldLength = ctrl.stories.length;
+        ctrl.editedStory = {assignee: '1'};
 
-    expect(ctrl.currentStory.assignee).toEqual('1');
-    expect(ctrl.editedStory).toEqual(ctrl.currentStory);
-  });
+        ctrl.createStory();
 
-  it('should create a story', function() {
-    reset();
-    var oldLength = ctrl.stories.length;
-    ctrl.editedStory = {assignee: '1'};
+        expect(ctrl.stories.length).toBeGreaterThan(oldLength);
+    });
 
-    ctrl.createStory();
+    it('should update a story', function () {
+        var oldStory = angular.copy(ctrl.stories[0]);
+        ctrl.currentStory = ctrl.editedStory = oldStory;
+        ctrl.editedStory.assignee = '9';
 
-    expect(ctrl.stories.length).toBeGreaterThan(oldLength);
-  });
+        ctrl.updateStory();
 
-  it('should update a story', function() {
-    reset();
-    var oldStory = angular.copy(ctrl.stories[0]);
-    ctrl.currentStory = ctrl.editedStory = oldStory;
-    ctrl.editedStory.assignee = '9';
+        expect(ctrl.stories[0]).not.toEqual(oldStory);
+    });
 
-    ctrl.updateStory();
+    it('should delete a story', function () {
+        var oldLength = ctrl.stories.length;
 
-    expect(ctrl.stories[0]).not.toEqual(oldStory);
-  });
+        ctrl.deleteStory('1');
 
-  it('should delete a story', function() {
-    reset();
-    var oldLength = ctrl.stories.length;
-
-    ctrl.deleteStory('1');
-
-    expect(ctrl.stories.length).toBeLessThan(oldLength);
-  });
+        expect(ctrl.stories.length).toBeLessThan(oldLength);
+    });
 });
