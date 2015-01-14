@@ -45,10 +45,12 @@ describe('StoryboardCtrl', function () {
     });
 
     it('should create a story', function () {
-        var story = {assignee: '1', id: 3};
+        var l = ctrl.stories.length,
+            story = {assignee: '1'};
 
-        ctrl.setCurrentStory(story);
+        ctrl.editedStory = story;
         ctrl.createStory();
+        ctrl.stories[l].id = '3';
 
         expect(ctrl.stories).toContain(story);
     });

@@ -42,7 +42,7 @@ angular.module('Angello.Storyboard')
 
         storyboard.createStory = function () {
             var newStory = angular.copy(storyboard.editedStory);
-            if (!newStory.id) newStory.id = ID();
+            newStory.id = ID();
 
             storyboard.stories.push(newStory);
             storyboard.resetForm();
