@@ -1,10 +1,9 @@
 'use strict';
 
-beforeEach(module('Angello.Storyboard'));
-
-var ctrl;
-
 describe('StoryboardCtrl', function () {
+    var ctrl;
+
+    beforeEach(module('Angello.Storyboard'));
 
     beforeEach(inject(function ($controller) {
         ctrl = $controller('StoryboardCtrl', {});
