@@ -2,7 +2,8 @@
 
 beforeEach(module('Angello.Storyboard'));
 
-var ctrl, scope, element, compile;
+var ctrl;
+
 describe('StoryboardCtrl', function () {
 
     beforeEach(inject(function ($controller) {
@@ -13,8 +14,13 @@ describe('StoryboardCtrl', function () {
         };
     }));
 
-    it('should initialize currentStory, editedStory, stories, types, statuses, and users', function () {
-        expect(ctrl).toBeInitialized();
+    it('should initialize properties', function () {
+        expect(ctrl.currentStory).toBeNull();
+        expect(ctrl.editedStory).toEqual({});
+        expect(ctrl.stories).toBeDefined();
+        expect(ctrl.types).toBeDefined();
+        expect(ctrl.statuses).toBeDefined();
+        expect(ctrl.users).toBeDefined();
     });
 
     it('should reset the form', function () {
