@@ -235,14 +235,18 @@ form.ng-dirty input.ng-valid {
     min-height: 215px;
     max-width: 100%;
     line-height: 1.428571429;
-    background-image: url(../img/bg-login.png);
-    background-size: cover;
     width: 400px;
     padding: 20px;
     margin: 80px auto 20px;
-    background-repeat: no-repeat;
-    background-position: top left;
     position: relative;
+}
+
+.form-signin .a0-panel.a0-onestep {
+    width: 100% !important;
+}
+
+.form-signin input {
+    max-width: none !important;
 }
 
 .form-signin button {
