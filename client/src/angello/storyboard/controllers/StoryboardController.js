@@ -88,11 +88,12 @@ angular.module('Angello.Storyboard')
         
         myStory.isEmptyStatus = function (status) {
             var empty = true;
-            
-            myStory.stories.forEach(function (story) {
-                if (story.status === status) empty = false;
-            });
-            
+            if (myStory.stories) {
+                myStory.stories.forEach(function (story) {
+                    if (story.status === status) empty = false;
+                });
+            }
+
             return empty;
         };
         
