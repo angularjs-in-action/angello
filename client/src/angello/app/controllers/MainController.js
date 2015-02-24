@@ -1,4 +1,4 @@
-angular.module('Angello.Common', [])
+angular.module('Angello.Common')
     .controller('MainCtrl', MainCtrl);
 function MainCtrl($scope, $location, LoginService) {
     var main = this;
