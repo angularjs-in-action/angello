@@ -22,7 +22,8 @@
     },
     "contributors": [
         "Brian Ford <btford@umich.edu> (http://briantford.com/)",
-        "Lukas Ruebbelke <simpul@gmail.com> (http://onehungrymind.com/)"
+        "Lukas Ruebbelke <simpul@gmail.com> (http://onehungrymind.com/)",
+        "Martin Gontovnikas <martin@gon.to> (http://gon.to/)"
     ],
     "license": "MIT",
     "readmeFilename": "README.md"
