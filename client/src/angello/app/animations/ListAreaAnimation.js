@@ -1,5 +1,5 @@
 angular.module('Angello.Common')
-    .animation('.list-area-expanded', function () {
+    .animation('.list-area-animation', function () {
         return {
             addClass: function (element, className, done) {
                 if (className == 'list-area-expanded') {
