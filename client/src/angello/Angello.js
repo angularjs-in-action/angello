@@ -77,7 +77,7 @@ myModule.config(function ($routeProvider, $httpProvider, $provide,
     }
 
     jwtInterceptorProvider.tokenGetter = function(store) {
-      store.get('userToken');
+      return store.get('userToken');
     }
 
     $httpProvider.interceptors.push('jwtInterceptor');
@@ -147,26 +147,6 @@ myModule.factory('loadingInterceptor', function (LoadingService) {
         }
     };
     return loadingInterceptor;
-});
-
-myModule.factory('requestInterceptor', function (UserService, CURRENT_BACKEND) {
-    if (CURRENT_BACKEND !== 'firebase') {
-        var requestInterceptor = {
-            request: function (config) {
-                var user = UserService.getCurrentUser();
-                var access_token = user ? user.access_token : null;
-
-                if(access_token) {
-                  config.headers.authorization = access_token;
-                }
-                return config;
-            }
-        };
-    } else {
-        var requestInterceptor = {};
-    }
-
-    return requestInterceptor;
 });
 
 myModule.run(function ($rootScope, LoadingService, LoginService) {
