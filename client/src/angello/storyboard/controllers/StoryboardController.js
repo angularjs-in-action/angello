@@ -1,6 +1,7 @@
 angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl',
-    function ($scope, $log, StoriesModel, UsersModel, STORY_STATUSES, STORY_TYPES) {
+        function ($scope, $log, StoriesModel, UsersModel,
+                    STORY_STATUSES, STORY_TYPES) {
         var myStory = this;
 
         myStory.detailsVisible = true;
