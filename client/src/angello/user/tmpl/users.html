@@ -10,7 +10,6 @@
           </thead>
           <tbody>
           <tr ng-repeat="user in users.users">
-              <!--<form ng-form="users.userForm" ng-submit="users.updateUser(user.id, user)">-->
               <td>
                 <ng-form name="userNameForm">
                   <input required name="userName" type="text" class="form-control" ng-model="user.name" ng-blur="users.updateUser(user.id, user)"/>
