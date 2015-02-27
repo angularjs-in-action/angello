@@ -1,6 +1,6 @@
 angular.module('Angello.Common')
-    .constant('CURRENT_BACKEND', 'node')
-    // .constant('CURRENT_BACKEND', 'firebase')
+    //.constant('CURRENT_BACKEND', 'node')
+    .constant('CURRENT_BACKEND', 'firebase')
     .service('EndpointConfigService', function($rootScope, CURRENT_BACKEND) {
         var service = this,
             endpointMap = {

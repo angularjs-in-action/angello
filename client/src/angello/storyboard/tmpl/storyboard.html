@@ -4,7 +4,8 @@
         <ul class="list my-repeat-animation" ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
             <hr>
-            <li userstory ng-repeat="story in storyboard.stories | filter: {status:status.name}"
+            <li userstory
+                ng-repeat="story in storyboard.stories | filter: {status:status.name}"
                 drag-container="story" mime-type="application/x-angello-status"
                 drop-container="" accepts="['application/x-angello-status']"
                 class="story my-repeat-animation"
@@ -15,7 +16,9 @@
             
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id);">×</button>
+                        <button type="button" class="close" ng-click="userStory.deleteStoryBoard(story.id)">
+                            ×
+                        </button>
                         <p class="title">{{story.title}}</p>
                     </div>
                     <div class="type-bar {{story.type}}"></div>

@@ -1,6 +1,8 @@
 angular.module('Angello.Dashboard')
     .directive('chart', function () {
-        var parseDataForCharts = function (sourceArray, sourceProp, referenceArray, referenceProp) {
+        var parseDataForCharts = function (sourceArray, sourceProp,
+            referenceArray, referenceProp) {
+
             var data = [];
             referenceArray.each(function (r) {
                 var count = sourceArray.count(function (s) {
@@ -13,7 +15,12 @@ angular.module('Angello.Dashboard')
 
         var linker = function (scope, element, attrs) {
             scope.$watch('sourceArray', function () {
-                scope.data = parseDataForCharts(scope.sourceArray, attrs['sourceProp'], scope.referenceArray, attrs['referenceProp']);
+                scope.data = parseDataForCharts(
+                    scope.sourceArray,
+                    attrs['sourceProp'],
+                    scope.referenceArray,
+                    attrs['referenceProp']
+                );
 
                 if (element.is(':visible')) {
                     $.plot(element, [ scope.data ], {
@@ -41,4 +48,4 @@ angular.module('Angello.Dashboard')
                 referenceArray: '='
             }
         };
-    });
+});
