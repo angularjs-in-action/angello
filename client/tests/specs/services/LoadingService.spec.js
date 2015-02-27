@@ -10,13 +10,15 @@ describe('Loading Service', function () {
         LoadingService = _LoadingService_;
     }));
 
-    it('should update $rootScope to false when setLoading is set to false', function () {
-        LoadingService.setLoading(false);
-        expect($rootScope.loadingView).toEqual(false);
+    it('should update $rootScope to false when setLoading is set to false',
+        function () {
+            LoadingService.setLoading(false);
+            expect($rootScope.loadingView).toEqual(false);
     });
 
-    it('should update $rootScope to true when setLoading is set to true', function () {
-        LoadingService.setLoading(true);
-        expect($rootScope.loadingView).toEqual(true);
+    it('should update $rootScope to true when setLoading is set to true',
+        function () {
+            LoadingService.setLoading(true);
+            expect($rootScope.loadingView).toEqual(true);
     });
 });

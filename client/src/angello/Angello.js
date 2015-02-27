@@ -78,7 +78,7 @@ myModule.config(function ($routeProvider, $httpProvider, $provide,
 
     jwtInterceptorProvider.tokenGetter = function(store) {
       return store.get('userToken');
-    }
+    };
 
     $httpProvider.interceptors.push('jwtInterceptor');
 
@@ -89,9 +89,6 @@ myModule.config(function ($routeProvider, $httpProvider, $provide,
     // Use the `decorator` solution to substitute or attach behaviors to
     // original service instance; @see angular-mocks for more examples....
     $provide.decorator('$log', function ($delegate) {
-        // Save the original $log.debug()
-        var debugFn = $delegate.debug;
-
         // TODO Extract this into a utility service
         function timeStamp() {
             // Create a date object with the current time
@@ -122,6 +119,9 @@ myModule.config(function ($routeProvider, $httpProvider, $provide,
             // Return the formatted string
             return date.join("/") + " " + time.join(":") + " " + suffix;
         }
+
+        // Save the original $log.debug()
+        var debugFn = $delegate.debug;
 
         $delegate.debug = function () {
             // Prepend timestamp

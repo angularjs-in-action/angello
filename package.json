@@ -7,7 +7,7 @@
         "test": "tests"
     },
     "scripts": {
-        "test": "karma start --single-run --browsers PhantomJS karma.conf.js"
+        "test": "karma start --single-run --browsers PhantomJS client/tests/karma.conf.js"
     },
     "repository": {
         "type": "git",
