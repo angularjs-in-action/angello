@@ -11,11 +11,14 @@ angular.module('Angello.Common')
             },
             removeClass: function (element, className, done) {
                 if (className == 'details-visible') {
-                    TweenMax.to(element, 0.5, {right: -element.width() + 50, onComplete: done });
+                    TweenMax.to(element, 0.5, {
+                        right: -element.width() + 50,
+                        onComplete: done
+                    });
                 }
                 else {
                     done();
                 }
             }
         };
-    });
+});
