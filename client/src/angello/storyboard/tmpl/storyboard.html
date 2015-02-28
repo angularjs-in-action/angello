@@ -66,22 +66,26 @@
             <div class="form-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
-                    <input type="text" id="inputTitle" name="inputTitle" placeholder="Title" ng-model="storyboard.editedStory.title" ng-required="true" ng-minlength="3" ng-maxlength="30" class="form-control">
+                    <input class="form-control" type="text" id="inputTitle" name="inputTitle"
+                           placeholder="Title" ng-model="storyboard.editedStory.title"
+                           ng-required="true" ng-minlength="3" ng-maxlength="30">
 
                     <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputTitle.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputTitle.$error"
-                      ng-if="storyboard.showMessages('inputTitle')">
+                        ng-class="{
+                            'alert alert-error alert-warning': storyboard.detailsForm.inputTitle.$invalid
+                        }"
+                        ng-messages="storyboard.detailsForm.inputTitle.$error"
+                        ng-if="storyboard.showMessages('inputTitle')">
 
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                      <div ng-message ="minlength">
-                        <small>Too short!</small>
-                      </div>
-                      <div ng-message="maxlength">
-                        <small>Too long!</small>
-                      </div>
+                        <div ng-message="required">
+                            <small>Required!</small>
+                        </div>
+                        <div ng-message="minlength">
+                            <small>Too short!</small>
+                        </div>
+                        <div ng-message="maxlength">
+                            <small>Too long!</small>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -178,11 +182,17 @@
         </form>
         <hr>
         <div ng-if="storyboard.currentStory">
-            <button class="btn btn-default" ng-click="storyboard.updateCancel()">Cancel</button>
-            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.updateStory()">Update</button>
+            <button class="btn btn-default" ng-click="storyboard.updateCancel()">
+                Cancel
+            </button>
+            <button class="btn pull-right btn-default"
+                    ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.updateStory()">Update</button>
         </div>
         <div ng-if="!storyboard.currentStory">
-            <button class="btn pull-right btn-default" ng-disabled="!storyboard.detailsForm.$valid" ng-click="storyboard.createStory()">New storyboard</button>
+            <button class="btn pull-right btn-default"
+                    ng-disabled="!storyboard.detailsForm.$valid"
+                    ng-click="storyboard.createStory()">New storyboard</button>
         </div>
     </div>
 </div>
