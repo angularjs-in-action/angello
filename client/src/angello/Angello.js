@@ -14,7 +14,7 @@ var myModule = angular.module('Angello',
         'angular-storage'
     ]);
 
-myModule.config(function ($routeProvider, $httpProvider, $provide,
+myModule.config(function($routeProvider, $httpProvider, $provide,
   authProvider, CURRENT_BACKEND, jwtInterceptorProvider) {
 
     $routeProvider
