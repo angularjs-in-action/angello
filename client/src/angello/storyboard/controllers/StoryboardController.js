@@ -2,95 +2,96 @@ angular.module('Angello.Storyboard')
     .controller('StoryboardCtrl',
         function ($scope, $log, StoriesModel, UsersModel,
                     STORY_STATUSES, STORY_TYPES) {
-        var myStory = this;
+        var storyboard = this;
 
-        myStory.detailsVisible = true;
-        myStory.currentStoryId = null;
-        myStory.currentStory = null;
-        myStory.editedStory = {};
-        myStory.stories = [];
+        storyboard.detailsVisible = true;
+        storyboard.currentStoryId = null;
+        storyboard.currentStory = null;
+        storyboard.editedStory = {};
+        storyboard.stories = [];
 
-        myStory.types = STORY_TYPES;
-        myStory.statuses = STORY_STATUSES;
+        storyboard.types = STORY_TYPES;
+        storyboard.statuses = STORY_STATUSES;
 
-        myStory.users = {};
+        storyboard.users = {};
 
         UsersModel.all()
             .then(function (result) {
-                myStory.users = (result !== 'null') ? result : {};
+                storyboard.users = (result !== 'null') ? result : {};
                 $log.debug('RESULT', result);
             }, function (reason) {
                 $log.debug('REASON', reason);
             });
 
-        myStory.setCurrentStory = function (story) {
+        storyboard.setCurrentStory = function (story) {
             $log.debug(story);
-            myStory.currentStoryId = story.id;
-            myStory.currentStory = story;
-            myStory.editedStory = angular.copy(myStory.currentStory);
+            storyboard.currentStoryId = story.id;
+            storyboard.currentStory = story;
+            storyboard.editedStory = angular.copy(storyboard.currentStory);
         };
 
-        myStory.getStories = function () {
-            StoriesModel.all().then(function (result) {
-                myStory.stories = (result !== 'null') ? result : {};
-                $log.debug('RESULT', result);
-            }, function (reason) {
-                $log.debug('REASON', reason);
-            });
-        };
-
-        myStory.createStory = function () {
-            StoriesModel.create(myStory.editedStory)
+        storyboard.getStories = function () {
+            StoriesModel.all()
                 .then(function (result) {
-                    myStory.getStories();
-                    myStory.resetForm();
-                    $log.debug('RESULT', result);
-                }, function (reason) {
-                    $log.debug('ERROR', reason);
-                });
-        };
-
-        myStory.updateStory = function () {
-            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
-
-            fields.forEach(function (field) {
-                myStory.currentStory[field] = myStory.editedStory[field]
-            });
-
-            StoriesModel.update(myStory.currentStoryId, myStory.editedStory)
-                .then(function (result) {
-                    myStory.getStories();
-                    myStory.resetForm();
+                    storyboard.stories = (result !== 'null') ? result : {};
                     $log.debug('RESULT', result);
                 }, function (reason) {
                     $log.debug('REASON', reason);
                 });
         };
 
-        myStory.updateCancel = function () {
-            myStory.resetForm();
+        storyboard.createStory = function () {
+            StoriesModel.create(storyboard.editedStory)
+                .then(function (result) {
+                    storyboard.getStories();
+                    storyboard.resetForm();
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('ERROR', reason);
+                });
         };
 
-        myStory.showMessages = function (field) {
-            return myStory.detailsForm[field].$touched || myStory.detailsForm.$submitted
+        storyboard.updateStory = function () {
+            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
+
+            fields.forEach(function (field) {
+                storyboard.currentStory[field] = storyboard.editedStory[field]
+            });
+
+            StoriesModel.update(storyboard.currentStoryId, storyboard.editedStory)
+                .then(function (result) {
+                    storyboard.getStories();
+                    storyboard.resetForm();
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('REASON', reason);
+                });
         };
 
-        myStory.resetForm = function () {
-            myStory.currentStory = null;
-            myStory.editedStory = {};
-
-            myStory.detailsForm.$setPristine();
-            myStory.detailsForm.$setUntouched();
+        storyboard.updateCancel = function () {
+            storyboard.resetForm();
         };
 
-        myStory.setDetailsVisible = function (visible) {
-            myStory.detailsVisible = visible;
+        storyboard.showMessages = function (field) {
+            return storyboard.detailsForm[field].$touched || storyboard.detailsForm.$submitted
         };
 
-        myStory.isEmptyStatus = function (status) {
+        storyboard.resetForm = function () {
+            storyboard.currentStory = null;
+            storyboard.editedStory = {};
+
+            storyboard.detailsForm.$setPristine();
+            storyboard.detailsForm.$setUntouched();
+        };
+
+        storyboard.setDetailsVisible = function (visible) {
+            storyboard.detailsVisible = visible;
+        };
+
+        storyboard.isEmptyStatus = function (status) {
             var empty = true;
-            if (myStory.stories) {
-                myStory.stories.forEach(function (story) {
+            if (storyboard.stories) {
+                storyboard.stories.forEach(function (story) {
                     if (story.status === status) empty = false;
                 });
             }
@@ -98,7 +99,7 @@ angular.module('Angello.Storyboard')
             return empty;
         };
 
-        myStory.finalizeDrop = function (story) {
+        storyboard.finalizeDrop = function (story) {
             StoriesModel.update(story.id, story)
                 .then(function (result) {
                     $log.debug('RESULT', result);
@@ -107,33 +108,33 @@ angular.module('Angello.Storyboard')
                 });
         };
 
-        myStory.changeStatus = function (story, status) {
+        storyboard.changeStatus = function (story, status) {
             story.status = status.name;
         };
 
-        myStory.insertAdjacent = function (target, story, insertBefore) {
+        storyboard.insertAdjacent = function (target, story, insertBefore) {
             if (target === story) return;
 
-            var fromIdx = myStory.stories.indexOf(story);
-            var toIdx = myStory.stories.indexOf(target);
+            var fromIdx = storyboard.stories.indexOf(story);
+            var toIdx = storyboard.stories.indexOf(target);
 
             if (!insertBefore) toIdx++;
 
             if (fromIdx >= 0 && toIdx >= 0) {
-                myStory.stories.splice(fromIdx, 1);
+                storyboard.stories.splice(fromIdx, 1);
 
                 if (toIdx >= fromIdx) toIdx--;
 
-                myStory.stories.splice(toIdx, 0, story);
+                storyboard.stories.splice(toIdx, 0, story);
 
                 story.status = target.status;
             }
         };
 
         $scope.$on('storyDeleted', function () {
-            myStory.getStories();
-            myStory.resetForm();
+            storyboard.getStories();
+            storyboard.resetForm();
         });
 
-        myStory.getStories();
+        storyboard.getStories();
     });

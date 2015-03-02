@@ -11,13 +11,15 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-          'vendor/angular.js',
-          'vendor/angular-route.js',
-          'vendor/angular-animate.js',
-          'vendor/angular-mocks.js',
-          'tests/mocks/*.js',
-          'src/angello/**/*.js',
-          'tests/**/*.js'
+        'vendor/angular.js',
+        'vendor/angular-route.js',
+        'vendor/angular-animate.js',
+        'vendor/angular-mocks.js',
+        'https://cdn.auth0.com/js/lock-6.js',
+        'https://cdn.auth0.com/w2/auth0-angular-4.js',
+        'tests/mocks/*.js',
+        'src/angello/**/*.js',
+        'tests/**/*.js'
         ],
 
 

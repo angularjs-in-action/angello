@@ -4,16 +4,6 @@ describe('Stories Model', function () {
 
     beforeEach(module('Angello.Common'));
 
-    beforeEach(module(function($provide) {
-        $provide.value('AuthModel', {
-            getCurrentUserId: function(){
-                return 1;
-            }
-        });
-
-        $provide.constant('CURRENT_BACKEND', 'firebase');
-    }));
-
     afterEach(inject(function($httpBackend) {
         $httpBackend.verifyNoOutstandingExpectation();
         $httpBackend.verifyNoOutstandingRequest();
@@ -22,7 +12,7 @@ describe('Stories Model', function () {
     it('Should get all', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = [];
         $httpBackend.when(
-            'GET', 'https://angello.firebaseio.com/clients/1/stories/.json'
+            'GET', 'https://angello-angularjs.firebaseio.com/clients/1/stories/.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -38,7 +28,9 @@ describe('Stories Model', function () {
 
     it('Should fetch', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('GET', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
+        $httpBackend.when(
+            'GET', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
+        ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
 
@@ -54,7 +46,7 @@ describe('Stories Model', function () {
     it('Should create', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'POST', 'https://angello.firebaseio.com/clients/1/stories/.json'
+            'POST', 'https://angello-angularjs.firebaseio.com/clients/1/stories/.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -70,7 +62,9 @@ describe('Stories Model', function () {
 
     it('Should update', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
-        $httpBackend.when('PUT', 'https://angello.firebaseio.com/clients/1/stories/1.json').respond(response);
+        $httpBackend.when(
+            'PUT', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
+        ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
 
@@ -86,7 +80,7 @@ describe('Stories Model', function () {
     it('Should destroy', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'DELETE', 'https://angello.firebaseio.com/clients/1/stories/1.json'
+            'DELETE', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);

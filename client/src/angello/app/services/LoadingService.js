@@ -3,7 +3,7 @@ angular.module('Angello.Common')
         function ($rootScope) {
             var service = this;
 
-            service.setLoading = function (loading) {
+            service.setLoading = function(loading) {
                 $rootScope.loadingView = loading;
             };
         });

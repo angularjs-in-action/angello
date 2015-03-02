@@ -66,8 +66,9 @@ myModule.config(function($routeProvider, $httpProvider, $provide,
       clientID: 'Fq8hKAkghu45WpnqrYTc6dbvXhBUdP7l'
     });
 
-    // Interceptor
+    // Loading interceptor
     $httpProvider.interceptors.push('loadingInterceptor');
+
     // Request interceptor
     if (CURRENT_BACKEND === 'firebase') {
       jwtInterceptorProvider.authPrefix = '';
