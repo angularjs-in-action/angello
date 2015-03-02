@@ -1,4 +1,4 @@
-/* CSS Animations
+/* CSS Transitions
 ------------------------------------------------------------------------------------------------ */
 .my-fade-animation.ng-enter, .my-fade-animation.ng-leave {
     -webkit-transition: 0.5s linear all;
@@ -119,21 +119,37 @@
 }
 
 @keyframes repeat-animation-move {
-  from { opacity:0.5; }
-  to { opacity:1; }
+  from {
+    opacity:0.5;
+  }
+  to {
+    opacity:1;
+  }
 }
 
 @-webkit-keyframes repeat-animation-move {
-  from { opacity:0.5; }
-  to { opacity:1; }
+  from {
+    opacity:0.5;
+  }
+  to {
+    opacity:1;
+  }
 }
 
 @-moz-keyframes repeat-animation-move {
-  from { opacity:0.5; }
-  to { opacity:1; }
+  from {
+    opacity:0.5;
+  }
+  to {
+    opacity:1;
+  }
 }
 
 @-o-keyframes repeat-animation-move {
-  from { opacity:0.5; }
-  to { opacity:1; }
+  from {
+    opacity:0.5;
+  }
+  to {
+    opacity:1;
+  }
 }
