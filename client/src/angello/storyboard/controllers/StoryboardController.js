@@ -1,5 +1,5 @@
 angular.module('Angello.Storyboard')
-    .controller('StoryboardCtrl', function () {
+    .controller('StoryboardCtrl', function() {
         var storyboard = this;
 
         storyboard.currentStory = null;
@@ -18,6 +18,7 @@ angular.module('Angello.Storyboard')
             },
             {
                 "assignee": "2",
+                "criteria": "It works!",
                 "description": "testing something",
                 "id": "2",
                 "reporter": "1",
@@ -47,7 +48,7 @@ angular.module('Angello.Storyboard')
             {"email": "another@user.com", "name": "Another User", "id": "2"}
         ];
 
-        storyboard.setCurrentStory = function (story) {
+        storyboard.setCurrentStory = function(story) {
             storyboard.currentStory = story;
             storyboard.editedStory = angular.copy(storyboard.currentStory);
         };
@@ -57,7 +58,7 @@ angular.module('Angello.Storyboard')
             return '_' + Math.random().toString(36).substr(2, 9);
         };
 
-        storyboard.createStory = function () {
+        storyboard.createStory = function() {
             var newStory = angular.copy(storyboard.editedStory);
             newStory.id = ID();
 
@@ -65,10 +66,11 @@ angular.module('Angello.Storyboard')
             storyboard.resetForm();
         };
 
-        storyboard.updateStory = function () {
-            var fields = ['title', 'description', 'criteria', 'status', 'type', 'reporter', 'assignee'];
+        storyboard.updateStory = function() {
+            var fields = ['title', 'description', 'criteria',
+                            'status', 'type', 'reporter', 'assignee'];
 
-            fields.forEach(function (field) {
+            fields.forEach(function(field) {
                 storyboard.currentStory[field] = storyboard.editedStory[field];
             });
 
@@ -83,11 +85,11 @@ angular.module('Angello.Storyboard')
             storyboard.resetForm();
         };
 
-        storyboard.updateCancel = function () {
+        storyboard.updateCancel = function() {
             storyboard.resetForm();
         };
 
-        storyboard.resetForm = function () {
+        storyboard.resetForm = function() {
             storyboard.currentStory = null;
             storyboard.editedStory = {};
 

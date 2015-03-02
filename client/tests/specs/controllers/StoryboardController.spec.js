@@ -1,19 +1,19 @@
 'use strict';
 
-describe('StoryboardCtrl', function () {
+describe('StoryboardCtrl', function() {
     var ctrl;
 
     beforeEach(module('Angello.Storyboard'));
 
-    beforeEach(inject(function ($controller) {
+    beforeEach(inject(function($controller) {
         ctrl = $controller('StoryboardCtrl', {});
         ctrl.detailsForm = {
-            $setPristine: function () { },
-            $setUntouched: function () {  }
+            $setPristine: function() { },
+            $setUntouched: function() {  }
         };
     }));
 
-    it('should initialize properties', function () {
+    it('should initialize properties', function() {
         expect(ctrl.currentStory).toBeNull();
         expect(ctrl.editedStory).toEqual({});
         expect(ctrl.stories).toBeDefined();
@@ -22,7 +22,7 @@ describe('StoryboardCtrl', function () {
         expect(ctrl.users).toBeDefined();
     });
 
-    it('should reset the form', function () {
+    it('should reset the form', function() {
         ctrl.editedStory = ctrl.currentStory = {assignee: '1'};
 
         ctrl.resetForm();
@@ -31,7 +31,7 @@ describe('StoryboardCtrl', function () {
         expect(ctrl.editedStory).toEqual({});
     });
 
-    it('should cancel the form', function () {
+    it('should cancel the form', function() {
         ctrl.editedStory = ctrl.currentStory = {assignee: '1'};
 
         ctrl.updateCancel();
@@ -40,7 +40,7 @@ describe('StoryboardCtrl', function () {
         expect(ctrl.editedStory).toEqual({});
     });
 
-    it('should set current story', function () {
+    it('should set current story', function() {
         var story = {assignee: '1'};
 
         ctrl.setCurrentStory(story);
@@ -49,7 +49,7 @@ describe('StoryboardCtrl', function () {
         expect(ctrl.editedStory).toEqual(ctrl.currentStory);
     });
 
-    it('should create a story', function () {
+    it('should create a story', function() {
         var story = {assignee: '1', id: '3'};
 
         ctrl.editedStory = story;
@@ -59,7 +59,7 @@ describe('StoryboardCtrl', function () {
         expect(ctrl.stories).toContain(story);
     });
 
-    it('should update a story', function () {
+    it('should update a story', function() {
         var story = ctrl.stories[0],
             title = 'Updated Story';
 
@@ -70,7 +70,7 @@ describe('StoryboardCtrl', function () {
         expect(story.title).toEqual(title);
     });
 
-    it('should delete a story', function () {
+    it('should delete a story', function() {
         var story = ctrl.stories[0];
 
         ctrl.deleteStory(story.id);

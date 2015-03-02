@@ -1,12 +1,13 @@
 <!-- STORIES -->
 <div class="list-area">
     <div class="list-wrapper">
-        <ul class="list my-repeat-animation" sortable=""
+        <ul class="list my-repeat-animation"
             ng-repeat="status in storyboard.statuses">
             <h3 class="status">{{status.name}}</h3>
-            <hr>
+            <hr/>
             <li class="story"
-                ng-repeat="story in storyboard.stories | filter: {status:status.name}"
+                ng-repeat="story in storyboard.stories
+                    | filter: {status:status.name}"
                 ng-click="storyboard.setCurrentStory(story)">
                 <article>
                     <div>
@@ -26,99 +27,96 @@
 
 <!-- STORY DETAILS -->
 <div class="details">
-    <div>
-        <h3>Card Details</h3>
-
-        <form name="storyboard.detailsForm" novalidate="">
-            <div class="form-group">
-                <div class="controls">
-                    <label class="control-label" for="inputTitle">*Title</label>
-                    <input type="text" id="inputTitle" name="inputTitle"
-                           placeholder="Title"
-                           ng-model="storyboard.editedStory.title" ng-required="true"
-                           ng-minlength="3" ng-maxlength="30" class="form-control">
-                </div>
+    <h3>Card Details</h3>
+    <form name="storyboard.detailsForm" novalidate="">
+        <div class="form-group">
+            <div class="controls">
+                <label class="control-label" for="inputTitle">*Title</label>
+                <input type="text" id="inputTitle" name="inputTitle"
+                       placeholder="Title" ng-model="storyboard.editedStory.title"
+                       ng-required="true" ng-minlength="3" ng-maxlength="30"
+                       class="form-control">
             </div>
-            <div class="form-group">
-                <label class="control-label" for="inputStatus">*Status</label>
-
-                <div class="controls">
-                    <select id="inputStatus" name="inputStatus" class="form-control"
-                            ng-model="storyboard.editedStory.status"
-                            ng-options="story.name as story.name for story in storyboard.statuses"
-                            ng-required="true">
-                        <option value="">Select Status</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="inputType">*Type</label>
-
-                <div class="controls">
-                    <select id="inputType" name="inputType" class="form-control"
-                            ng-model="storyboard.editedStory.type"
-                            ng-options="type.name as type.name for type in storyboard.types"
-                            ng-required="true">
-                        <option value="">Select Type</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="inputDescription">Description</label>
-
-                <div class="controls">
-                    <textarea id="inputDescription" name="inputDescription"
-                              class="form-control" placeholder="Description" rows="3"
-                              ng-model="storyboard.editedStory.description"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
-
-                <div class="controls">
-                    <textarea id="inputAcceptance"
-                              name="inputAcceptance" class="form-control"
-                              placeholder="Acceptance Criteria" rows="3"
-                              ng-model="storyboard.editedStory.criteria"></textarea>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">*Reporter</label>
-
-                <div class="controls">
-                    <select id="inputReporter" name="inputReporter"
-                        ng-model="storyboard.editedStory.reporter" ng-required="true"
-                        ng-options="user.id as user.name for user in storyboard.users"
-                        class="form-control">
-                        <option value="">Please select...</option>
-                    </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="control-label">*Assignee</label>
-
-                <div class="controls">
-                    <select ng-model="storyboard.editedStory.assignee" class="form-control"
-                        name="inputAssignee" ng-required="true"
-                        ng-options="user.id as user.name for user in storyboard.users">
-                        <option value="">Please select...</option>
-                    </select>
-                </div>
-            </div>
-        </form>
-        <hr>
-        <div ng-if="storyboard.currentStory">
-            <button class="btn btn-default" ng-click="storyboard.updateCancel()">
-                Cancel
-            </button>
-            <button class="btn pull-right btn-default"
-                    ng-disabled="!storyboard.detailsForm.$valid"
-                    ng-click="storyboard.updateStory()">Update Story</button>
         </div>
-        <div ng-if="!storyboard.currentStory">
-            <button class="btn pull-right btn-default"
-                    ng-disabled="!storyboard.detailsForm.$valid"
-                    ng-click="storyboard.createStory()">Create Story</button>
+        <div class="form-group">
+            <label class="control-label" for="inputStatus">*Status</label>
+
+            <div class="controls">
+                <select id="inputStatus" name="inputStatus" class="form-control"
+                        ng-model="storyboard.editedStory.status"
+                        ng-options="story.name as story.name for story in storyboard.statuses"
+                        ng-required="true">
+                    <option value="">Select Status</option>
+                </select>
+            </div>
         </div>
+        <div class="form-group">
+            <label class="control-label" for="inputType">*Type</label>
+
+            <div class="controls">
+                <select id="inputType" name="inputType" class="form-control"
+                        ng-model="storyboard.editedStory.type"
+                        ng-options="type.name as type.name for type in storyboard.types"
+                        ng-required="true">
+                    <option value="">Select Type</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputDescription">Description</label>
+
+            <div class="controls">
+                <textarea id="inputDescription" name="inputDescription"
+                          class="form-control" placeholder="Description" rows="3"
+                          ng-model="storyboard.editedStory.description"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
+
+            <div class="controls">
+                <textarea id="inputAcceptance"
+                          name="inputAcceptance" class="form-control"
+                          placeholder="Acceptance Criteria" rows="3"
+                          ng-model="storyboard.editedStory.criteria"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">*Reporter</label>
+
+            <div class="controls">
+                <select id="inputReporter" name="inputReporter"
+                    ng-model="storyboard.editedStory.reporter" ng-required="true"
+                    ng-options="user.id as user.name for user in storyboard.users"
+                    class="form-control">
+                    <option value="">Please select...</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">*Assignee</label>
+
+            <div class="controls">
+                <select ng-model="storyboard.editedStory.assignee" class="form-control"
+                    name="inputAssignee" ng-required="true"
+                    ng-options="user.id as user.name for user in storyboard.users">
+                    <option value="">Please select...</option>
+                </select>
+            </div>
+        </div>
+    </form>
+    <hr/>
+    <div ng-if="storyboard.currentStory">
+        <button class="btn btn-default" ng-click="storyboard.updateCancel()">
+            Cancel
+        </button>
+        <button class="btn pull-right btn-default"
+                ng-disabled="!storyboard.detailsForm.$valid"
+                ng-click="storyboard.updateStory()">Update Story</button>
+    </div>
+    <div ng-if="!storyboard.currentStory">
+        <button class="btn pull-right btn-default"
+                ng-disabled="!storyboard.detailsForm.$valid"
+                ng-click="storyboard.createStory()">Create Story</button>
     </div>
 </div>
