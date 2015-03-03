@@ -73,7 +73,8 @@ angular.module('Angello.Storyboard')
         };
 
         storyboard.showMessages = function (field) {
-            return storyboard.detailsForm[field].$touched || storyboard.detailsForm.$submitted
+            return storyboard.detailsForm[field].$touched
+                && storyboard.detailsForm[field].$invalid;
         };
 
         storyboard.resetForm = function () {

@@ -70,12 +70,9 @@
                            placeholder="Title" ng-model="storyboard.editedStory.title"
                            ng-required="true" ng-minlength="3" ng-maxlength="30">
 
-                    <div
-                        ng-class="{
-                            'alert alert-error alert-warning': storyboard.detailsForm.inputTitle.$invalid
-                        }"
-                        ng-messages="storyboard.detailsForm.inputTitle.$error"
-                        ng-if="storyboard.showMessages('inputTitle')">
+                    <div class="alert alert-warning"
+                         ng-messages="storyboard.detailsForm.inputTitle.$error"
+                         ng-if="storyboard.showMessages('inputTitle')">
 
                         <div ng-message="required">
                             <small>Required!</small>
