@@ -100,19 +100,6 @@ angular.module('Angello.Storyboard')
             return empty;
         };
 
-        storyboard.finalizeDrop = function (story) {
-            StoriesModel.update(story.id, story)
-                .then(function (result) {
-                    $log.debug('RESULT', result);
-                }, function (reason) {
-                    $log.debug('REASON', reason);
-                });
-        };
-
-        storyboard.changeStatus = function (story, status) {
-            story.status = status.name;
-        };
-
         storyboard.insertAdjacent = function (target, story, insertBefore) {
             if (target === story) return;
 
@@ -130,6 +117,19 @@ angular.module('Angello.Storyboard')
 
                 story.status = target.status;
             }
+        };
+
+        storyboard.finalizeDrop = function (story) {
+            StoriesModel.update(story.id, story)
+                .then(function (result) {
+                    $log.debug('RESULT', result);
+                }, function (reason) {
+                    $log.debug('REASON', reason);
+                });
+        };
+
+        storyboard.changeStatus = function (story, status) {
+            story.status = status.name;
         };
 
         $scope.$on('storyDeleted', function () {
