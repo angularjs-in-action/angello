@@ -24,7 +24,8 @@ module.exports = function (config) {
             'https://cdn.auth0.com/w2/auth0-angular-4.js',
             'vendor/angular-jwt.js',
             'src/angello/**/*.js',
-            'tests/**/*.js'
+            'tests/**/*.js',
+            '**/*.html'
         ],
 
 
@@ -34,8 +35,19 @@ module.exports = function (config) {
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {},
+        preprocessors: {
+            '**/*.html': ['ng-html2js']
+        },
 
+        ngHtml2JsPreprocessor: {
+            // strip this from the file path
+            //stripPrefix: 'public/',
+            //stripSufix: '.ext',
+            // prepend this to the
+            //prependPrefix: 'served/',
+
+            moduleName: 'Angello.Templates'
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
