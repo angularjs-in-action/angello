@@ -7,7 +7,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "karma start --single-run --browsers PhantomJS client/tests/karma.conf.js"
+    "test": "karma start --single-run --browsers Chrome client/tests/karma.conf.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,7 @@
     "karma-chrome-launcher": "~0.1",
     "karma-cli": "0.0.4",
     "karma-jasmine": "^0.2.2",
-    "karma-ng-html2js-preprocessor": "^0.1.2",
-    "karma-phantomjs-launcher": "^0.1.2"
+    "karma-ng-html2js-preprocessor": "^0.1.2"
   },
   "contributors": [
     "Brian Ford <btford@umich.edu> (http://briantford.com/)",
