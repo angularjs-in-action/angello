@@ -16,8 +16,13 @@ module.exports = function (config) {
             'vendor/angular-route.js',
             'vendor/angular-animate.js',
             'vendor/angular-mocks.js',
+            'http://cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-messages.min.js',
+            'https://cdn.firebase.com/v0/firebase.js',
+            'https://cdn.firebase.com/libs/angularfire/0.6.0/angularfire.min.js',
             'https://cdn.auth0.com/js/lock-6.js',
+            'vendor/angular-storage.js',
             'https://cdn.auth0.com/w2/auth0-angular-4.js',
+            'vendor/angular-jwt.js',
             'src/angello/**/*.js',
             'tests/**/*.js'
         ],
