@@ -40,10 +40,16 @@ You're done! Go ahead and move on to the *Start it* section.
  
 
 #### Start it
-Start up your local web server and navigate to the client folder. <br>
-Example: [http://localhost/~username/angello/client/](http://localhost/~username/angello/client/)
+If you have a local web server that you use, simply serve the client directory of the project. If you do not, you will need to install [Node.js and NPM](https://nodejs.org/download/).
 
-If you don't have a local web server and/or don't want to set one up, run `python -m SimpleHTTPServer` from the root directory of your project. You should get an output that looks like this: `Serving HTTP on 0.0.0.0 port 8000 ...`. Just navigate to the web address and port specified + /client (in this case, [http://0.0.0.0:8000/client](http://0.0.0.0:8000/client)).
+Once you have installed Node.js and NPM, run the following commands in your terminal. Make sure you are in the `angello` directory you just cloned.
+
+```
+npm install -g serve
+serve client/
+```
+
+These commands install the serve package on your system globally and then serve the client directory of the angello application for your viewing pleasure.
 
 #### Use it!
 At this point, you should see the login portion of the site.
