@@ -42,7 +42,7 @@ You're done! Go ahead and move on to the *Start it* section.
 #### Start it
 If you have a local web server that you use, simply serve the client directory of the project. If you do not, you will need to install [Node.js and NPM](https://nodejs.org/download/).
 
-Once you have installed Node.js and NPM, run the following commands in your terminal. Make sure you are in the `angello` directory you just cloned.
+Once you have installed Node.js and NPM, run the following commands in your terminal. Make sure you are in the `angello` directory.
 
 ```
 npm install -g serve
