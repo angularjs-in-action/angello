@@ -5,7 +5,7 @@ angular.module('Angello.Common')
         var service = this,
             endpointMap = {
                 firebase: { URI: 'https://my-first-angello.firebaseio.com/', root: 'clients/', format: '.json' },
-                node: { URI: 'http://localhost:3000/', root: 'api/clients/', format: ''}
+                node: { URI: 'http://localhost:4000/', root: 'api/clients/', format: ''}
             },
             currentEndpoint = endpointMap[CURRENT_BACKEND],
             userId = null,
