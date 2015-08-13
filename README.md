@@ -32,7 +32,7 @@ There are two options for the backend of the app: NodeJS and Firebase.
 You're done! Skip to the *Start it* section
 
 ##### Using NodeJS
-1. Go to the [Angello NodeJS API](https://github.com/angularjs-in-action/angello-node-api) and follow the directions to get the API running.
+1. Go to the [Angello Express API](https://github.com/angularjs-in-action/angello-express-api) and follow the directions to get the API running.
 2. Once the API is running, open `/client/src/angello/app/services/EndpointConfigService.js` in a text editor, uncomment `// .constant('CURRENT_BACKEND', 'node')` and comment out `.constant('CURRENT_BACKEND', 'firebase')`.
 ![Set the backend](https://cloud.githubusercontent.com/assets/590361/4444425/ce28c818-47f0-11e4-9457-d95a20e9450d.png)
 
