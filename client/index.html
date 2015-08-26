@@ -15,16 +15,15 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
         <link rel="stylesheet" href="assets/css/angello.css">
-        <link rel="stylesheet" href="assets/css/animations.css">
     </head>
-    <body ng-controller="MainCtrl as main" ng-class="{loading:loadingView}">
+    <body>
         <div class="navbar navbar-fixed-top navbar-default">
             <div class="navbar-header pull-left">
                 <a class="logo navbar-brand" href="#/">
                     <img src="assets/img/angello.png">
                 </a>
             </div>
-            <div class="btn-group pull-right" ng-show="main.currentUser">
+            <div class="btn-group pull-right">
                 <a class="btn btn-danger" href="#/">
                     <span class="glyphicon glyphicon-home"></span>
                 </a>
@@ -34,17 +33,18 @@
                 <a class="btn btn-danger" href="#/dashboard">
                     <span class="glyphicon glyphicon-signal"></span>
                 </a>
-                <button class="btn btn-default" ng-click="main.logout()">
+                <a class="btn btn-default" href="#/login">
                     <span class="glyphicon glyphicon-log-out"></span>
-                </button>
+                </a>
             </div>
         </div>
 
         <div ng-view=""></div>
 
-        <div class="modal"></div>
+        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.3.3/angular-route.min.js"></script>
+        <script src="src/angello/Angello.js"></script>
 
-        <script src="vendor/head.load.min.js"></script>
-        <script src="assets/js/boot.js"></script>
     </body>
 </html>
