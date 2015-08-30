@@ -1,40 +1,52 @@
 <!-- STORIES -->
-<div class="list-area-animation"
-     ng-class="{'list-area-expanded':!storyboard.detailsVisible}">
+<div class="list-area-animation">
     <div class="list-wrapper">
-        <ul class="list my-repeat-animation"
-            ng-repeat="status in storyboard.statuses">
-            <h3 class="status">{{status.name}}</h3>
+        <ul class="list my-repeat-animation">
+            <h3 class="status">To Do</h3>
             <hr/>
-            <li userstory
-                ng-repeat="story in storyboard.stories | filter: {status:status.name}"
-                drag-container="story" mime-type="application/x-angello-status"
-                drop-container="" accepts="['application/x-angello-status']"
-                class="story my-repeat-animation"
-                ng-click="storyboard.setCurrentStory(story)">
-
-                <div drop-target="top" on-drag-enter="storyboard.insertAdjacent(story, data, true)" on-drop="storyboard.finalizeDrop(data)"></div>
-                <div drop-target="bottom" on-drag-enter="storyboard.insertAdjacent(story, data, false)" on-drop="storyboard.finalizeDrop(data)"></div>
-
+            <li class="story my-repeat-animation">
                 <article>
                     <div>
-                        <button type="button" class="close" ng-click="userStory.deleteStory(story.id)">
+                        <button type="button" class="close">
                             ×
                         </button>
-                        <p class="title">{{story.title}}</p>
+                        <p class="title">Test Task</p>
                     </div>
-                    <div class="type-bar {{story.type}}"></div>
+                    <div class="type-bar Bug"></div>
                     <div>
-                        <p>{{story.description}}</p>
+                        <p>Do This</p>
                     </div>
                 </article>
             </li>
-            <div
-                class="emptystatus"
-                drop-container="" accepts="['application/x-angello-status']"
-                on-drop="storyboard.finalizeDrop(data)"
-                on-drag-enter="storyboard.changeStatus(data, status)"
-                ng-if="storyboard.isEmptyStatus(status)">
+            <div class="emptystatus">
+            </div>
+        </ul>
+        <ul class="list my-repeat-animation">
+            <h3 class="status">In Progress</h3>
+            <hr/>
+        
+            <div class="emptystatus">
+            </div>
+        </ul>
+        <ul class="list my-repeat-animation">
+            <h3 class="status">Code Review</h3>
+            <hr/>
+        
+            <div class="emptystatus">
+            </div>
+        </ul>
+        <ul class="list my-repeat-animation">
+            <h3 class="status">QA Review</h3>
+            <hr/>
+        
+            <div class="emptystatus">
+            </div>
+        </ul>
+        <ul class="list my-repeat-animation">
+            <h3 class="status">Verified</h3>
+            <hr/>
+        
+            <div class="emptystatus">
             </div>
         </ul>
     </div>
@@ -42,154 +54,88 @@
 
 
 <!-- STORY DETAILS -->
-<div class="details details-animation"
-     ng-class="{'details-visible':storyboard.detailsVisible}">
+<div class="details details-animation details-visible">
     <div class="details-nav">
-        <div ng-if="!storyboard.detailsVisible">
-            <button class="btn pull-left btn-default"
-                    ng-click="storyboard.setDetailsVisible(true)">
-                <span class="glyphicon glyphicon-arrow-left"></span>
-            </button>
-        </div>
-        <div ng-if="storyboard.detailsVisible">
-            <button class="btn pull-right btn-default"
-                    ng-click="storyboard.setDetailsVisible(false)">
+        <div>
+            <button class="btn pull-left btn-default">
                 <span class="glyphicon glyphicon-arrow-right"></span>
             </button>
         </div>
     </div>
 
-    <div ng-if="storyboard.detailsVisible" class="my-fade-animation">
+    <div class="my-fade-animation">
         <h3>Card Details</h3>
 
-        <form name="storyboard.detailsForm" novalidate="">
+        <form name="storyboard.detailsForm">
             <div class="form-group">
                 <div class="controls">
                     <label class="control-label" for="inputTitle">*Title</label>
                     <input class="form-control" type="text" id="inputTitle" name="inputTitle"
-                           placeholder="Title" ng-model="storyboard.editedStory.title"
-                           ng-required="true" ng-minlength="3" ng-maxlength="30">
-
-                    <div class="alert alert-warning"
-                         ng-messages="storyboard.detailsForm.inputTitle.$error"
-                         ng-if="storyboard.showMessages('inputTitle')">
-
-                        <div ng-message="required">
-                            <small>Required!</small>
-                        </div>
-                        <div ng-message="minlength">
-                            <small>Too short!</small>
-                        </div>
-                        <div ng-message="maxlength">
-                            <small>Too long!</small>
-                        </div>
-                    </div>
+                           placeholder="Title" ng-minlength="3" ng-maxlength="30">
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputStatus">*Status</label>
 
                 <div class="controls">
-                    <select id="inputStatus" name="inputStatus" class="form-control" ng-model="storyboard.editedStory.status" ng-options="l.name as l.name for l in storyboard.statuses" ng-required="true">
+                    <select id="inputStatus" name="inputStatus" class="form-control">
                         <option value="">Select Status</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputStatus.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputStatus.$error"
-                      ng-if="storyboard.showMessages('inputStatus')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputType">*Type</label>
 
                 <div class="controls">
-                    <select id="inputType" name="inputType" class="form-control" ng-model="storyboard.editedStory.type" ng-options="t.name as t.name for t in storyboard.types" ng-required="true">
+                    <select id="inputType" name="inputType" class="form-control">
                         <option value="">Select Type</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputType.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputType.$error"
-                      ng-if="storyboard.showMessages('inputType')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputDescription">Description</label>
 
                 <div class="controls">
-                    <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3" ng-model="storyboard.editedStory.description"></textarea>
+                    <textarea id="inputDescription" name="inputDescription" class="form-control" placeholder="Description" rows="3"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label" for="inputAcceptance">Acceptance Criteria</label>
 
                 <div class="controls">
-                    <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3" ng-model="storyboard.editedStory.criteria"></textarea>
+                    <textarea id="inputAcceptance" name="inputAcceptance" class="form-control" placeholder="Acceptance Criteria" rows="3"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label">*Reporter</label>
 
                 <div class="controls">
-                    <select ng-model="storyboard.editedStory.reporter" class="form-control"
-                        name="inputReporter" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
+                    <select class="form-control"
+                        name="inputReporter">
                         <option value="">Please select...</option>
                     </select>
-                    <div ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputReporter.$invalid}"
-                         ng-messages="storyboard.detailsForm.inputReporter.$error"
-                         ng-if="storyboard.showMessages('inputReporter')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label">*Assignee</label>
 
                 <div class="controls">
-                    <select ng-model="storyboard.editedStory.assignee" class="form-control"
-                        name="inputAssignee" ng-required="true" ng-options="user.id as user.name for user in storyboard.users">
+                    <select class="form-control"
+                        name="inputAssignee">
                         <option value="">Please select...</option>
                     </select>
-
-                    <div
-                      ng-class="{'alert alert-error alert-warning': storyboard.detailsForm.inputAssignee.$invalid}"
-                      ng-messages="storyboard.detailsForm.inputAssignee.$error"
-                      ng-if="storyboard.showMessages('inputAssignee')">
-
-                      <div ng-message="required">
-                        <small>Required!</small>
-                      </div>
-                    </div>
                 </div>
             </div>
         </form>
         <hr>
-        <div ng-if="storyboard.currentStory">
-            <button class="btn btn-default" ng-click="storyboard.updateCancel()">
+        <div>
+            <button class="btn btn-default">
                 Cancel
             </button>
-            <button class="btn pull-right btn-default"
-                    ng-disabled="storyboard.detailsForm.$invalid"
-                    ng-click="storyboard.updateStory()">Update</button>
+            <button class="btn pull-right btn-default">Update</button>
         </div>
-        <div ng-if="!storyboard.currentStory">
-            <button class="btn pull-right btn-default"
-                    ng-disabled="storyboard.detailsForm.$invalid"
-                    ng-click="storyboard.createStory()">New Storyboard</button>
+        <div>
+            <button class="btn pull-right btn-default">New Storyboard</button>
         </div>
     </div>
 </div>

@@ -9,36 +9,20 @@
           </tr>
           </thead>
           <tbody>
-          <tr ng-repeat="user in users.users">
+          <tr>
               <td>
                 <ng-form name="userNameForm">
-                  <input required name="userName" type="text" class="form-control" ng-model="user.name" ng-blur="users.updateUser(user.id, user)"/>
-
-                  <div class="error" ng-messages="userNameForm.userName.$error">
-                    <div ng-message="required">
-                      Please enter a name.
-                    </div>
-                  </div>
+                  <input required name="userName" type="text" class="form-control" value="Lukas Ruebbelke"/>
                 </ng-form>
               </td>
               <td>
                 <ng-form name="userEmailForm">
-                  <input required name="userEmail" type="email" class="form-control" ng-model="user.email" ng-blur="users.updateUser(user.id, user)"/>
-
-                  <div class="error" ng-messages="userEmailForm.userEmail.$error">
-                    <div ng-message="required">
-                      Please enter an email.
-                    </div>
-                    <div ng-message="email">
-                      Email should be in format example@example.com
-                    </div>
-                  </div>
+                  <input required name="userEmail" type="email" class="form-control" value="luk@test.com"/>
                 </ng-form>
               </td>
               <td>
-                <button type="button" class="btn btn-link"
-                        ng-click="users.removeUser(user.id)">Remove</button>
-                <a class="btn btn-link" href="#/users/{{user.id}}">View</a>
+                <button type="button" class="btn btn-link">Remove</button>
+                <a class="btn btn-link" href="#/users/userId">View</a>
               </td>
           </tr>
           </tbody>
@@ -48,25 +32,12 @@
     <div class="well">
         <h4>Add User</h4>
 
-        <form name="users.newUserForm" class="form-inline new-user" role="form" novalidate ng-submit="users.addUser()">
+        <form name="users.newUserForm" class="form-inline new-user" role="form">
             <div class="form-group">
-                <input required name="userName" type="text" class="form-control" ng-model="users.newUser.name" placeholder="Name">
-                <div class="error" ng-messages="users.newUserForm.userName.$error" ng-if="users.showMessages('userName')">
-                    <div ng-message="required">
-                      Please enter a name.
-                    </div>
-                </div>
+                <input required name="userName" type="text" class="form-control" placeholder="Name">
             </div>
             <div class="form-group">
-                <input required name="userEmail" type="email" class="form-control" ng-model="users.newUser.email" placeholder="Email">
-                <div class="error" ng-messages="users.newUserForm.userEmail.$error" ng-if="users.showMessages('userEmail')">
-                    <div ng-message="required">
-                      Please enter an email.
-                    </div>
-                    <div ng-message="email">
-                      Email should be in format example@example.com
-                    </div>
-                </div>
+                <input required name="userEmail" type="email" class="form-control" placeholder="Email">
             </div>
             <button type="submit" class="btn btn-default">Add</button>
         </form>
