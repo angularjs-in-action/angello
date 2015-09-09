@@ -12,7 +12,7 @@ describe('Stories Model', function () {
     it('Should get all', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = [];
         $httpBackend.when(
-            'GET', 'https://angello-angularjs.firebaseio.com/clients/1/stories/.json'
+            'GET', 'https://my-first-angello.firebaseio.com/clients/1/stories/.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -29,7 +29,7 @@ describe('Stories Model', function () {
     it('Should fetch', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'GET', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
+            'GET', 'https://my-first-angello.firebaseio.com/clients/1/stories/1.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -46,7 +46,7 @@ describe('Stories Model', function () {
     it('Should create', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'POST', 'https://angello-angularjs.firebaseio.com/clients/1/stories/.json'
+            'POST', 'https://my-first-angello.firebaseio.com/clients/1/stories/.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -63,7 +63,7 @@ describe('Stories Model', function () {
     it('Should update', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'PUT', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
+            'PUT', 'https://my-first-angello.firebaseio.com/clients/1/stories/1.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
@@ -80,7 +80,7 @@ describe('Stories Model', function () {
     it('Should destroy', inject(function(StoriesModel, $httpBackend, $rootScope) {
         var response = {};
         $httpBackend.when(
-            'DELETE', 'https://angello-angularjs.firebaseio.com/clients/1/stories/1.json'
+            'DELETE', 'https://my-first-angello.firebaseio.com/clients/1/stories/1.json'
         ).respond(response);
 
         $rootScope.$broadcast('onCurrentUserId', 1);
