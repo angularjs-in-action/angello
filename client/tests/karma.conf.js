@@ -11,14 +11,21 @@ module.exports = function (config) {
 
         // list of files / patterns to load in the browser
         files: [
-          'vendor/angular.js',
-          'vendor/angular-route.js',
-          'vendor/angular-animate.js',
-          'vendor/angular-mocks.js',
-          'vendor/sugar-1.3.9.min.js',
-          'tests/mocks/*.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-messages.min.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-route.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-animate.js',
+          'https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-rc.0/angular-mocks.js',
+          'https://cdn.firebase.com/js/client/2.3.2/firebase.js',
+          'https://cdn.firebase.com/libs/angularfire/1.1.3/angularfire.min.js',
+          'https://cdn.auth0.com/js/lock-7.min.js',
+          'https://cdn.auth0.com/w2/auth0-angular-4.js',
+          'vendor/sugar-1.4.1.min.js',
+          'vendor/angular-storage.js',
+          'vendor/angular-jwt.js',
           'src/angello/**/*.js',
-          'tests/**/*.js'
+          'tests/**/*.js',
+          '**/*.html'
         ],
 
         // list of files to exclude
